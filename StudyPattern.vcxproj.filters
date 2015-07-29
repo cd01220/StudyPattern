@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Main">
+      <UniqueIdentifier>{9f1bcee5-45e9-4d3f-98b1-e39b9de8a2b5}</UniqueIdentifier>
+      <Extensions>c;cpp;h;hpp</Extensions>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{b94e2d63-56dd-4468-92d3-41f37f4151f4}</UniqueIdentifier>
+      <Extensions>c;cpp;h;hpp</Extensions>
+    </Filter>
+    <Filter Include="Layer3Architecture">
+      <UniqueIdentifier>{2c620d70-0b3a-409d-b373-15a5ba6e464a}</UniqueIdentifier>
+      <Extensions>c;cpp;h;hpp</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Src\Main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PersonDomain.cpp">
+      <Filter>Layer3Architecture</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\PersonMapper.cpp">
+      <Filter>Layer3Architecture</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Src\SystemInclude.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PersonDomain.h">
+      <Filter>Layer3Architecture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\PersonMapper.h">
+      <Filter>Layer3Architecture</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>
