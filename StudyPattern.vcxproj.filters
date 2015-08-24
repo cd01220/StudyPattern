@@ -13,27 +13,117 @@
       <UniqueIdentifier>{2c620d70-0b3a-409d-b373-15a5ba6e464a}</UniqueIdentifier>
       <Extensions>c;cpp;h;hpp</Extensions>
     </Filter>
+    <Filter Include="StateMachine">
+      <UniqueIdentifier>{dbe66143-5a4f-4a8b-8f5c-de9e20a56328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="StateMachineLib">
+      <UniqueIdentifier>{47f847e0-045c-418e-8555-cf4f103d85ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Main.cpp">
       <Filter>Main</Filter>
     </ClCompile>
-    <ClCompile Include="Src\PersonDomain.cpp">
+    <ClCompile Include="Src\StateMachine\CmdInterpreter.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachine\DemoState1.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachine\DemoState2.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachine\DemoState3.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachine\DemoStateMachine.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp">
       <Filter>Layer3Architecture</Filter>
     </ClCompile>
-    <ClCompile Include="Src\PersonMapper.cpp">
+    <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp">
       <Filter>Layer3Architecture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\SystemInclude.h">
+    <ClInclude Include="Src\StateMachineLib\ActiveState.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\ClassMethodThread.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\CompositeState.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\ConcurrentCompositeState.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\conversion_detection.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\EventQueue.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\RefCountPtr.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\Region.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\State.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\StateMachine.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\static_isa.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclConfig.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclDoxygen.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclMutex.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclSemaphore.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclThread.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\SttclTime.h">
+      <Filter>StateMachineLib</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\CmdInterpreter.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\DemoState1.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\DemoState2.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\DemoState3.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\DemoStateMachine.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachine\IDemoState.h">
+      <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
+      <Filter>Layer3Architecture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Layer3Architecture\PersonMapper.h">
+      <Filter>Layer3Architecture</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Public\SystemInclude.h">
       <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PersonDomain.h">
-      <Filter>Layer3Architecture</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\PersonMapper.h">
-      <Filter>Layer3Architecture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
