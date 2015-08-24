@@ -159,5 +159,4 @@ private:
 }
 
 
-
 #endif /* EVENTQUEUE_H_ */

@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file conversion_detection.h
  * Declares numerous template classes to realize type conversion checks.
@@ -60,3 +61,4 @@ struct Inherits {
 };
 
 }
+#endif

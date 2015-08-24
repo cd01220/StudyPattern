@@ -1,3 +1,4 @@
+#if 0
 /**
  * @file static_isa.h
  * Declares numerous template classes to realize static concept checks.
@@ -192,3 +193,4 @@ struct HeroicProxy {
 };
 
 }
+#endif
