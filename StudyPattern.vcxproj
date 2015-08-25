@@ -14,39 +14,14 @@
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
-    <ClCompile Include="Src\StateMachine\CmdInterpreter.cpp" />
-    <ClCompile Include="Src\StateMachine\DemoState1.cpp" />
-    <ClCompile Include="Src\StateMachine\DemoState2.cpp" />
-    <ClCompile Include="Src\StateMachine\DemoState3.cpp" />
-    <ClCompile Include="Src\StateMachine\DemoStateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
-    <ClInclude Include="Src\StateMachineLib\ActiveState.h" />
-    <ClInclude Include="Src\StateMachineLib\ClassMethodThread.h" />
-    <ClInclude Include="Src\StateMachineLib\CompositeState.h" />
-    <ClInclude Include="Src\StateMachineLib\ConcurrentCompositeState.h" />
-    <ClInclude Include="Src\StateMachineLib\conversion_detection.h" />
-    <ClInclude Include="Src\StateMachineLib\EventQueue.h" />
-    <ClInclude Include="Src\StateMachineLib\RefCountPtr.h" />
-    <ClInclude Include="Src\StateMachineLib\Region.h" />
     <ClInclude Include="Src\StateMachineLib\State.h" />
     <ClInclude Include="Src\StateMachineLib\StateMachine.h" />
-    <ClInclude Include="Src\StateMachineLib\static_isa.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclConfig.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclDoxygen.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclMutex.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclSemaphore.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclThread.h" />
-    <ClInclude Include="Src\StateMachineLib\SttclTime.h" />
-    <ClInclude Include="Src\StateMachine\CmdInterpreter.h" />
-    <ClInclude Include="Src\StateMachine\DemoState1.h" />
-    <ClInclude Include="Src\StateMachine\DemoState2.h" />
-    <ClInclude Include="Src\StateMachine\DemoState3.h" />
-    <ClInclude Include="Src\StateMachine\DemoStateMachine.h" />
-    <ClInclude Include="Src\StateMachine\IDemoState.h" />
+    <ClInclude Include="Src\StateMachine\Demo.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

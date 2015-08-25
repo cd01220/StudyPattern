@@ -1,15 +1,13 @@
 #include "Public/SystemInclude.h"
-
-#include "StateMachine/DemoStateMachine.h"
-#include "StateMachine/CmdInterpreter.h"
+#include "StateMachine/Demo.h"
 
 using namespace std;
 
-
 int main()
 {   
-    Application::DemoStateMachine demoStateMachine;
-	Application::CmdInterpreter cmdInterpreter(cin,demoStateMachine);
+    Task task;
 
-	return cmdInterpreter.run();
+    task.HandleReceive();
+
+	return 0;
 }
