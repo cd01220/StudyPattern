@@ -2,55 +2,24 @@
 #ifndef _StateMachine_h_
 #define _StateMachine_h_
 
-#include "Public/SystemInclude.h"
+#include "SystemInclude.h"
 
 #include "State.h"
 
-template <typename StateInterface>
-class StateMachine: public StateInterface
+/**********************class StateMachine**********************/
+class StateMachine: public Interface
 {
 public:
-    typedef StateBase<StateInterface> StateType;
-    typedef std::shared_ptr<StateType> StateTypeSharedPtr;
+    StateMachine(State *state);
+    ~StateMachine();
 
-    StateMachine(const StateTypeSharedPtr& state): state(state)
-    { }
-
-    ~StateMachine()
-    {
-    }
-
-    void ChangeState(StateTypeSharedPtr& newState)
-    {
-        ExitCurrentState();
-        SetState(newState);
-        EnterNewState();
-    }
-
-    void SetState(StateTypeSharedPtr& newState)
-    {
-        state = newState;
-    }
-
-    void EnterNewState()
-    {
-        state->Entry();
-        state->StartDo();
-    }
-
-    void ExitCurrentState()
-    {
-        if (state != nullptr)
-        {
-            state->EndDo();
-            state->Exit();
-        }
-    }
-
-    virtual StateTypeSharedPtr GetInitialState() = 0;
+    void ChangeState(State* newState);
+    void SetState(State* newState);
+    void EnterNewState();
+    void ExitCurrentState();
 
 protected:
-    StateTypeSharedPtr state;
+    std::shared_ptr<State> state;
 };
 
 #endif

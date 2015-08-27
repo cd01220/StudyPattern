@@ -60,10 +60,16 @@
 #   ifdef _WIN32
 #       include <cstdint>
 #       include <system_error>
+#       include <thread>
+#       include <mutex>
+#       include <condition_variable>
 #   else
 #       if GCC_VERSION > 40600
 #           include <cstdint>
 #           include <system_error>
+#           include <thread>
+#           include <mutex>
+#           include <condition_variable>
 #       else
 #           include <stdint.h>
 #           define nullptr NULL

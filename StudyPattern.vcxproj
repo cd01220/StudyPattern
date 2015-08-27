@@ -14,11 +14,15 @@
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\StateMachineLib\State.cpp" />
+    <ClCompile Include="Src\StateMachineLib\StateMachine.cpp" />
+    <ClCompile Include="Src\StateMachine\Demo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
+    <ClInclude Include="Src\StateMachineLib\Interface.h" />
     <ClInclude Include="Src\StateMachineLib\State.h" />
     <ClInclude Include="Src\StateMachineLib\StateMachine.h" />
     <ClInclude Include="Src\StateMachine\Demo.h" />
@@ -57,7 +61,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\Src;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Src;$(SolutionDir)\Src\Public;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>

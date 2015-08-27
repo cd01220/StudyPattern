@@ -30,6 +30,15 @@
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp">
       <Filter>Layer3Architecture</Filter>
     </ClCompile>
+    <ClCompile Include="Src\StateMachine\Demo.cpp">
+      <Filter>StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachineLib\StateMachine.cpp">
+      <Filter>StateMachineLib</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\StateMachineLib\State.cpp">
+      <Filter>StateMachineLib</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -49,6 +58,9 @@
     </ClInclude>
     <ClInclude Include="Src\StateMachine\Demo.h">
       <Filter>StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\StateMachineLib\Interface.h">
+      <Filter>StateMachineLib</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

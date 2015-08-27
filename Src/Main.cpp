@@ -1,13 +1,15 @@
-#include "Public/SystemInclude.h"
+#include "SystemInclude.h"
+
 #include "StateMachine/Demo.h"
 
 using namespace std;
 
+
 int main()
 {   
     Task task;
+    task.Receive();
 
-    task.HandleReceive();
-
+    Sleep(1000);
 	return 0;
 }
