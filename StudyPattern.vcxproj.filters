@@ -16,8 +16,11 @@
     <Filter Include="StateMachine">
       <UniqueIdentifier>{dbe66143-5a4f-4a8b-8f5c-de9e20a56328}</UniqueIdentifier>
     </Filter>
-    <Filter Include="StateMachineLib">
-      <UniqueIdentifier>{47f847e0-045c-418e-8555-cf4f103d85ff}</UniqueIdentifier>
+    <Filter Include="MessageQueue">
+      <UniqueIdentifier>{cfc0d111-3f45-403c-b1f9-512f01afb20f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Reactor">
+      <UniqueIdentifier>{43c60019-4bce-4f55-bbd7-bf8edc2a2a48}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -30,14 +33,11 @@
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp">
       <Filter>Layer3Architecture</Filter>
     </ClCompile>
-    <ClCompile Include="Src\StateMachine\Demo.cpp">
+    <ClCompile Include="Src\StateMachine\StateMachine.cpp">
       <Filter>StateMachine</Filter>
     </ClCompile>
-    <ClCompile Include="Src\StateMachineLib\StateMachine.cpp">
-      <Filter>StateMachineLib</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\StateMachineLib\State.cpp">
-      <Filter>StateMachineLib</Filter>
+    <ClCompile Include="Src\Reactor\Reactor.cpp">
+      <Filter>Reactor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,17 +50,17 @@
     <ClInclude Include="Src\Public\SystemInclude.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Src\StateMachineLib\State.h">
-      <Filter>StateMachineLib</Filter>
+    <ClInclude Include="Src\MessageQueue\MessageQueue.h">
+      <Filter>MessageQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\StateMachineLib\StateMachine.h">
-      <Filter>StateMachineLib</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\StateMachine\Demo.h">
+    <ClInclude Include="Src\StateMachine\StateMachine.h">
       <Filter>StateMachine</Filter>
     </ClInclude>
-    <ClInclude Include="Src\StateMachineLib\Interface.h">
-      <Filter>StateMachineLib</Filter>
+    <ClInclude Include="Src\Reactor\Reactor.h">
+      <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor\EventHanlder.h">
+      <Filter>Reactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

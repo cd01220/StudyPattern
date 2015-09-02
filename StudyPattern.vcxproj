@@ -14,18 +14,17 @@
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
-    <ClCompile Include="Src\StateMachineLib\State.cpp" />
-    <ClCompile Include="Src\StateMachineLib\StateMachine.cpp" />
-    <ClCompile Include="Src\StateMachine\Demo.cpp" />
+    <ClCompile Include="Src\Reactor\Reactor.cpp" />
+    <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
+    <ClInclude Include="Src\MessageQueue\MessageQueue.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
-    <ClInclude Include="Src\StateMachineLib\Interface.h" />
-    <ClInclude Include="Src\StateMachineLib\State.h" />
-    <ClInclude Include="Src\StateMachineLib\StateMachine.h" />
-    <ClInclude Include="Src\StateMachine\Demo.h" />
+    <ClInclude Include="Src\Reactor\EventHanlder.h" />
+    <ClInclude Include="Src\Reactor\Reactor.h" />
+    <ClInclude Include="Src\StateMachine\StateMachine.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
