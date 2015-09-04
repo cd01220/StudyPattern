@@ -11,21 +11,26 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\AceDemo\Callback.cpp" />
+    <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\AceDemo\Callback.h" />
+    <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\MessageQueue\MessageQueue.h" />
+    <ClInclude Include="Src\Public\SystemError.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
     <ClInclude Include="Src\Reactor\EventHanlder.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
     <ClInclude Include="Src\StateMachine\StateMachine.h" />
-    <ClInclude Include="Src\TimerQueue\Demo.h" />
     <ClInclude Include="Src\TimerQueue\TimerQueueFwd.h" />
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +67,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\Src;$(SolutionDir)\Src\Public;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\Src;$(SolutionDir)\Src\Public;$(SolutionDir)\Tools\ACE_wrappers;$(IncludePath)</IncludePath>
+    <ReferencePath>$(VCInstallDir)atlmfc\lib;$(VCInstallDir)lib</ReferencePath>
+    <LibraryPath>$(VCInstallDir)lib;$(VCInstallDir)atlmfc\lib;$(WindowsSDK_LibraryPath_x86);$(SolutionDir)\Tools\ACE_wrappers\lib</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -78,6 +85,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ACEd.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

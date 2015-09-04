@@ -25,6 +25,9 @@
     <Filter Include="TimerQueue">
       <UniqueIdentifier>{066e849f-05ef-47c8-b6ca-1b8876d0facd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AceDemo">
+      <UniqueIdentifier>{6c383b97-80a2-4f31-a112-a3d9a42852c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Main.cpp">
@@ -41,6 +44,15 @@
     </ClCompile>
     <ClCompile Include="Src\Reactor\Reactor.cpp">
       <Filter>Reactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Public\SystemError.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp">
+      <Filter>AceDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\Callback.cpp">
+      <Filter>AceDemo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -68,8 +80,14 @@
     <ClInclude Include="Src\TimerQueue\TimerQueueFwd.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\TimerQueue\Demo.h">
-      <Filter>TimerQueue</Filter>
+    <ClInclude Include="Src\Public\SystemError.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\TimerDispatcher.h">
+      <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\Callback.h">
+      <Filter>AceDemo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
