@@ -22,6 +22,9 @@
     <Filter Include="Reactor">
       <UniqueIdentifier>{43c60019-4bce-4f55-bbd7-bf8edc2a2a48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TimerQueue">
+      <UniqueIdentifier>{066e849f-05ef-47c8-b6ca-1b8876d0facd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Main.cpp">
@@ -61,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Src\Reactor\EventHanlder.h">
       <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\TimerQueueFwd.h">
+      <Filter>TimerQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\Demo.h">
+      <Filter>TimerQueue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

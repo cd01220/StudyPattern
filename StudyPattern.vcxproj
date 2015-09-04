@@ -25,6 +25,8 @@
     <ClInclude Include="Src\Reactor\EventHanlder.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
     <ClInclude Include="Src\StateMachine\StateMachine.h" />
+    <ClInclude Include="Src\TimerQueue\Demo.h" />
+    <ClInclude Include="Src\TimerQueue\TimerQueueFwd.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
