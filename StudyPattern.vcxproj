@@ -13,28 +13,39 @@
   <ItemGroup>
     <ClCompile Include="Src\AceDemo\Callback.cpp" />
     <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp" />
+    <ClCompile Include="Src\Event\EventHandler.cpp" />
+    <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
+    <ClCompile Include="Src\TimerQueue\TimeListT.inl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\AceDemo\Callback.h" />
     <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
+    <ClInclude Include="Src\Event\EventHandler.h" />
+    <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\MessageQueue\MessageQueue.h" />
     <ClInclude Include="Src\Public\SystemError.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
-    <ClInclude Include="Src\Reactor\EventHanlder.h" />
+    <ClInclude Include="Src\Reactor\ReactorImpl.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
     <ClInclude Include="Src\StateMachine\StateMachine.h" />
-    <ClInclude Include="Src\TimerQueue\TimerQueueFwd.h" />
+    <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h" />
+    <ClInclude Include="Src\TimerQueue\TimeListT.h" />
+    <ClInclude Include="Src\TimerQueue\TimerList.h" />
+    <ClInclude Include="Src\TimerQueue\TimerQueue.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Src\TimerQueue\TimerQueue.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC8D1673-A964-4C90-A8A0-FC3EE137DF5D}</ProjectGuid>

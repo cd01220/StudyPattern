@@ -1,17 +1,10 @@
-#ifndef _EventHanlder_h_
-#define _EventHanlder_h_
+#ifndef _ReactorImpl_h_
+#define _ReactorImpl_h_
 
 #include "SystemInclude.h"
-#include "TimerQueue/TimerQueueFwd.h"
+#include "TimerQueue/AbstractTimerQueue.h"
 
 class ReactorImpl;
-/**********************class EventHandler**********************/
-/* class ACE_Event_Handler */
-class EventHandler
-{
-public:
-    virtual int HandleTimeOut(std::chrono::milliseconds, const void *arg = 0);
-};
 
 /**********************class ReactorNotify**********************/
 /* ACE_Reactor_Notify */

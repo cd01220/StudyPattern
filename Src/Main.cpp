@@ -12,14 +12,12 @@ using namespace this_thread;
 
 #include "AceDemo/Callback.h"
 #include "AceDemo/TimerDispatcher.h"
+
 int main (int, ACE_TCHAR *[])
 {
-    ACE_Timer_Queue *timer_queue;
-
-    ACE_NEW_RETURN(timer_queue, ACE_Timer_List, -1);
-
+    ACE_Timer_Queue *timer_queue = new ACE_Timer_List;
     // setup the timer queue
-    Timer::instance ()->set (timer_queue);
+    Timer::instance()->set(timer_queue);
 
     CB cb[10];
     long args[10];

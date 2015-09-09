@@ -64,6 +64,7 @@
 #       include <thread>
 #       include <mutex>
 #       include <condition_variable>
+#       include <chrono>
 #   else
 #       if GCC_VERSION > 40600
 #           include <cstdint>
@@ -71,6 +72,7 @@
 #           include <thread>
 #           include <mutex>
 #           include <condition_variable>
+#       	include <chrono>
 #       else
 #           include <stdint.h>
 #           define nullptr NULL

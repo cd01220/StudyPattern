@@ -8,10 +8,10 @@ void Timer_Dispatcher::wait_for_event (void)
 
     while (1)
     {
-        ACE_Time_Value max_tv = timer_queue_->gettimeofday ();
+        ACE_Time_Value maxTv = timer_queue_->gettimeofday ();
 
         ACE_Time_Value *this_timeout =
-            this->timer_queue_->calculate_timeout (&max_tv);
+            this->timer_queue_->calculate_timeout (&maxTv);
 
         if (*this_timeout == ACE_Time_Value::zero)
             this->timer_queue_->expire ();
