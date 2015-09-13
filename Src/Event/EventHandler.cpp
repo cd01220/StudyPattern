@@ -4,7 +4,7 @@
 
 using namespace std;
 
-std::error_code EventHandler::HandleTimeOut(const TimePoint&, const void *arg)
+std::error_code EventHandler::HandleTimeOut(TimePoint, const void *arg)
 {
     return error_code();
 }

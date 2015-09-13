@@ -9,7 +9,7 @@
 class EventHandler
 {
 public:
-    virtual std::error_code HandleTimeOut(const TimePoint&, const void *arg = 0);
+    virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
 };
 
 #endif

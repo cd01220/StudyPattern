@@ -63,7 +63,10 @@
     <ClCompile Include="Src\Event\EventHandler.cpp">
       <Filter>Event</Filter>
     </ClCompile>
-    <ClCompile Include="Src\TimerQueue\TimeListT.inl">
+    <ClCompile Include="Src\TimerQueue\TimerQueue.cpp">
+      <Filter>TimerQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TimerQueue\EventHandlerStub.cpp">
       <Filter>TimerQueue</Filter>
     </ClCompile>
   </ItemGroup>
@@ -98,9 +101,6 @@
     <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\TimerQueue\TimerQueue.h">
-      <Filter>TimerQueue</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h">
       <Filter>Event</Filter>
     </ClInclude>
@@ -110,10 +110,19 @@
     <ClInclude Include="Src\Reactor\ReactorImpl.h">
       <Filter>Reactor</Filter>
     </ClInclude>
-    <ClInclude Include="Src\TimerQueue\TimeListT.h">
+    <ClInclude Include="Src\Public\CopyDisabled.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\TimeValue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\TimerQueue\TimerList.h">
+    <ClInclude Include="Src\TimerQueue\TimerNode.h">
+      <Filter>TimerQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\TimerQueue.h">
+      <Filter>TimerQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\EventHandlerStub.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
   </ItemGroup>

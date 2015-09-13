@@ -1,47 +1,55 @@
-#ifndef _TimerQueueFwd_h_
-#define _TimerQueueFwd_h_
+#ifndef _AbstractTimerQueue_h_
+#define _AbstractTimerQueue_h_
 
 #include "SystemInclude.h"
-
-/**********************class TimeValue**********************/
-/* ACE_Time_Value */
-typedef std::chrono::system_clock::time_point TimePoint;
-typedef std::chrono::milliseconds TimeInterval;
+#include "TimerNode.h"
 
 /**********************class AbstractTimerQueue**********************/
 /* ACE_Abstract_Timer_Queue */
-template<typename EventHandlerType>
+// T: ACE_Event_Handler
+template<typename T>
 class AbstractTimerQueue
 {
 public:
-    virtual ~AbstractTimerQueue() {};
+    AbstractTimerQueue() {}
+    virtual ~AbstractTimerQueue() {}
+    
+    virtual std::error_code Schedule(std::shared_ptr<T> handler, 
+        const void *arc, 
+        TimePoint future, 
+        TimeInterval interval) = 0;
 
-    virtual bool IsEmpty (void) const = 0;
+    /**
+    * Run the <functor> for all timers whose values are <= @a current_time.
+    * This does not account for <timer_skew>.  Returns the number of
+    * timers canceled.
+    */
+    virtual uint_t Expire(TimePoint currentTime) = 0;
+    virtual uint_t Expire() = 0;
 
-    // Returns the time of the earlier node in the Timer_Queue.  Must
-    // be called on a non-empty queue.
-    virtual TimePoint EarliestTime(void) const = 0; 
+    /**
+    * Cancel all timer associated with @a type.  If
+    * @a dont_call_handle_close is 0 then the <functor> will be invoked,
+    * which typically invokes the <handle_close> hook.  Returns number
+    * of timers cancelled.
+    */
+    //virtual std::error_code Cancel(const T&, bool doCallHandleClose) = 0;
+
+    /**
+    * Close timer queue. Cancels all timers.
+    */
+    //virtual void Close(void) = 0;
 
     // Determine the next event to timeout.  Returns @a max if there are
     // no pending timers or if all pending timers are longer than max.
     // This method acquires a lock internally since it modifies internal state.
     /* Example:
-        TimePoint maxTv = chrono::system_clock::now();
-        TimePoint *thisTimeOut = this->timer_queue_->CalculateTimeout (&maxTv);
-        if (*this_timeout == TimePoint::Zero)
-            this->timer_queue_->expire();
+    TimePoint maxTv = chrono::system_clock::now();
+    TimePoint *thisTimeOut = this->timer_queue_->CalculateTimeout (&maxTv);
+    if (*this_timeout == TimePoint::Zero)
+    this->timer_queue_->expire();
     */
-    virtual TimeInterval CalculateTimeout(TimePoint max) = 0;
-
-    virtual std::system_error Schedule(const EventHandlerType &handler, void *arg, 
-                                       const TimePoint &time, const TimeInterval &interval);
-    virtual std::error_code Expir() = 0;
-    virtual std::error_code Cancel(const EventHandlerType&, bool) = 0;
-    virtual void Close(void) = 0;
+    //virtual TimeInterval CalculateTimeout(TimePoint max) = 0;
 };
-
-class EventHandler;
-
-typedef AbstractTimerQueue<EventHandler> TimerQueue;
 
 #endif
