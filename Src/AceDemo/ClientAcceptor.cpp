@@ -32,11 +32,13 @@ int ClientAcceptor::handle_input (ACE_HANDLE)
     auto_ptr<ClientService> p (client);
 
     if (this->acceptor_.accept (client->peer ()) == -1)
-        ACE_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT ("(%P|%t) %p\n"),
-        ACE_TEXT ("Failed to accept ")
-        ACE_TEXT ("client connection")),
-        -1);
+    {
+        ACE_ERROR_RETURN((LM_ERROR,
+            ACE_TEXT ("(%P|%t) %p\n"),
+            ACE_TEXT ("Failed to accept ")
+            ACE_TEXT ("client connection")),
+            -1);
+    }
     p.release ();
     client->reactor (this->reactor ());
     if (client->open () == -1)

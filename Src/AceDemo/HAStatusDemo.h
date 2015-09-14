@@ -5,6 +5,8 @@
 inline int HaStatusDemo (int, ACE_TCHAR *[])
 {
     ACE_INET_Addr port_to_listen ("HAStatus");
+    cout << port_to_listen.get_host_addr() << ", " << port_to_listen.get_port_number() << endl;
+
     ClientAcceptor acceptor;
     acceptor.reactor (ACE_Reactor::instance ());
     if (acceptor.open (port_to_listen) == -1)

@@ -87,6 +87,9 @@
     <ClCompile Include="Src\AceDemo\ClientService.cpp">
       <Filter>AceDemo</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Task\ServiceObject.cpp">
+      <Filter>Task</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -161,8 +164,11 @@
     <ClInclude Include="Src\AceDemo\ClientService.h">
       <Filter>AceDemo</Filter>
     </ClInclude>
-    <ClInclude Include="Src\AceDemo\ClientServiceDemo.h">
+    <ClInclude Include="Src\AceDemo\HAStatusDemo.h">
       <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Task\TaskBase.h">
+      <Filter>Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

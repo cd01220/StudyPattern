@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "AceDemo/ClientServiceDemo.h"
+#include "AceDemo/HAStatusDemo.h"
 
 int main(int argc, char *argv[])
 {

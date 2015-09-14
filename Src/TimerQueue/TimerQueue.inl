@@ -118,7 +118,7 @@ std::error_code TimerQueueT<T1>::Schedule(std::shared_ptr<T1> handler,
     return errCode;
 }
 
-/**********************class EventHandler**********************/
+/**********************class TimerQueueT**********************/
 /* private member function */
 template <class T1>
 uint_t TimerQueueT<T1>::AllocTimerId()
