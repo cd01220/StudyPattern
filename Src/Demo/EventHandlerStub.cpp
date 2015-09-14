@@ -9,25 +9,14 @@ using namespace std;
 
 EventHandlerStub::EventHandlerStub () : count(0)
 {
-  cout << "EventHandlerStub::EventHandlerStub" << endl;
+    cout << "EventHandlerStub::EventHandlerStub" << endl;
 }
 
 error_code EventHandlerStub::HandleTimeOut(TimePoint, const void *arg)
 {
-  cout << "EventHandlerStub::handle_timeout" << endl;
-  
-  if (count == 5)
-  {
-      //int status = Timer::instance ()->reset_interval(timerId, Duration(1000));
-  }
-
-  if (count++ == 10)
-  {
-      TimerDispatcher &dispatcher = TimerDispatcher::GetInstance();
-      dispatcher.Cancel(timerId);
-  }
-
-  return error_code();
+    cout << "EventHandlerStub::handle_timeout" << endl;
+    count++;
+    return error_code();
 }
 
 uint_t EventHandlerStub::GetTimerId()

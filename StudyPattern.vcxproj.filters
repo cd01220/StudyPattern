@@ -34,6 +34,9 @@
     <Filter Include="Demo">
       <UniqueIdentifier>{c346f86f-c784-4003-8cb3-fa8f4ce80b4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Task">
+      <UniqueIdentifier>{22ab803a-72fb-4e41-9823-1f1c0f65aee7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Main.cpp">
@@ -74,6 +77,15 @@
     </ClCompile>
     <ClCompile Include="Src\Demo\TimerDispatcherStub.cpp">
       <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\TimerQueueDemo.h">
+      <Filter>AceDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\ClientAcceptor.cpp">
+      <Filter>AceDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\ClientService.cpp">
+      <Filter>AceDemo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +145,24 @@
     </ClInclude>
     <ClInclude Include="Src\Demo\TimerDispatcherStub.h">
       <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Demo\TimerQueueDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\TimerQueue\TimerQueueAdapter.h">
+      <Filter>TimerQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Task\ServiceObject.h">
+      <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\ClientAcceptor.h">
+      <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\ClientService.h">
+      <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\ClientServiceDemo.h">
+      <Filter>AceDemo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

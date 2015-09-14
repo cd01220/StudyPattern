@@ -12,6 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\AceDemo\Callback.cpp" />
+    <ClCompile Include="Src\AceDemo\ClientAcceptor.cpp" />
+    <ClCompile Include="Src\AceDemo\ClientService.cpp" />
+    <ClCompile Include="Src\AceDemo\TimerQueueDemo.h" />
     <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
     <ClCompile Include="Src\Demo\TimerDispatcherStub.cpp" />
@@ -27,9 +30,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\AceDemo\Callback.h" />
+    <ClInclude Include="Src\AceDemo\ClientAcceptor.h" />
+    <ClInclude Include="Src\AceDemo\ClientService.h" />
+    <ClInclude Include="Src\AceDemo\ClientServiceDemo.h" />
     <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Demo\TimerDispatcherStub.h" />
+    <ClInclude Include="Src\Demo\TimerQueueDemo.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
     <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
@@ -41,9 +48,11 @@
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
     <ClInclude Include="Src\StateMachine\StateMachine.h" />
+    <ClInclude Include="Src\Task\ServiceObject.h" />
     <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h" />
     <ClInclude Include="Src\TimerQueue\TimerQueue.h" />
     <ClInclude Include="Src\TimerQueue\TimerNode.h" />
+    <ClInclude Include="Src\TimerQueue\TimerQueueAdapter.h" />
     <ClInclude Include="Src\TimerQueue\TimeValue.h" />
   </ItemGroup>
   <ItemGroup>

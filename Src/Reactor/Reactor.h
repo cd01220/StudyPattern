@@ -1,4 +1,4 @@
-#ifndef _Reactor_h_
+#if !defined(_Reactor_h_)
 #define _Reactor_h_
 
 #include "SystemInclude.h"

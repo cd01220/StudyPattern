@@ -3,8 +3,8 @@
 
 #include "CopyDisabled.h"
 #include "Event/EventHandler.h"
-#include "TimerNode.h"
-#include "AbstractTimerQueue.h"
+#include "TimerQueue/TimerNode.h"
+#include "TimerQueue/AbstractTimerQueue.h"
 
 /**********************class TimerQueueUpcallBase**********************/
 /* ACE define the class "ACE_Event_Handler_Handle_Timeout_Upcall", required by TimerQueue 

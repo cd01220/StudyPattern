@@ -23,7 +23,7 @@ int main(int, char *[])
 }
 */
 
-#ifndef _TimerDispatcher_h_
+#if !defined(_TimerDispatcher_h_)
 #define _TimerDispatcher_h_
 
 #include "SystemInclude.h"

@@ -58,10 +58,6 @@ public:
     */
     virtual uint_t Expire(TimePoint currentTime) = 0;
     virtual uint_t Expire() = 0;
-
-
-
-
 };
 
 #endif

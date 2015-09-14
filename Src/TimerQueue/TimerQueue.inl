@@ -72,9 +72,7 @@ Duration TimerQueueT<T1>::CalculateTimeout(TimePoint currentTime)
 template <class T1>
 std::error_code TimerQueueT<T1>::Cancel(uint_t timerId)
 {
-    //caller may call this function in the Expire() context, this will cause
-    //re-lock().
-    //lock_guard<std::mutex> lock(c11mutex);
+    lock_guard<std::mutex> lock(c11mutex);
     CancelTimerId(timerId);
     return error_code();
 }

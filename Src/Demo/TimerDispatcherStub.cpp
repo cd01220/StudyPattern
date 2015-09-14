@@ -6,7 +6,6 @@
 #include "Demo/TimerDispatcherStub.h"
 
 using namespace std;
-using namespace this_thread;
 
 std::error_code TimerDispatcher::Cancel(uint_t timerId)
 {

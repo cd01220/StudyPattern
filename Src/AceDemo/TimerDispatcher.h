@@ -74,7 +74,7 @@ private:
 };
 
 typedef ACE_Singleton<Timer_Dispatcher, ACE_Null_Mutex> Timer;
-// Listing 1
+
 
 #endif /*TIMER_DISPATCHER_H*/
 
