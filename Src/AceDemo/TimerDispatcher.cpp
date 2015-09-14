@@ -34,34 +34,31 @@ long Timer_Dispatcher::schedule (ACE_Event_Handler *cb,
                                  const ACE_Time_Value &abs_time,
                                  const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("Timer_Dispatcher::schedule_timer");
-
-  return this->timer_queue_->schedule(cb, arg, abs_time, interval);
+    ACE_TRACE ("Timer_Dispatcher::schedule_timer");
+    return this->timer_queue_->schedule(cb, arg, abs_time, interval);
 }
 // Listing 2
 // Listing 3 code/ch20
 int Timer_Dispatcher::cancel (ACE_Event_Handler *cb,
                           int dont_call_handle_close)
 {
-  ACE_TRACE ("Timer_Dispatcher::cancel");
-  return timer_queue_->cancel (cb, dont_call_handle_close);
+    ACE_TRACE ("Timer_Dispatcher::cancel");
+    return timer_queue_->cancel (cb, dont_call_handle_close);
 }
 // Listing 3
 // Listing 4 code/ch20
 void Timer_Dispatcher::set (ACE_Timer_Queue *timer_queue)
 {
-  ACE_TRACE ("Timer_Dispatcher::set");
-
-  timer_queue_ = timer_queue;
+    ACE_TRACE ("Timer_Dispatcher::set");
+    timer_queue_ = timer_queue;
 }
 
 // Listing 4
 int Timer_Dispatcher::reset_interval (long timer_id,
                                   const ACE_Time_Value &interval)
 {
-  ACE_TRACE ("Timer_Dispatcher::reset_interval");
-
-  return timer_queue_->reset_interval(timer_id, interval);
+    ACE_TRACE ("Timer_Dispatcher::reset_interval");
+    return timer_queue_->reset_interval(timer_id, interval);
 }
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Timer_Dispatcher, ACE_Null_Mutex);
 

@@ -2,6 +2,7 @@
 #define _TimerQueue_h_
 
 #include "CopyDisabled.h"
+#include "Event/EventHandler.h"
 #include "TimerNode.h"
 #include "AbstractTimerQueue.h"
 
@@ -40,6 +41,7 @@ class TimerQueueT: public AbstractTimerQueue<T1>,
 {
 public:
     typedef typename TimerNodeT<T1> TimerNode;
+    enum: uint_t { MaxNodeNumber = 65535 };
     TimerQueueT();
 
     // Destructor - make virtual for proper destruction of inherited
@@ -47,8 +49,16 @@ public:
     virtual ~TimerQueueT(void);
 
     // virtual ACE_Time_Value *ACE_Timer_Queue_T::calculate_timeout (ACE_Time_Value *max);
-    virtual TimeInterval CalculateTimeout(TimePoint max);
-    
+    virtual Duration CalculateTimeout(TimePoint max);
+
+    /**
+    * Cancel all timer associated with @a type.  If
+    * @a dont_call_handle_close is 0 then the <functor> will be invoked,
+    * which typically invokes the <handle_close> hook.  Returns number
+    * of timers cancelled.
+    */
+    virtual std::error_code Cancel(uint_t timerId);
+
     /**
     * Implement ACE_Abstract_Timer_Queue<TYPE>::expire() with the right
     * locking strategy.
@@ -61,15 +71,28 @@ public:
     * locking strategy.
     */
     virtual std::error_code Schedule(std::shared_ptr<T1> handler, 
-        const void *arc, 
+        const void *act, 
         TimePoint future, 
-        TimeInterval interval);
+        Duration  interval,
+        uint_t    *timerId);
 
-protected:
+private:
+    uint_t AllocTimerId();
+    void CancelTimerId(uint_t timerId);
+    /**
+    * interally implement of Expire(TimePoint currentTime) without lock.
+    */
+    uint_t ExpireImpl(TimePoint currentTime);
+
+    void FreeTimerId(uint_t timerId);
     
 private:
     std::mutex c11mutex;
-    std::list<std::shared_ptr<TimerNode>> timers;
+    std::priority_queue<std::shared_ptr<TimerNode>> timers;
+    std::list<uint_t> freeId; 
+    std::bitset<MaxNodeNumber> canceledId;
 };
+
+typedef TimerQueueT<EventHandler> TimerQueue;
 
 #endif

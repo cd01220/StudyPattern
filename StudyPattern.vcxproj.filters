@@ -31,6 +31,9 @@
     <Filter Include="Event">
       <UniqueIdentifier>{4aeeba58-c6d8-4bf3-a7b2-1e4b18068e95}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Demo">
+      <UniqueIdentifier>{c346f86f-c784-4003-8cb3-fa8f4ce80b4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Src\Main.cpp">
@@ -66,8 +69,11 @@
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp">
       <Filter>TimerQueue</Filter>
     </ClCompile>
-    <ClCompile Include="Src\TimerQueue\EventHandlerStub.cpp">
-      <Filter>TimerQueue</Filter>
+    <ClCompile Include="Src\Demo\EventHandlerStub.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Demo\TimerDispatcherStub.cpp">
+      <Filter>Demo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -122,8 +128,11 @@
     <ClInclude Include="Src\TimerQueue\TimerQueue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\TimerQueue\EventHandlerStub.h">
-      <Filter>TimerQueue</Filter>
+    <ClInclude Include="Src\Demo\EventHandlerStub.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Demo\TimerDispatcherStub.h">
+      <Filter>Demo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

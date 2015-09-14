@@ -6,6 +6,6 @@
 /**********************class TimeValue**********************/
 /* ACE_Time_Value */
 typedef std::chrono::system_clock::time_point TimePoint;
-typedef std::chrono::milliseconds TimeInterval;
+typedef std::chrono::milliseconds Duration;
 
 #endif

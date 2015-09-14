@@ -11,20 +11,16 @@
 class EventHandlerStub: public EventHandler
 {
 public:
-  EventHandlerStub ();
+    EventHandlerStub ();
 
-  // Set the timer id that is being handled by this instance.
-  void SetID(long timerID);
-
-  // Get the timer id.
-  int GetID(void);
-
-  // Handle the timeout.
-  std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    // Handle the timeout.
+    std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    uint_t GetTimerId();
+    void SetTimerId(uint_t timerId);
 
 private:
-  int timerID;
-  int count;
+    int count;
+    uint_t timerId;
 };
 
 #endif /*CB_H*/

@@ -51,6 +51,7 @@
 #   include <map>
 #   include <vector>
 #   include <set>
+#   include <bitset>
 #   include <queue>
 #   include <typeinfo>
 #   include <functional>

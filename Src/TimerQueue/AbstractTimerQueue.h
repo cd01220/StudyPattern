@@ -14,10 +14,42 @@ public:
     AbstractTimerQueue() {}
     virtual ~AbstractTimerQueue() {}
     
+    /**
+    * Close timer queue. Cancels all timers.
+    */
+    //virtual void Close(void) = 0;
+
+    // Determine the next event to timeout.  Returns @a max if there are
+    // no pending timers or if all pending timers are longer than max.
+    // This method acquires a lock internally since it modifies internal state.
+    /* 
+    Example1:
+        TimePoint maxTv = chrono::system_clock::now();
+        Duration duration = this->timer_queue_->CalculateTimeout (&maxTv);
+        if (duration == Duration::zero)
+            this->timer_queue_->expire();
+
+    Example2:
+        TimePoint maxTv = chrono::system_clock::now();
+        Duration duration = this->timer_queue_->CalculateTimeout (&maxTv);
+        SleepEx((DWORD)duration.count(), true);
+        timer_queue_->Expire();
+    */
+    virtual Duration CalculateTimeout(TimePoint max) = 0;
+    
+    /**
+    * Cancel all timer associated with @a type.  If
+    * @a dont_call_handle_close is 0 then the <functor> will be invoked,
+    * which typically invokes the <handle_close> hook.  Returns number
+    * of timers cancelled.
+    */
+    virtual std::error_code Cancel(uint_t timerId) = 0;
+
     virtual std::error_code Schedule(std::shared_ptr<T> handler, 
         const void *arc, 
         TimePoint future, 
-        TimeInterval interval) = 0;
+        Duration  interval,
+        uint_t *timerId) = 0;
 
     /**
     * Run the <functor> for all timers whose values are <= @a current_time.
@@ -27,29 +59,9 @@ public:
     virtual uint_t Expire(TimePoint currentTime) = 0;
     virtual uint_t Expire() = 0;
 
-    /**
-    * Cancel all timer associated with @a type.  If
-    * @a dont_call_handle_close is 0 then the <functor> will be invoked,
-    * which typically invokes the <handle_close> hook.  Returns number
-    * of timers cancelled.
-    */
-    //virtual std::error_code Cancel(const T&, bool doCallHandleClose) = 0;
 
-    /**
-    * Close timer queue. Cancels all timers.
-    */
-    //virtual void Close(void) = 0;
 
-    // Determine the next event to timeout.  Returns @a max if there are
-    // no pending timers or if all pending timers are longer than max.
-    // This method acquires a lock internally since it modifies internal state.
-    /* Example:
-    TimePoint maxTv = chrono::system_clock::now();
-    TimePoint *thisTimeOut = this->timer_queue_->CalculateTimeout (&maxTv);
-    if (*this_timeout == TimePoint::Zero)
-    this->timer_queue_->expire();
-    */
-    //virtual TimeInterval CalculateTimeout(TimePoint max) = 0;
+
 };
 
 #endif

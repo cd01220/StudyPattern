@@ -27,8 +27,7 @@ Example 2:
 */
 enum class system_error_t
 {
-    file_not_exists = 1,
-    bad_file_type   = 2,
+    no_id_space = 1,
 };
 
 class system_category_impl : public std::error_category
