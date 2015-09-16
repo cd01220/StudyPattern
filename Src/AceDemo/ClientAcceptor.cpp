@@ -12,15 +12,14 @@ ClientAcceptor::~ClientAcceptor ()
 // Listing 5
 
 // Listing 2 code/ch07
-int ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
+int ClientAcceptor::open(const ACE_INET_Addr &listen_addr)
 {
     if (this->acceptor_.open (listen_addr, 1) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
         ACE_TEXT ("%p\n"),
         ACE_TEXT ("acceptor.open")),
         -1);
-    return this->reactor ()->register_handler
-        (this, ACE_Event_Handler::ACCEPT_MASK);
+    return this->reactor()->register_handler(this, ACE_Event_Handler::ACCEPT_MASK);
 }
 // Listing 2
 

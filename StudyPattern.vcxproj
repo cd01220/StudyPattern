@@ -27,14 +27,21 @@
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
     <ClCompile Include="Src\Task\ServiceObject.cpp" />
+    <ClCompile Include="Src\Task\TaskBase.cpp" />
+    <ClCompile Include="Src\TimerQueue\TimerQueueAdapter.cpp" />
+    <None Include="Src\TimerQueue\TimerQueueAdapter.inl">
+      <FileType>Document</FileType>
+    </None>
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Src\AceDemo\ActiveTimerDemo.h" />
     <ClInclude Include="Src\AceDemo\Callback.h" />
     <ClInclude Include="Src\AceDemo\ClientAcceptor.h" />
     <ClInclude Include="Src\AceDemo\ClientService.h" />
     <ClInclude Include="Src\AceDemo\HAStatusDemo.h" />
     <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
+    <ClInclude Include="Src\Demo\ActiveTimerDemo.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Demo\TimerDispatcherStub.h" />
     <ClInclude Include="Src\Demo\TimerQueueDemo.h" />

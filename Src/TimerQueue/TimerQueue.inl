@@ -32,7 +32,7 @@ using namespace std;
 //}
 
 /**********************class TimerQueueT**********************/
-template <class T1>
+template <typename T1>
 TimerQueueT<T1>::TimerQueueT() 
 {
     for (uint_t i = 0; i < MaxNodeNumber; ++i)
@@ -41,12 +41,12 @@ TimerQueueT<T1>::TimerQueueT()
     }
 }
 
-template <class T1>
-TimerQueueT<T1>::~TimerQueueT(void)
+template <typename T1>
+TimerQueueT<T1>::~TimerQueueT()
 {}
 
 
-template <class T1>
+template <typename T1>
 Duration TimerQueueT<T1>::CalculateTimeout(TimePoint currentTime)
 {
     lock_guard<std::mutex> lock(c11mutex);
@@ -69,7 +69,7 @@ Duration TimerQueueT<T1>::CalculateTimeout(TimePoint currentTime)
     return Duration::zero();
 }
 
-template <class T1>
+template <typename T1>
 std::error_code TimerQueueT<T1>::Cancel(uint_t timerId)
 {
     lock_guard<std::mutex> lock(c11mutex);
@@ -77,7 +77,7 @@ std::error_code TimerQueueT<T1>::Cancel(uint_t timerId)
     return error_code();
 }
 
-template <class T1>
+template <typename T1>
 uint_t TimerQueueT<T1>::Expire(void)
 {
     lock_guard<std::mutex> lock(c11mutex);
@@ -88,14 +88,21 @@ uint_t TimerQueueT<T1>::Expire(void)
     return this->ExpireImpl(currentTime);
 }
 
-template <class T1>
+template <typename T1>
 uint_t TimerQueueT<T1>::Expire(TimePoint currentTime)
 {
     lock_guard<std::mutex> lock(c11mutex);
     return this->ExpireImpl(currentTime);
 }
 
-template <class T1>
+template <typename T1>
+bool TimerQueueT<T1>::IsEmpty()
+{
+    lock_guard<std::mutex> lock(c11mutex);
+    return timers.empty();
+}
+
+template <typename T1>
 std::error_code TimerQueueT<T1>::Schedule(std::shared_ptr<T1> handler, 
     const void *act, TimePoint future, Duration interval, uint_t *timerId)
 {
@@ -120,7 +127,7 @@ std::error_code TimerQueueT<T1>::Schedule(std::shared_ptr<T1> handler,
 
 /**********************class TimerQueueT**********************/
 /* private member function */
-template <class T1>
+template <typename T1>
 uint_t TimerQueueT<T1>::AllocTimerId()
 {
     assert(!freeId.empty());
@@ -130,13 +137,13 @@ uint_t TimerQueueT<T1>::AllocTimerId()
     return id;
 }
 
-template <class T1>
+template <typename T1>
 void TimerQueueT<T1>::CancelTimerId(uint_t timerId)
 {
     canceledId.set(timerId);
 }
 
-template <class T1>
+template <typename T1>
 uint_t TimerQueueT<T1>::ExpireImpl(TimePoint currentTime)
 {
     uint_t numberOfExpiredTimer = 0;
@@ -165,7 +172,7 @@ uint_t TimerQueueT<T1>::ExpireImpl(TimePoint currentTime)
     return numberOfExpiredTimer;
 }
 
-template <class T1>
+template <typename T1>
 void TimerQueueT<T1>::FreeTimerId(uint_t timerId)
 {    
     canceledId.reset(timerId);

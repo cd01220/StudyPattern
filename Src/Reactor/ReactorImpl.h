@@ -11,12 +11,12 @@ class ReactorImpl;
 class ReactorNotify
 {
 public:
-    // = Initialization and termination methods.
-  virtual int open (ReactorImpl *,
-                    TimerQueue *timerQueue = 0,
-                    int disableNotify = 0) = 0;
+  //  // = Initialization and termination methods.
+  //virtual int open (ReactorImpl *,
+  //                  TimerQueue *timerQueue = 0,
+  //                  int disableNotify = 0) = 0;
 
-  virtual int close (void) = 0;
+  //virtual int close (void) = 0;
 };
 
 /**********************class EventHandler**********************/

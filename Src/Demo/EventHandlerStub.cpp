@@ -2,6 +2,7 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "Reactor/Reactor.h"
 #include "Demo/TimerDispatcherStub.h"
 #include "EventHandlerStub.h"
 

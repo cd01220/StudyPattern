@@ -46,7 +46,7 @@ public:
 
     // Destructor - make virtual for proper destruction of inherited
     // classes.
-    virtual ~TimerQueueT(void);
+    virtual ~TimerQueueT();
 
     // virtual ACE_Time_Value *ACE_Timer_Queue_T::calculate_timeout (ACE_Time_Value *max);
     virtual Duration CalculateTimeout(TimePoint max);
@@ -66,6 +66,8 @@ public:
     virtual uint_t Expire(void);
     virtual uint_t Expire(TimePoint currentTime);
     
+    virtual bool IsEmpty();
+
     /**
     * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule() with the right
     * locking strategy.

@@ -90,6 +90,12 @@
     <ClCompile Include="Src\Task\ServiceObject.cpp">
       <Filter>Task</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Task\TaskBase.cpp">
+      <Filter>Task</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\TimerQueue\TimerQueueAdapter.cpp">
+      <Filter>TimerQueue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -170,12 +176,21 @@
     <ClInclude Include="Src\Task\TaskBase.h">
       <Filter>Task</Filter>
     </ClInclude>
+    <ClInclude Include="Src\AceDemo\ActiveTimerDemo.h">
+      <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Demo\ActiveTimerDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Src\TimerQueue\TimerQueue.inl">
+      <Filter>TimerQueue</Filter>
+    </None>
+    <None Include="Src\TimerQueue\TimerQueueAdapter.inl">
       <Filter>TimerQueue</Filter>
     </None>
   </ItemGroup>

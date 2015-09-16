@@ -12,7 +12,7 @@ using namespace this_thread;
 #include "Demo/EventHandlerStub.h"
 #include "Demo/TimerDispatcherStub.h"
 
-inline int DemoMain(int argc, char *argv[])
+inline int TimerQueueDemoMain(int argc, char *argv[])
 {
     TimerDispatcher &dispatcher = TimerDispatcher::GetInstance();
     dispatcher.Set(make_shared<TimerQueue>());

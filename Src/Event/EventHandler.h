@@ -4,16 +4,20 @@
 #include "SystemInclude.h"
 #include "TimerQueue/AbstractTimerQueue.h"
 
+#define MaxMaskNum 32
+typedef void* Handle;
+#define InvalidHandleValue (Handle)(-1);
+
 class Reactor;
 /**********************class EventHandler**********************/
 /* class ACE_Event_Handler */
 class EventHandler
 {
 public:
-    enum: uint_t
+    enum: uint32_t
     {
-        LoPriority = 0,
-        HiPriority = 10,
+        LowPriority = 0,
+        HighPriority = 10,
         NullMask   = 0,
         ReadMask = (1 << 0),
         WriteMask = (1 << 1),
@@ -23,22 +27,25 @@ public:
         TimerMask = (1 << 5),
         QosMask = (1 << 6),
         GroupQosMask = (1 << 7),
-        SIGNAL_MASK = (1 << 8),
-        AllEventsMask = (uint_t)-1,
+        SignalMask = (1 << 8),
+        AllEventsMask = (uint32_t)-1,
         RweMask = ReadMask | WriteMask | ExceptMask,
     };
 
     virtual ~EventHandler();
-
+    
     virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    virtual Reactor* GetReactor();
+    virtual Handle GetHandle();
+    virtual void SetReactor(Reactor *reactor);
 
 protected:
     /// Force ACE_Event_Handler to be an abstract base class.
-    EventHandler(std::shared_ptr<Reactor> reactor = nullptr, uint_t priority = LoPriority);
+    EventHandler(Reactor *reactor = nullptr, uint_t priority = LowPriority);
 
 private:
-    std::shared_ptr<Reactor> reactor;
-    uint_t priority;
+    Reactor *reactor;
+    uint_t  priority;
 };
 
 #endif

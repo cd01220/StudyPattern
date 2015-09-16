@@ -6,7 +6,7 @@ using namespace std;
 
 /**********************class ServiceObject**********************/
 /* Origial definition: ACE_Service_Object */
-ServiceObject::ServiceObject(std::shared_ptr<Reactor> reactor)
+ServiceObject::ServiceObject(Reactor *reactor)
     : EventHandler(reactor)
 {
 }

@@ -10,7 +10,7 @@ class ServiceObject: public EventHandler
 public:
     // = Initialization and termination methods.
     /// Constructor.
-    ServiceObject (std::shared_ptr<Reactor> reactor = nullptr);
+    ServiceObject (Reactor *reactor = nullptr);
 
     /// Destructor.
     virtual ~ServiceObject (void);

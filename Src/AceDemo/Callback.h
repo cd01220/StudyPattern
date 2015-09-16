@@ -5,8 +5,7 @@
 #define _Callback_h_
 
 #include "ace/Event_Handler.h"
-
-#include "TimerDispatcher.h"
+#include "AceDemo/TimerDispatcher.h"
 
 // Listing 1 code/ch20
 class CB : public ACE_Event_Handler
