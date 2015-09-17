@@ -43,11 +43,11 @@ error_code ThreadTimerQueueAdapter<T1, T2>::Cancel(uint_t timerId)
 }
 
 template <typename T1, typename T2>
-void ThreadTimerQueueAdapter<T1, T2>::Deactivate(void)
+error_code ThreadTimerQueueAdapter<T1, T2>::Deactivate(void)
 {
     isActive = false;
     cv.notify_one();
-    TaskBase::Deactivate();
+    return TaskBase::Deactivate();
 }
 
 template <typename T1, typename T2>

@@ -1,6 +1,7 @@
 #ifndef _Demo_h_
 #define _Demo_h_
 
+#if 0
 #include "MessageQueue/MessageQueue.h"
 
 /* Example:
@@ -68,4 +69,5 @@ private:
     int dictionary;
 };
 
+#endif
 #endif

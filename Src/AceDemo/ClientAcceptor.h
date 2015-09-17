@@ -11,6 +11,7 @@
 class ClientAcceptor : public ACE_Event_Handler
 {
 public:
+    ClientAcceptor();
     virtual ~ClientAcceptor ();
 
     //FUZZ: disable check_for_lack_ACE_OS
@@ -27,6 +28,9 @@ public:
     // Called when this handler is removed from the ACE_Reactor.
     virtual int handle_close (ACE_HANDLE handle,
         ACE_Reactor_Mask close_mask);
+
+    virtual int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg);
 
 protected:
     ACE_SOCK_Acceptor acceptor_;

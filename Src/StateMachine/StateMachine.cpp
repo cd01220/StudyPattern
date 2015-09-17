@@ -3,7 +3,7 @@
 #include "StateMachine.h"
 
 using namespace std;
-
+#if 0
 /**********************class Task**********************/
 Task::Task(): state(new InitState)
 {
@@ -67,3 +67,4 @@ State* CapturingState::Receive()
 {
     return nullptr;
 }
+#endif

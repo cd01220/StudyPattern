@@ -8,4 +8,9 @@
 typedef std::chrono::system_clock::time_point TimePoint;
 typedef std::chrono::milliseconds Duration;
 
+inline TimePoint GetCurTime()
+{
+    return std::chrono::system_clock::now();
+}
+
 #endif

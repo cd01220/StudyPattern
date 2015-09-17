@@ -27,7 +27,7 @@ public:
     std::error_code Cancel(uint_t timerId);
 
     // Inform the dispatching thread that it should terminate.
-    void Deactivate (void);
+    std::error_code Deactivate (void);
 
     std::error_code Schedule(std::shared_ptr<T2> handler, 
         const void *act, 

@@ -75,9 +75,6 @@
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp">
       <Filter>Demo</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Demo\TimerDispatcherStub.cpp">
-      <Filter>Demo</Filter>
-    </ClCompile>
     <ClCompile Include="Src\AceDemo\TimerQueueDemo.h">
       <Filter>AceDemo</Filter>
     </ClCompile>
@@ -95,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Src\TimerQueue\TimerQueueAdapter.cpp">
       <Filter>TimerQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MessageQueue\MessageQueue.cpp">
+      <Filter>MessageQueue</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,12 +150,6 @@
       <Filter>TimerQueue</Filter>
     </ClInclude>
     <ClInclude Include="Src\Demo\EventHandlerStub.h">
-      <Filter>Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Demo\TimerDispatcherStub.h">
-      <Filter>Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Demo\TimerQueueDemo.h">
       <Filter>Demo</Filter>
     </ClInclude>
     <ClInclude Include="Src\TimerQueue\TimerQueueAdapter.h">

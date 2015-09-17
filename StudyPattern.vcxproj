@@ -17,12 +17,12 @@
     <ClCompile Include="Src\AceDemo\TimerQueueDemo.h" />
     <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
-    <ClCompile Include="Src\Demo\TimerDispatcherStub.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
+    <ClCompile Include="Src\MessageQueue\MessageQueue.cpp" />
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
@@ -43,8 +43,6 @@
     <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
-    <ClInclude Include="Src\Demo\TimerDispatcherStub.h" />
-    <ClInclude Include="Src\Demo\TimerQueueDemo.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
     <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />

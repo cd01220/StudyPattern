@@ -25,7 +25,7 @@ public:
     virtual std::error_code Close(uint_t flags = 0);
 
     // Inform the dispatching thread that it should terminate.
-    virtual void Deactivate (void);
+    virtual std::error_code Deactivate (void);
 
     /// Hook called to initialize a task and prepare it for execution.
     /// @a args can be used to pass arbitrary information into <open>.

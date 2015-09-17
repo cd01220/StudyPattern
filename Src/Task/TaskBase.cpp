@@ -25,9 +25,10 @@ error_code TaskBase::Close(uint_t flags)
     return error_code();
 }
 
-void TaskBase::Deactivate (void)
+error_code TaskBase::Deactivate (void)
 {
     svcThread.join();
+    return error_code();
 }
 
 error_code TaskBase::Open(void *args)

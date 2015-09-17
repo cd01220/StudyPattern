@@ -3,7 +3,6 @@
 #include "SystemError.h"
 
 #include "Reactor/Reactor.h"
-#include "Demo/TimerDispatcherStub.h"
 #include "EventHandlerStub.h"
 
 using namespace std;
