@@ -2,7 +2,7 @@
 #include "SystemError.h"
 
 #include "Reactor/Reactor.h"
-#include "TaskBase.h"
+#include "Task/TaskBase.h"
 using namespace std;
 
 /**********************class TaskBase**********************/
@@ -25,12 +25,6 @@ error_code TaskBase::Close(uint_t flags)
     return error_code();
 }
 
-error_code TaskBase::Deactivate (void)
-{
-    svcThread.join();
-    return error_code();
-}
-
 error_code TaskBase::Open(void *args)
 {
     return error_code();
@@ -39,6 +33,12 @@ error_code TaskBase::Open(void *args)
 error_code TaskBase::ServiceRoutine()
 {
     return error_code();
+}
+
+void TaskBase::Wait()
+{
+    if (svcThread.joinable())
+        svcThread.join();
 }
 
 /**********************class TaskBase**********************/

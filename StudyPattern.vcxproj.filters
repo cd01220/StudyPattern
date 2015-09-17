@@ -72,9 +72,6 @@
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp">
       <Filter>TimerQueue</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Demo\EventHandlerStub.cpp">
-      <Filter>Demo</Filter>
-    </ClCompile>
     <ClCompile Include="Src\AceDemo\TimerQueueDemo.h">
       <Filter>AceDemo</Filter>
     </ClCompile>
@@ -95,6 +92,15 @@
     </ClCompile>
     <ClCompile Include="Src\MessageQueue\MessageQueue.cpp">
       <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\AceDemo\MessageQueueDemo.cpp">
+      <Filter>AceDemo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MessageQueue\MessageBlock.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Task\Task.cpp">
+      <Filter>Task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -149,9 +155,6 @@
     <ClInclude Include="Src\TimerQueue\TimerQueue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Demo\EventHandlerStub.h">
-      <Filter>Demo</Filter>
-    </ClInclude>
     <ClInclude Include="Src\TimerQueue\TimerQueueAdapter.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
@@ -175,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h">
       <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\AceDemo\MessageReceiver.h">
+      <Filter>AceDemo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MessageQueue\MessageBlock.h">
+      <Filter>MessageQueue</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Task\Task.h">
+      <Filter>Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

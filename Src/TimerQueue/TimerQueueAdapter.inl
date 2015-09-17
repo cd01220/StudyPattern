@@ -23,8 +23,8 @@ ThreadTimerQueueAdapter<T1, T2>::~ThreadTimerQueueAdapter()
 template <typename T1, typename T2>
 error_code ThreadTimerQueueAdapter<T1, T2>::Activate()
 {
+    std::lock_guard<mutex> lock(c11mutex);
     this->isActive = true;
-
     return TaskBase::Activate();
 }
 
@@ -43,11 +43,11 @@ error_code ThreadTimerQueueAdapter<T1, T2>::Cancel(uint_t timerId)
 }
 
 template <typename T1, typename T2>
-error_code ThreadTimerQueueAdapter<T1, T2>::Deactivate(void)
+void ThreadTimerQueueAdapter<T1, T2>::Deactivate(void)
 {
+    std::lock_guard<mutex> lock(c11mutex);
     isActive = false;
     cv.notify_one();
-    return TaskBase::Deactivate();
 }
 
 template <typename T1, typename T2>
@@ -59,6 +59,7 @@ error_code ThreadTimerQueueAdapter<T1, T2>::Schedule(std::shared_ptr<T2> handler
 {
     error_code errCode;
 
+    std::lock_guard<mutex> lock(c11mutex);
     errCode = timerQueue->Schedule(handler, act, future, interval, timerId);
     if (errCode)
     {

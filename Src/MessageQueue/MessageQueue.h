@@ -2,7 +2,9 @@
 #define _MessageQueue_h_
 
 #include "SystemInclude.h"
+
 #include "TimerQueue/TimeValue.h"
+#include "MessageQueue/MessageBlock.h"
 
 /**********************class NotificationStrategy**********************/
 /**
@@ -19,12 +21,6 @@ class NotificationStrategy
 {
 public:
     virtual std::error_code Notify() = 0;
-};
-
-/**********************class MessageBlock**********************/
-/* ACE_Message_Block */
-class MessageBlock
-{
 };
 
 /**********************class MessageQueueBase**********************/
@@ -45,11 +41,10 @@ public:
     };
     MessageQueueBase();
     virtual ~MessageQueueBase();
-
+        
+    virtual void Activate() = 0;
     // Close down the message queue and release all resources.
     virtual void Close(void) = 0;
-    
-    virtual void Activate() = 0;
     // Inform the dispatching thread that it should terminate.
     virtual void Deactivate (void) = 0;
 
@@ -68,10 +63,10 @@ public:
     * on the queue.
     * original definition: peek_dequeue_head()
     */
-    virtual std::shared_ptr<MessageBlock> PeekFront(Duration duration) = 0;
+    virtual std::error_code PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
 
-    virtual std::shared_ptr<MessageBlock> Pop(Duration duration) = 0;
-    virtual void Push(std::shared_ptr<MessageBlock>, Duration duration) = 0;
+    virtual std::error_code Pop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
+    virtual std::error_code Push(std::shared_ptr<MessageBlock> msg, Duration duration) = 0;
 
 protected:
     uint_t state;
@@ -83,19 +78,18 @@ class MessageQueue: public MessageQueueBase
 {
 public:
     MessageQueue(std::shared_ptr<NotificationStrategy> ns = nullptr);
-    virtual ~MessageQueue();
+    virtual ~MessageQueue();    
     
+    virtual void Activate();
     // Close down the message queue and release all resources.
-    virtual void Close(void) = 0;
-    
-    virtual void Activate() = 0;
+    virtual void Close(void);
     // Inform the dispatching thread that it should terminate.
-    virtual void Deactivate(void) = 0;
+    virtual void Deactivate(void);
 
-    virtual bool IsEmpty() = 0;
-    virtual bool IsFull() = 0;
+    virtual bool IsEmpty();
+    virtual bool IsFull();
 
-    virtual size_t GetSize() = 0;
+    virtual size_t GetSize();
     virtual void Open(std::shared_ptr<NotificationStrategy> ns = nullptr);
 
     /**
@@ -108,16 +102,16 @@ public:
     * on the queue.
     * original definition: peek_dequeue_head()
     */
-    virtual std::shared_ptr<MessageBlock> PeekFront(Duration duration) = 0;
+    virtual std::error_code PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration);
 
-    virtual std::shared_ptr<MessageBlock> Pop(Duration duration);
+    virtual std::error_code Pop(std::shared_ptr<MessageBlock> &msg, Duration duration);
     /* Enqueue an ACE_Message_Block into the queue in accordance with
      * the ACE_Message_Block's priority (0 is lowest priority).  FIFO
      * order is maintained when messages of the same priority are
      * inserted consecutively.
     ACE_Message_Queue::enqueue_prio (ACE_Message_Block *new_item, ACE_Time_Value *timeout)
     */
-    virtual void Push(std::shared_ptr<MessageBlock>, Duration duration);
+    virtual std::error_code Push(std::shared_ptr<MessageBlock> msg, Duration duration);
 
 private:
     void DeactivateImpl(void);

@@ -1,4 +1,4 @@
-#if !defined(_TaskBase_h_)
+#ifndef _TaskBase_h_
 #define _TaskBase_h_
 
 #include "Task/ServiceObject.h"
@@ -24,9 +24,6 @@ public:
     */
     virtual std::error_code Close(uint_t flags = 0);
 
-    // Inform the dispatching thread that it should terminate.
-    virtual std::error_code Deactivate (void);
-
     /// Hook called to initialize a task and prepare it for execution.
     /// @a args can be used to pass arbitrary information into <open>.
     virtual std::error_code Open(void *args = nullptr);
@@ -34,6 +31,8 @@ public:
     // service thread routine
     // original definition: virtual int ACE_Task_Base::svc (void);
     virtual std::error_code ServiceRoutine();
+
+    virtual void Wait();
 
 private:
     // Routine that runs the service routine as a daemon thread.

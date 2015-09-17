@@ -1,4 +1,4 @@
-#if !defined(_Reactor_h_)
+#ifndef _Reactor_h_
 #define _Reactor_h_
 
 #include "SystemInclude.h"
@@ -35,7 +35,7 @@ private:
 
 /**********************class Reactor**********************/
 /* class ACE_Reactor */
-class Reactor: public std::enable_shared_from_this<Reactor>
+class Reactor
 {
 public:
     std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler, uint32_t mask);

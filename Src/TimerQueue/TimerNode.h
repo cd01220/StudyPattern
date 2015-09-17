@@ -1,4 +1,4 @@
-#if !defined(_TimerQueueIterator_h_)
+#ifndef _TimerQueueIterator_h_
 #define _TimerQueueIterator_h_
 
 #include "TimeValue.h"

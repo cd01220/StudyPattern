@@ -1,5 +1,5 @@
-#ifndef _Demo_h_
-#define _Demo_h_
+#ifndef _StateMachine_h_
+#define _StateMachine_h_
 
 #if 0
 #include "MessageQueue/MessageQueue.h"

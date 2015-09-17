@@ -1,4 +1,4 @@
-#if !defined(_TimerQueue_h_)
+#ifndef _TimerQueue_h_
 #define _TimerQueue_h_
 
 #include "CopyDisabled.h"

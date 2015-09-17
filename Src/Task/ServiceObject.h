@@ -1,4 +1,4 @@
-#if !defined(_ServiceObject_h_)
+#ifndef _ServiceObject_h_
 #define _ServiceObject_h_
 
 #include "Event/EventHandler.h"  //for definition of EventHandler and Reactor

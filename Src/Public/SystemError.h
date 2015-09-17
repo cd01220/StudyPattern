@@ -28,6 +28,8 @@ Example 2:
 enum class system_error_t
 {
     no_id_space = 1,
+    queue_is_full,
+    queue_is_empty
 };
 
 class system_category_impl : public std::error_category

@@ -1,4 +1,4 @@
-#if !defined(_TimeValue_h_)
+#ifndef _TimeValue_h_
 #define _TimeValue_h_
 
 #include "SystemInclude.h"

@@ -27,15 +27,15 @@ int ClientAcceptor::open(const ACE_INET_Addr &listen_addr)
         ACE_TEXT ("acceptor.open")),
         -1);
     
-    ACE_Timer_Queue *timer_queue;
-    ACE_NEW_NORETURN(timer_queue, ACE_Timer_List);
-    this->reactor()->timer_queue(timer_queue);
+    //ACE_Timer_Queue *timer_queue;
+    //ACE_NEW_NORETURN(timer_queue, ACE_Timer_List);
+    //this->reactor()->timer_queue(timer_queue);
 
-    const ACE_Time_Value curr_tv = ACE_OS::gettimeofday() + ACE_Time_Value (1L);
-    ACE_Time_Value interval = ACE_Time_Value (1, 500);
-    int ret = this->reactor()->schedule_timer(this, nullptr, interval,  interval);
-    if (ret != 0)
-        std::cout << "error" << std::endl;
+    //const ACE_Time_Value curr_tv = ACE_OS::gettimeofday() + ACE_Time_Value (1L);
+    //ACE_Time_Value interval = ACE_Time_Value (1, 500);
+    //int ret = this->reactor()->schedule_timer(this, nullptr, interval,  interval);
+    //if (ret != 0)
+    //    std::cout << "error" << std::endl;
 
     return this->reactor()->register_handler(this, ACE_Event_Handler::ACCEPT_MASK | ACE_Event_Handler::TIMER_MASK);
 }

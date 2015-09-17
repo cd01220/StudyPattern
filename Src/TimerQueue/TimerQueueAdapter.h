@@ -1,4 +1,4 @@
-#if !defined(_TimerQueueAdapter_h_)
+#ifndef _TimerQueueAdapter_h_
 #define _TimerQueueAdapter_h_
 
 #include "Task/TaskBase.h"
@@ -27,7 +27,7 @@ public:
     std::error_code Cancel(uint_t timerId);
 
     // Inform the dispatching thread that it should terminate.
-    std::error_code Deactivate (void);
+    void Deactivate (void);
 
     std::error_code Schedule(std::shared_ptr<T2> handler, 
         const void *act, 
@@ -35,6 +35,7 @@ public:
         Duration  interval,
         uint_t    *timerId);
 
+    // ACE_Thread_Timer_Queue_Adapter::svc()
     // overwrite virtual function of TaskBase::ServiceRoutine
     virtual std::error_code ServiceRoutine();
 
