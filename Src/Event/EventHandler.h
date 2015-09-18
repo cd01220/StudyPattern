@@ -4,9 +4,14 @@
 #include "SystemInclude.h"
 #include "TimerQueue/AbstractTimerQueue.h"
 
-#define MaxMaskNum 32
-typedef void* Handle;
-#define InvalidHandleValue (Handle)(-1);
+#define MaxMaskNum 64
+typedef std::bitset<MaxMaskNum> Mask;
+
+#ifdef _WIN32
+    typedef HANDLE Handle;
+    #define InvalidHandleValue INVALID_HANDLE_VALUE
+#else
+#endif
 
 class Reactor;
 /**********************class EventHandler**********************/
@@ -18,25 +23,24 @@ public:
     {
         LowPriority = 0,
         HighPriority = 10,
+
         NullMask   = 0,
-        ReadMask = (1 << 0),
-        WriteMask = (1 << 1),
-        ExceptMask = (1 << 2),
-        AcceptMask = (1 << 3),
-        ConnectMask = (1 << 4),
-        TimerMask = (1 << 5),
-        QosMask = (1 << 6),
-        GroupQosMask = (1 << 7),
-        SignalMask = (1 << 8),
-        AllEventsMask = (uint32_t)-1,
-        RweMask = ReadMask | WriteMask | ExceptMask,
+        ReadMask,
+        WriteMask,
+        ExceptMask,
+        AcceptMask,
+        ConnectMask,
+        TimerMask,
+        QosMask,
+        GroupQosMask,
+        SignalMask,
     };
 
     virtual ~EventHandler();
     
     virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
     virtual Reactor* GetReactor();
-    virtual Handle GetHandle();
+    virtual Handle GetHandle() const;
     virtual void SetReactor(Reactor *reactor);
 
 protected:

@@ -29,7 +29,9 @@ enum class system_error_t
 {
     no_id_space = 1,
     queue_is_full,
-    queue_is_empty
+    queue_is_empty,
+    time_out,
+    unknown_error, 
 };
 
 class system_category_impl : public std::error_category

@@ -4,6 +4,7 @@
 #ifndef _Callback_h_
 #define _Callback_h_
 
+#include "SystemInclude.h"
 #include "ace/Event_Handler.h"
 #include "AceDemo/TimerDispatcher.h"
 
@@ -25,6 +26,12 @@ public:
 
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
+
+    virtual int handle_exception (ACE_HANDLE)
+    {
+        std::cout << "handle_exception" << std::endl;
+        return 0;
+    }
 
 private:
   long timerID_;

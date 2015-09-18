@@ -1,6 +1,8 @@
 #ifndef _ClientAcceptor_h_
 #define _ClientAcceptor_h_
 
+
+
 // Listing 1 code/ch07
 #include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
@@ -31,6 +33,7 @@ public:
 
     virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
+
 
 protected:
     ACE_SOCK_Acceptor acceptor_;

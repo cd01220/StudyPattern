@@ -2,7 +2,7 @@
 #define _PersonMapper_h_
 
 /*   
-IncludeHeaderMode:  bouth PersonMapper.cpp and PersonDomain.cpp should each other's .h file.
+IncludeHeaderMode:  bouth PersonMapper.cpp and PersonDomain.cpp should include each other's .h file.
 TemplateMode     :  PersonMapper is desinged as a template class.  Person play as uppler layer of PersonMapper.
                     So PersonMapper do not need include "Person.h"
 */

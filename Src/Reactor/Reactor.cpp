@@ -1,22 +1,23 @@
 #include "SystemInclude.h"
+#include "SystemError.h"
 
+#include "Reactor/WfmoReactor.h"
 #include "Reactor/Reactor.h"
 using namespace std;
 
-/**********************class ReactorImpl**********************/
-/* class ACE_Reactor_Impl */
-
-/**********************class Section**********************/
-/* class ACE_Select_Reactor_T */
-error_code SelectReactor::RegisterHandler(shared_ptr<EventHandler> handler, uint32_t mask)
+/**********************class Reactor**********************/
+Reactor::Reactor()
 {
-    error_code errCode;
-
-    return errCode;
+#ifdef _WIN32
+    implementation = make_shared<WfmoReactor>();
+#endif
 }
 
-/**********************class Reactor**********************/
-error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, uint32_t mask)
+Reactor::~Reactor()
+{
+}
+
+error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, const Mask& mask)
 {
     error_code errCode;
     Reactor *reactor = handler->GetReactor();
@@ -26,6 +27,34 @@ error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, uint32_t m
     if (errCode)
     {
         handler->SetReactor(reactor);
+    }
+
+    return errCode;
+}
+
+error_code Reactor::RunEventLoop()
+{
+    return RunReactorEventLoop(nullptr);
+}
+
+std::error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
+{
+    if (!implementation->IsActived())
+    {
+        return error_code(system_error_t::unknown_error);
+    }
+
+    error_code errCode;
+    while (true)
+    {
+        errCode = implementation->HandleEvents(Duration::max());
+        if (errCode)
+        { break; }
+
+        if (hook != nullptr)
+        {
+            hook(*this);
+        }
     }
 
     return errCode;

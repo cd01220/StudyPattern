@@ -102,6 +102,12 @@
     <ClCompile Include="Src\Task\Task.cpp">
       <Filter>Task</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Reactor\ReactorImpl.cpp">
+      <Filter>Reactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Reactor\WfmoReactor.cpp">
+      <Filter>Reactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="Src\Task\Task.h">
       <Filter>Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor\WfmoReactor.h">
+      <Filter>Reactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -20,7 +20,7 @@ Reactor* EventHandler::GetReactor()
     return reactor;
 }
 
-Handle EventHandler::GetHandle()
+Handle EventHandler::GetHandle() const
 {
     return InvalidHandleValue;
 }

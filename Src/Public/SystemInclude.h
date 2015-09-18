@@ -8,6 +8,26 @@
 
 /*** OS header. ***/
 #ifdef _WIN32
+    /* Disables fopen(), strcpy(), ... security warning on Microsoft compilers.
+     * The _CRT_SECURE_NO_WARNINGS must be defined before including any system 
+     * header files which may cause the security warning.
+     */
+#   define _CRT_SECURE_NO_WARNINGS 
+    /* there are two macro "min, max" definition in minwindef.h,
+    they will cause troulbe when we call std::min() or std::max() template.
+    #ifndef NOMINMAX
+    #ifndef max
+    #define max(a,b)            (((a) > (b)) ? (a) : (b))
+    #endif
+
+    #ifndef min
+    #define min(a,b)            (((a) < (b)) ? (a) : (b))
+    #endif
+    #endif  // NOMINMAX 
+
+    to avoid trouble, we define NOMINMAX.
+    */
+#   define NOMINMAX 
 #   include <Winsock2.h>
 #   ifdef __MINGW32__
 #       include <unistd.h>
@@ -16,6 +36,13 @@
 #   define  __BIG_ENDIAN    4321
 #   define  __PDP_ENDIAN    3412
 #   define  __BYTE_ORDER    __LITTLE_ENDIAN
+    /* Debug memory leack. */
+#   include "crtdbg.h"
+#   ifdef _DEBUG
+#       define DEBUG_CLIENTBLOCK   new( _CLIENT_BLOCK, __FILE__, __LINE__)
+#   else
+#       define DEBUG_CLIENTBLOCK
+#   endif // _DEBUG
 #endif
 
 #ifdef __linux
@@ -59,6 +86,7 @@
 #   include <memory>
 #   include <climits>
 #   include <cerrno>
+#   include <utility>
 #   ifdef _WIN32
 #       include <cstdint>
 #       include <system_error>
