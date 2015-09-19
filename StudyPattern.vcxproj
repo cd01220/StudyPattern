@@ -11,12 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Src\AceDemo\Callback.cpp" />
-    <ClCompile Include="Src\AceDemo\ClientAcceptor.cpp" />
-    <ClCompile Include="Src\AceDemo\ClientService.cpp" />
-    <ClCompile Include="Src\AceDemo\MessageQueueDemo.cpp" />
-    <ClCompile Include="Src\AceDemo\TimerQueueDemo.h" />
-    <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
@@ -39,14 +33,8 @@
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Src\AceDemo\ActiveTimerDemo.h" />
-    <ClInclude Include="Src\AceDemo\Callback.h" />
-    <ClInclude Include="Src\AceDemo\ClientAcceptor.h" />
-    <ClInclude Include="Src\AceDemo\ClientService.h" />
-    <ClInclude Include="Src\AceDemo\HAStatusDemo.h" />
-    <ClInclude Include="Src\AceDemo\MessageReceiver.h" />
-    <ClInclude Include="Src\AceDemo\TimerDispatcher.h" />
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h" />
+    <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
     <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
@@ -124,7 +112,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ACEd.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Ws2_32.lib;iphlpapi.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

@@ -25,9 +25,6 @@
     <Filter Include="TimerQueue">
       <UniqueIdentifier>{066e849f-05ef-47c8-b6ca-1b8876d0facd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="AceDemo">
-      <UniqueIdentifier>{6c383b97-80a2-4f31-a112-a3d9a42852c5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Event">
       <UniqueIdentifier>{4aeeba58-c6d8-4bf3-a7b2-1e4b18068e95}</UniqueIdentifier>
     </Filter>
@@ -57,12 +54,6 @@
     <ClCompile Include="Src\Public\SystemError.cpp">
       <Filter>Public</Filter>
     </ClCompile>
-    <ClCompile Include="Src\AceDemo\TimerDispatcher.cpp">
-      <Filter>AceDemo</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AceDemo\Callback.cpp">
-      <Filter>AceDemo</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp">
       <Filter>Event</Filter>
     </ClCompile>
@@ -71,15 +62,6 @@
     </ClCompile>
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp">
       <Filter>TimerQueue</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AceDemo\TimerQueueDemo.h">
-      <Filter>AceDemo</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AceDemo\ClientAcceptor.cpp">
-      <Filter>AceDemo</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AceDemo\ClientService.cpp">
-      <Filter>AceDemo</Filter>
     </ClCompile>
     <ClCompile Include="Src\Task\ServiceObject.cpp">
       <Filter>Task</Filter>
@@ -92,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="Src\MessageQueue\MessageQueue.cpp">
       <Filter>MessageQueue</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\AceDemo\MessageQueueDemo.cpp">
-      <Filter>AceDemo</Filter>
     </ClCompile>
     <ClCompile Include="Src\MessageQueue\MessageBlock.cpp">
       <Filter>MessageQueue</Filter>
@@ -131,12 +110,6 @@
     <ClInclude Include="Src\Public\SystemError.h">
       <Filter>Public</Filter>
     </ClInclude>
-    <ClInclude Include="Src\AceDemo\TimerDispatcher.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AceDemo\Callback.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
     <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
@@ -167,26 +140,11 @@
     <ClInclude Include="Src\Task\ServiceObject.h">
       <Filter>Task</Filter>
     </ClInclude>
-    <ClInclude Include="Src\AceDemo\ClientAcceptor.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AceDemo\ClientService.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AceDemo\HAStatusDemo.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Task\TaskBase.h">
       <Filter>Task</Filter>
     </ClInclude>
-    <ClInclude Include="Src\AceDemo\ActiveTimerDemo.h">
-      <Filter>AceDemo</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h">
       <Filter>Demo</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\AceDemo\MessageReceiver.h">
-      <Filter>AceDemo</Filter>
     </ClInclude>
     <ClInclude Include="Src\MessageQueue\MessageBlock.h">
       <Filter>MessageQueue</Filter>
@@ -196,6 +154,9 @@
     </ClInclude>
     <ClInclude Include="Src\Reactor\WfmoReactor.h">
       <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Demo\EventHandlerStub.h">
+      <Filter>Demo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

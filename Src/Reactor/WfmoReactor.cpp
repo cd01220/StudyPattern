@@ -15,23 +15,26 @@ std::error_code WfmoReactor::HandleEvents(Duration duration)
     return HandleEventsImpl(duration);
 }
 
-error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler, const Mask& mask)
+error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler, long mask)
 {
     error_code errCode;
-    errCode = RegisterHandlerImpl(InvalidHandleValue, InvalidHandleValue, handler, mask);
+    errCode = RegisterHandlerImpl(handler, mask);
     return errCode;
 }
 
 /**********************class WfmoReactor**********************/
 /* private member function */
-error_code WfmoReactor::RegisterHandlerImpl(Handle eventHandle, Handle ioHandle, 
-    shared_ptr<EventHandler> handler, const Mask& mask)
+error_code WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler, long mask)
 {
     error_code errCode;
-    if (ioHandle == InvalidHandleValue)
-    {
-        ioHandle = handler->GetHandle();
-    }
+
+    auto iter = repository.find(handler->GetIoHandle());
+    assert(iter == repository.end());
+    HandlerMaskTuple tuple = {handler, mask};
+    repository.insert(make_pair(handler->GetIoHandle(), tuple));
+
+    int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
+        handler->GetEventHandle(), mask);
 
     return errCode;
 }
@@ -50,8 +53,6 @@ std::error_code WfmoReactor::HandleEventsImpl(Duration duration)
         errCode = this->WaitForMultipleObjects(duration);
         if (errCode)
             break;
-
-
     }
 
     return errCode;
@@ -63,7 +64,7 @@ std::error_code WfmoReactor::WaitForMultipleObjects(Duration duration)
     DWORD result = WAIT_IO_COMPLETION;
     while (result == WAIT_IO_COMPLETION)
     {
-        result = ::WaitForMultipleObjectsEx(AtomicWaitArray, atomicWaitArray, TRUE, timeout, TRUE);
+        //result = ::WaitForMultipleObjectsEx(AtomicWaitArray, atomicWaitArray, TRUE, timeout, TRUE);
     }
 
     error_code errCode;

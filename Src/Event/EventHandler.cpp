@@ -15,12 +15,17 @@ error_code EventHandler::HandleTimeOut(TimePoint, const void *arg)
     return error_code();
 }
 
+Handle EventHandler::GetEventHandle() const
+{
+    return InvalidHandleValue;
+}
+
 Reactor* EventHandler::GetReactor()
 {
     return reactor;
 }
 
-Handle EventHandler::GetHandle() const
+Handle EventHandler::GetIoHandle() const
 {
     return InvalidHandleValue;
 }

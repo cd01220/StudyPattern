@@ -17,7 +17,7 @@ Reactor::~Reactor()
 {
 }
 
-error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, const Mask& mask)
+error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, long mask)
 {
     error_code errCode;
     Reactor *reactor = handler->GetReactor();

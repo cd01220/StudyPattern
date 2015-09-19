@@ -4,9 +4,6 @@
 #include "SystemInclude.h"
 #include "TimerQueue/AbstractTimerQueue.h"
 
-#define MaxMaskNum 64
-typedef std::bitset<MaxMaskNum> Mask;
-
 #ifdef _WIN32
     typedef HANDLE Handle;
     #define InvalidHandleValue INVALID_HANDLE_VALUE
@@ -39,8 +36,9 @@ public:
     virtual ~EventHandler();
     
     virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    virtual Handle GetEventHandle() const;
     virtual Reactor* GetReactor();
-    virtual Handle GetHandle() const;
+    virtual Handle GetIoHandle() const;
     virtual void SetReactor(Reactor *reactor);
 
 protected:
