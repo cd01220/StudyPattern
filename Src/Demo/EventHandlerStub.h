@@ -7,17 +7,10 @@
 class EventHandlerStub: public EventHandler
 {
 public:
-    EventHandlerStub()
-    {
-        std::cout << "EventHandlerStub::EventHandlerStub" << std::endl;
-    }
-
-    // Handle the timeout.
-    std::error_code HandleTimeOut(TimePoint, const void *arg = 0)
-    {
-        std::cout << "EventHandlerStub::handle_timeout" << std::endl;
-        return std::error_code();
-    }
+    EventHandlerStub();
+    
+    std::error_code HandleInput();
+    std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
 
 private:
     uint_t timerId;

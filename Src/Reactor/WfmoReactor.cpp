@@ -23,6 +23,23 @@ error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler, long m
 }
 
 /**********************class WfmoReactor**********************/
+error_code WfmoReactor::HandleEventsImpl(Duration duration)
+{
+    error_code errCode;
+    if (!isActived)
+    {
+        errCode = system_error_t::reactor_isnot_actived;
+        return errCode;
+    }
+
+    while (!errCode)
+    {
+        errCode = this->WaitForMultipleEvents(duration);
+    }
+
+    return errCode;
+}
+
 /* private member function */
 error_code WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler, long mask)
 {
@@ -39,72 +56,53 @@ error_code WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler, lo
     return errCode;
 }
 
-std::error_code WfmoReactor::HandleEventsImpl(Duration duration)
+error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
 {
+    DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count());
+    DWORD result = WAIT_TIMEOUT;
+    HANDLE *handles = new HANDLE[repository.size()];
+
+    HANDLE *ptr = handles;
+    for (auto iter = repository.begin(); iter != repository.end(); ++iter)
+    {
+        *ptr++ = iter->second.handler->GetEventHandle();
+    }
+
+    result = ::WaitForMultipleObjectsEx (repository.size(),
+        handles, FALSE, timeout, TRUE);
+
+    /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status)  */
     error_code errCode;
-    if (!isActived)
+    switch(result)
+    {
+    case WAIT_TIMEOUT:
+    case WAIT_FAILED:
+        errCode = system_error_t::time_out;
+        break;
+
+    default:
+        break;
+    }
+
+    if (errCode)
+        return errCode;
+
+    WSANETWORKEVENTS events;
+    Handle handle = ptr[result - WAIT_OBJECT_0];
+    auto iter = repository.find(handle);
+    Handle event = iter->second.handler->GetEventHandle();
+    if (::WSAEnumNetworkEvents ((SOCKET) handle, event,
+                              &events) == SOCKET_ERROR)
     {
         errCode = system_error_t::unknown_error;
         return errCode;
     }
 
-    while (true)
+    long actualEvents = events.lNetworkEvents;
+    if ((actualEvents | FD_WRITE) != 0)
     {
-        errCode = this->WaitForMultipleObjects(duration);
-        if (errCode)
-            break;
+        iter->second.handler->HandleInput();
     }
 
-    return errCode;
-}
-
-std::error_code WfmoReactor::WaitForMultipleObjects(Duration duration)
-{
-    DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count());
-    DWORD result = WAIT_IO_COMPLETION;
-    while (result == WAIT_IO_COMPLETION)
-    {
-        //result = ::WaitForMultipleObjectsEx(AtomicWaitArray, atomicWaitArray, TRUE, timeout, TRUE);
-    }
-
-    error_code errCode;
-    switch(result)
-    {
-    case WAIT_TIMEOUT:
-        errCode = system_error_t::time_out;
-        break;
-    case WAIT_FAILED:
-    case WAIT_ABANDONED_0:
-        errCode = system_error_t::time_out;
-        break;
-    default:
-        break;
-    }
-
-    return errCode;
-}
-
-std::error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
-{
-    DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count());
-    DWORD result = WAIT_TIMEOUT;
-    //result = ::WaitForMultipleObjectsEx (this->handler_rep_.max_handlep1 (),
-    //                                 this->handler_rep_.handles (),
-    //                                 FALSE,
-    //                                 timeout,
-    //                                 alertable);
-    error_code errCode;
-    switch(result)
-    {
-    case WAIT_TIMEOUT:
-        errCode = system_error_t::time_out;
-        break;
-    case WAIT_FAILED:
-    case WAIT_ABANDONED_0:
-        errCode = system_error_t::time_out;
-        break;
-    default:
-        break;
-    }
     return errCode;
 }

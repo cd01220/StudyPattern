@@ -87,6 +87,9 @@
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp">
       <Filter>Reactor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Demo\EventHandlerStub.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">

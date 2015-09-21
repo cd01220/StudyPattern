@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />

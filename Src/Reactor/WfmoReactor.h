@@ -9,6 +9,9 @@ struct HandlerMaskTuple
     std::shared_ptr<EventHandler> handler;
     long                          mask;
 };
+/* Handle:          event handle
+   HandlerMaskTuple: EventHandler and mask
+*/
 typedef std::map<Handle, HandlerMaskTuple> HandlerRepository;
 
 /**********************class WfmoReactor**********************/
@@ -25,6 +28,10 @@ public:
     virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler, long mask);
 
 protected:
+    /* int ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time, int alertable)
+    */
+    std::error_code HandleEventsImpl(Duration duration);
+
     /* virtual int ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     ACE_HANDLE io_handle,
     ACE_Event_Handler *event_handler,
@@ -32,10 +39,6 @@ protected:
     */
     std::error_code RegisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask);
 
-    /* int ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time, int alertable)
-    */
-    std::error_code HandleEventsImpl(Duration duration);
-    std::error_code WaitForMultipleObjects(Duration duration);
     std::error_code WaitForMultipleEvents(Duration duration);
 
 

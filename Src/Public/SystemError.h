@@ -31,6 +31,7 @@ enum class system_error_t
     queue_is_full,
     queue_is_empty,
     time_out,
+    reactor_isnot_actived, 
     unknown_error, 
 };
 

@@ -10,6 +10,11 @@ EventHandler::~EventHandler()
 {
 }
 
+std::error_code EventHandler::HandleInput()
+{
+    return error_code();
+}
+
 error_code EventHandler::HandleTimeOut(TimePoint, const void *arg)
 {
     return error_code();
