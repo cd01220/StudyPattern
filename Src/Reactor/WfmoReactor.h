@@ -41,6 +41,12 @@ public:
     virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
 
 protected:
+    /* int ACE_WFMO_Reactor_Handler_Repository::unbind_i(ACE_HANDLE handle,
+                                                         ACE_Reactor_Mask mask,
+                                                         bool &changes_required)
+    */
+    std::error_code DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask, bool isChangeRequired);
+
     /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status) */
     std::error_code Dispatch(DWORD waitStatus);
     /* int ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status) */

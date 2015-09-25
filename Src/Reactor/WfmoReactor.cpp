@@ -80,6 +80,24 @@ error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
 
 /**********************class WfmoReactor**********************/
 /* protected member function */
+error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
+                                              long mask, bool isChangeRequired)
+{
+    long newMask = handler->GetMask() & (~mask);
+    handler->SetMask(newMask);
+
+    int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
+        handler->GetEventHandle(), handler->GetMask());
+    if (result != 0)
+    {
+        int err = WSAGetLastError();
+        /* */
+        return system_error_t::unknown_error;
+    }
+
+    return error_code();
+}
+
 error_code WfmoReactor::Dispatch(DWORD waitStatus)
 {
     DWORD index;
@@ -106,9 +124,12 @@ error_code WfmoReactor::DispatchHandles (size_t index)
     long problems = UpCall(events.lNetworkEvents, handler);
     if (problems != EventHandler::NullMask)
     {
-        //unbind
+        this->DeregisterHandlerImpl(handler, problems, false);
     }
 
+    /* we don't return handler error code to my caller, the handler should take care it's own error 
+    *  status.
+    */
     return error_code();
 }
 
