@@ -10,7 +10,27 @@ EventHandler::~EventHandler()
 {
 }
 
+std::error_code EventHandler::HandleException()
+{
+    return error_code();
+}
+
+std::error_code EventHandler::HandleGroupQos()
+{
+    return error_code();
+}
+
 std::error_code EventHandler::HandleInput()
+{
+    return error_code();
+}
+
+std::error_code EventHandler::HandleOutput()
+{
+    return error_code();
+}
+
+std::error_code EventHandler::HandleQos()
 {
     return error_code();
 }
@@ -35,9 +55,19 @@ Handle EventHandler::GetIoHandle() const
     return InvalidHandleValue;
 }
 
+long EventHandler::GetMask() const
+{
+    return mask;
+}
+
 void EventHandler::SetReactor(Reactor *reactor)
 {
     this->reactor = reactor;
+}
+
+void EventHandler::SetMask(long mask)
+{
+    this->mask = mask;
 }
 
 /**********************class EventHandler**********************/

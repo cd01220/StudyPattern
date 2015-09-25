@@ -111,7 +111,7 @@ std::error_code TimerQueueT<T1>::Schedule(std::shared_ptr<T1> handler,
     error_code errCode;
     if (freeId.empty())
     {
-        errCode = system_error_t::no_id_space;
+        errCode = system_error_t::no_free_timer_id;
         return errCode;
     }
     uint_t id = AllocTimerId();

@@ -23,7 +23,7 @@ error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, long mask)
     Reactor *reactor = handler->GetReactor();
     handler->SetReactor(this);
 
-    errCode = implementation->RegisterHandler(handler, mask);
+    errCode = implementation->RegisterHandler(handler);
     if (errCode)
     {
         handler->SetReactor(reactor);

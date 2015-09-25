@@ -15,7 +15,7 @@ public:
 
     /* int ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long) */
     virtual std::error_code HandleEvents(Duration duration) = 0;
-    virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler, long mask) = 0;
+    virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler) = 0;
 };
 
 /**********************class ReactorNotify**********************/

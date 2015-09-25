@@ -27,11 +27,11 @@ Example 2:
 */
 enum class system_error_t
 {
-    no_id_space = 1,
+    no_free_timer_id = 1,
+    reactor_isnot_actived, 
+    time_out,
     queue_is_full,
     queue_is_empty,
-    time_out,
-    reactor_isnot_actived, 
     unknown_error, 
 };
 
@@ -43,7 +43,6 @@ public:
     virtual std::error_condition default_error_condition(int ev) const;
 };
 
-const std::error_category& router_category();
 std::error_code make_error_code(system_error_t e);
 std::error_condition make_error_condition(system_error_t e);
 
