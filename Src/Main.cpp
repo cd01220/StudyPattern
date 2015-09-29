@@ -1,5 +1,6 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
+#include "Public/Debug.h"
 
 #include "Demo/ReactorDemo.h"
 
@@ -8,6 +9,9 @@ void InitSocket();
 
 int main(int argc, char *argv[])
 {
+    DebugFlag flag;
+    flag.SetState("EventHandlerStub::EventHandlerStub", true);
+
     InitSocket();
     ReactorMain1(argc, argv);
     return 0;

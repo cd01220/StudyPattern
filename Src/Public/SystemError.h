@@ -33,6 +33,8 @@ enum class system_error_t
     time_out,
     queue_is_full,
     queue_is_empty,
+	file_not_exists,
+	bad_file_type,
     unknown_error, 
 };
 

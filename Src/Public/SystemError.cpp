@@ -12,8 +12,11 @@ string system_category_impl::message(int ev) const
     string ret;
     switch(ev)
     {
-    case system_error_t::no_free_timer_id:
-        ret = "no free timer id";
+    case system_error_t::file_not_exists:
+        ret = "file not exists";
+        break;
+    case system_error_t::bad_file_type:
+        ret = "bad file type (supposed to be pcap format, 802.11 packet)";
         break;
     default:
         ret = "unknown error";

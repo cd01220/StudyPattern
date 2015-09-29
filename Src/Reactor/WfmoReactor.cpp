@@ -238,9 +238,7 @@ error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
             return errCode;
 
         case WAIT_FAILED:
-            if (timeout != 0)
-                return system_error_t::unknown_error;
-            return errCode;
+            return system_error_t::unknown_error;
 
         case WAIT_IO_COMPLETION:
             return errCode;

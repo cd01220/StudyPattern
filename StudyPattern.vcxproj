@@ -19,6 +19,7 @@
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\MessageQueue\MessageBlock.cpp" />
     <ClCompile Include="Src\MessageQueue\MessageQueue.cpp" />
+    <ClCompile Include="Src\Public\Debug.cpp" />
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\Reactor\ReactorImpl.cpp" />
@@ -44,6 +45,7 @@
     <ClInclude Include="Src\MessageQueue\MessageBlock.h" />
     <ClInclude Include="Src\MessageQueue\MessageQueue.h" />
     <ClInclude Include="Src\Public\CopyDisabled.h" />
+    <ClInclude Include="Src\Public\Debug.h" />
     <ClInclude Include="Src\Public\SystemError.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />

@@ -90,6 +90,9 @@
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp">
       <Filter>Demo</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Public\Debug.cpp">
+      <Filter>Public</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -163,6 +166,9 @@
     </ClInclude>
     <ClInclude Include="Src\Demo\ReactorDemo.h">
       <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Public\Debug.h">
+      <Filter>Public</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
