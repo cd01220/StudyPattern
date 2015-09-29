@@ -161,6 +161,9 @@
     <ClInclude Include="Src\Demo\EventHandlerStub.h">
       <Filter>Demo</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Demo\ReactorDemo.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

@@ -13,7 +13,7 @@
 class Reactor;
 /**********************class EventHandler**********************/
 /* class ACE_Event_Handler */
-class EventHandler
+class EventHandler: public std::enable_shared_from_this<EventHandler>
 {
 public:
     enum
@@ -37,6 +37,7 @@ public:
 
     virtual ~EventHandler();
     
+    virtual std::error_code HandleClose();
     virtual std::error_code HandleException();
     virtual std::error_code HandleGroupQos();
     virtual std::error_code HandleInput();
@@ -45,18 +46,21 @@ public:
     virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
 
     virtual Handle GetEventHandle() const;
-    virtual Reactor* GetReactor();
     virtual Handle GetIoHandle() const;
     virtual long GetMask() const;
-
-    virtual void SetReactor(Reactor *reactor);
+    virtual Reactor* GetReactor();
+    
+    virtual void SetIoHandle(Handle handle);
     virtual void SetMask(long mask);
+    virtual void SetReactor(Reactor *reactor);
 
 protected:
     /// Force ACE_Event_Handler to be an abstract base class.
     EventHandler(Reactor *reactor = nullptr, uint_t priority = LowPriority);
 
-private:
+protected:
+    Handle  eventHandle;
+    Handle  ioHandle;
     Reactor *reactor;
     uint_t  priority;
     long    mask;

@@ -17,7 +17,7 @@ Reactor::~Reactor()
 {
 }
 
-error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler, long mask)
+error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
 {
     error_code errCode;
     Reactor *reactor = handler->GetReactor();
@@ -49,7 +49,9 @@ std::error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
     {
         errCode = implementation->HandleEvents(Duration::max());
         if (errCode)
-        { break; }
+        { 
+            break; 
+        }
 
         if (hook != nullptr)
         {

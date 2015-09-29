@@ -7,7 +7,7 @@
 #include "Demo/EventHandlerStub.h"
 #include "TimerQueue/TimerQueueAdapter.h"
 
-inline int ActiveTimerMain(int argc, char *argv[])
+inline void ActiveTimerMain(int argc, char *argv[])
 {
     // Create an "active" timer and start its thread.
     ActiveTimer activeTimer;
@@ -18,8 +18,6 @@ inline int ActiveTimerMain(int argc, char *argv[])
     activeTimer.Schedule(handler, nullptr, GetCurTime() + Duration(1000), Duration(500), &timerId);
 
     activeTimer.Wait();
-    
-    return 0;
 }
 
 #endif

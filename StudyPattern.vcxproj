@@ -36,6 +36,7 @@
   <ItemGroup>
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
+    <ClInclude Include="Src\Demo\ReactorDemo.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
     <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />

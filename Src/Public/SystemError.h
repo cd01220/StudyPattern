@@ -27,7 +27,8 @@ Example 2:
 */
 enum class system_error_t
 {
-    no_free_timer_id = 1,
+    invalid_parameter = 1,
+    no_free_timer_id,
     reactor_isnot_actived, 
     time_out,
     queue_is_full,

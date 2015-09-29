@@ -10,27 +10,32 @@ EventHandler::~EventHandler()
 {
 }
 
-std::error_code EventHandler::HandleException()
+error_code EventHandler::HandleClose()
 {
     return error_code();
 }
 
-std::error_code EventHandler::HandleGroupQos()
+error_code EventHandler::HandleException()
 {
     return error_code();
 }
 
-std::error_code EventHandler::HandleInput()
+error_code EventHandler::HandleGroupQos()
 {
     return error_code();
 }
 
-std::error_code EventHandler::HandleOutput()
+error_code EventHandler::HandleInput()
 {
     return error_code();
 }
 
-std::error_code EventHandler::HandleQos()
+error_code EventHandler::HandleOutput()
+{
+    return error_code();
+}
+
+error_code EventHandler::HandleQos()
 {
     return error_code();
 }
@@ -42,17 +47,12 @@ error_code EventHandler::HandleTimeOut(TimePoint, const void *arg)
 
 Handle EventHandler::GetEventHandle() const
 {
-    return InvalidHandleValue;
-}
-
-Reactor* EventHandler::GetReactor()
-{
-    return reactor;
+    return eventHandle;
 }
 
 Handle EventHandler::GetIoHandle() const
 {
-    return InvalidHandleValue;
+    return ioHandle;
 }
 
 long EventHandler::GetMask() const
@@ -60,14 +60,25 @@ long EventHandler::GetMask() const
     return mask;
 }
 
-void EventHandler::SetReactor(Reactor *reactor)
+Reactor* EventHandler::GetReactor()
 {
-    this->reactor = reactor;
+    return reactor;
+}
+
+void EventHandler::SetIoHandle(Handle handle)
+{
+    ioHandle = handle;
 }
 
 void EventHandler::SetMask(long mask)
 {
     this->mask = mask;
+}
+
+void EventHandler::SetReactor(Reactor *reactor)
+{
+    if (this->reactor != reactor)
+        this->reactor = reactor;
 }
 
 /**********************class EventHandler**********************/
