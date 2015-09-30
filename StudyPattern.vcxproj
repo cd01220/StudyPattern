@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Src\Demo\Client.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
@@ -19,6 +20,7 @@
     <ClCompile Include="Src\Main.cpp" />
     <ClCompile Include="Src\MessageQueue\MessageBlock.cpp" />
     <ClCompile Include="Src\MessageQueue\MessageQueue.cpp" />
+    <ClCompile Include="Src\MessageQueue\NotificationStrategy.cpp" />
     <ClCompile Include="Src\Public\Debug.cpp" />
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
@@ -36,6 +38,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Demo\ActiveTimerDemo.h" />
+    <ClInclude Include="Src\Demo\Client.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Demo\ReactorDemo.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
@@ -44,6 +47,7 @@
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\MessageQueue\MessageBlock.h" />
     <ClInclude Include="Src\MessageQueue\MessageQueue.h" />
+    <ClInclude Include="Src\MessageQueue\NotificationStrategy.h" />
     <ClInclude Include="Src\Public\CopyDisabled.h" />
     <ClInclude Include="Src\Public\Debug.h" />
     <ClInclude Include="Src\Public\SystemError.h" />

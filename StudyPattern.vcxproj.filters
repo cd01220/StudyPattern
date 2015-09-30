@@ -93,6 +93,12 @@
     <ClCompile Include="Src\Public\Debug.cpp">
       <Filter>Public</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Demo\Client.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\MessageQueue\NotificationStrategy.cpp">
+      <Filter>MessageQueue</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -169,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="Src\Public\Debug.h">
       <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Demo\Client.h">
+      <Filter>Demo</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\MessageQueue\NotificationStrategy.h">
+      <Filter>MessageQueue</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

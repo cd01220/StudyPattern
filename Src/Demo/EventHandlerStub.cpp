@@ -132,5 +132,5 @@ error_code ClientService::Open()
     if (errCode)
         errstrm << errCode.message();
 
-    return error_code();
+    return errCode;
 }

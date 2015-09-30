@@ -19,6 +19,8 @@ public:
     MessageBlock(size_t size, uint_t type = MsgBlockData);
     ~MessageBlock();
 
+    char *GetPtr();
+
 private:
     char   *data;
     uint_t type;

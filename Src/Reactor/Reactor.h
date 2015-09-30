@@ -15,6 +15,8 @@ public:
     Reactor();
     virtual ~Reactor();
 
+    std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
+
     /* int register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
     std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
     

@@ -10,6 +10,8 @@
 #else
 #endif
 
+
+
 class Reactor;
 /**********************class EventHandler**********************/
 /* class ACE_Event_Handler */
@@ -64,6 +66,27 @@ protected:
     Reactor *reactor;
     uint_t  priority;
     long    mask;
+};
+
+/**********************class NotificationBuffer**********************/
+//class ACE_Export ACE_Notification_Buffer
+class NotificationBuffer
+{
+public:
+    NotificationBuffer(void);
+
+    NotificationBuffer(std::shared_ptr<EventHandler> handler, long mask);
+
+    /// Default destructor.
+    ~NotificationBuffer(void);
+
+public:
+    /// Pointer to the Event_Handler that will be dispatched
+    /// by the main event loop.
+    std::shared_ptr<EventHandler> handler;
+
+    /// Mask that indicates which method to call.
+    long mask;
 };
 
 #endif

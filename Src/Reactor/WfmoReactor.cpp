@@ -1,6 +1,7 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "MessageQueue/MessageBlock.h"
 #include "Reactor/WfmoReactor.h"
 using namespace std;
 
@@ -60,15 +61,35 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
     handles[repository.size() - 1] = handler->GetEventHandle();
 }
 
+/**********************class WfmoReactorNotify**********************/
+//???????????????????
+error_code WfmoReactorNotify::Notify(std::shared_ptr<EventHandler> handler, long mask)
+{
+    shared_ptr<MessageBlock> block = make_shared<MessageBlock>(MessageBlock(sizeof(NotificationBuffer)));
+    NotificationBuffer *buffer = (NotificationBuffer*)block->GetPtr();
+    buffer->handler = handler;
+    buffer->mask = mask;
+
+    Duration duration;
+    error_code errCode = msgQueue.Push(block, duration);
+    return errCode;
+}
+
 /**********************class WfmoReactor**********************/
 bool WfmoReactor::IsActived()
 {
     return true;
 }
 
-std::error_code WfmoReactor::HandleEvents(Duration duration)
+error_code WfmoReactor::HandleEvents(Duration duration)
 {
     return HandleEventsImpl(duration);
+}
+
+error_code WfmoReactor::Notify(std::shared_ptr<EventHandler> handler,
+                               long mask)
+{
+    return error_code();
 }
 
 error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
@@ -81,7 +102,7 @@ error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
 /**********************class WfmoReactor**********************/
 /* protected member function */
 error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
-                                              long mask, bool isChangeRequired)
+                                              long mask)
 {
     long newMask = handler->GetMask() & (~mask);
     handler->SetMask(newMask);
@@ -124,7 +145,7 @@ error_code WfmoReactor::DispatchHandles (size_t index)
     long problems = UpCall(events.lNetworkEvents, handler);
     if (problems != EventHandler::NullMask)
     {
-        this->DeregisterHandlerImpl(handler, problems, false);
+        this->DeregisterHandlerImpl(handler, problems);
     }
 
     /* we don't return handler error code to my caller, the handler should take care it's own error 

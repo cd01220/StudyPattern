@@ -14,3 +14,8 @@ MessageBlock::~MessageBlock()
 {
     delete[] data;
 }
+
+char *MessageBlock::GetPtr()
+{
+    return data;
+}

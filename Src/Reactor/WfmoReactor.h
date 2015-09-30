@@ -1,6 +1,7 @@
 #ifndef _WfmoReactor_h_
 #define _WfmoReactor_h_
 
+#include "MessageQueue/MessageQueue.h"
 #include "Reactor/ReactorImpl.h"
 
 /**********************class WfmoReactorHandlerRepository**********************/
@@ -27,6 +28,17 @@ private:
     std::map<Handle, std::shared_ptr<EventHandler>> repository;
 };
 
+/**********************class WfmoReactorNotify**********************/
+/* class ACE_WFMO_Reactor_Notify */
+class WfmoReactorNotify: public ReactorNotify
+{
+public:
+    std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
+
+private:
+    MessageQueue msgQueue;
+};
+
 /**********************class WfmoReactor**********************/
 /* class ACE_WFMO_Reactor (WFMO: Wait For Multiple Objects) */
 class WfmoReactor: public ReactorImpl
@@ -36,6 +48,8 @@ public:
 
     /* int ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long)*/
     virtual std::error_code HandleEvents(Duration duration);
+        
+    virtual std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int ACE_WFMO_Reactor::register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
     virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
@@ -45,7 +59,7 @@ protected:
                                                          ACE_Reactor_Mask mask,
                                                          bool &changes_required)
     */
-    std::error_code DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask, bool isChangeRequired);
+    std::error_code DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status) */
     std::error_code Dispatch(DWORD waitStatus);
@@ -71,7 +85,8 @@ protected:
     std::error_code WaitForMultipleEvents(Duration duration);
     
 private:
-    bool isActived;     
+    bool isActived;
+    std::shared_ptr<ReactorNotify> notifyHandler;
     WfmoReactorHandlerRepository repository;
 };
 

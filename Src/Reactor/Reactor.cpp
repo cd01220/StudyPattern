@@ -17,6 +17,14 @@ Reactor::~Reactor()
 {
 }
 
+error_code Reactor::Notify(std::shared_ptr<EventHandler> handler, long mask)
+{
+    if (handler != nullptr && handler->GetReactor() == nullptr)
+        handler->SetReactor(this);
+
+    return implementation->Notify(handler, mask);
+}
+
 error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
 {
     error_code errCode;
