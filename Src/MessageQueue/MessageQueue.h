@@ -75,6 +75,7 @@ public:
 
     virtual size_t GetSize();
     virtual void Open(std::shared_ptr<NotificationStrategy> ns = nullptr);
+    virtual void SetNotificationStrategy(std::shared_ptr<NotificationStrategy> ns);
 
     /**
     * Retrieve the first ACE_Message_Block without removing it.  Note

@@ -1,7 +1,7 @@
 #include "SystemInclude.h"
 
 #include "Reactor/Reactor.h"
-#include "EventHandler.h"
+#include "Event/EventHandler.h"
 
 using namespace std;
 
@@ -87,16 +87,3 @@ EventHandler::EventHandler(Reactor *reactor, uint_t priority)
     : reactor(reactor), priority(priority)
 {
 }
-
-/**********************class NotificationBuffer**********************/
-NotificationBuffer::NotificationBuffer(void)
-    : handler(nullptr), mask(EventHandler::NullMask)
-{}
-
-NotificationBuffer::NotificationBuffer(std::shared_ptr<EventHandler> handler, long mask)
-    : handler(handler), mask(mask)
-{}
-
-/// Default destructor.
-NotificationBuffer::~NotificationBuffer(void)
-{}

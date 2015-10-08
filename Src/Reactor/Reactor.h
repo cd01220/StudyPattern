@@ -26,6 +26,11 @@ public:
     /* int ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh) */
     virtual std::error_code RunReactorEventLoop(ReactorEventHook hook);
 
+    std::error_code ScheduleTimer(std::shared_ptr<EventHandler> handler,
+        const void *arg,
+        TimePoint timePoint,
+        Duration  interval);
+
 private:
     std::shared_ptr<ReactorImpl> implementation;
 };

@@ -2,6 +2,7 @@
 #include "SystemError.h"
 
 #include "MessageQueue/MessageBlock.h"
+#include "Reactor/ReactorMessageBlock.h"
 #include "Reactor/WfmoReactor.h"
 using namespace std;
 
@@ -62,13 +63,9 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
 }
 
 /**********************class WfmoReactorNotify**********************/
-//???????????????????
 error_code WfmoReactorNotify::Notify(std::shared_ptr<EventHandler> handler, long mask)
 {
-    shared_ptr<MessageBlock> block = make_shared<MessageBlock>(MessageBlock(sizeof(NotificationBuffer)));
-    NotificationBuffer *buffer = (NotificationBuffer*)block->GetPtr();
-    buffer->handler = handler;
-    buffer->mask = mask;
+    shared_ptr<MessageBlock> block = make_shared<NotificationMessageBlock>(NotificationMessageBlock(handler, mask));
 
     Duration duration;
     error_code errCode = msgQueue.Push(block, duration);

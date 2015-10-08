@@ -13,4 +13,9 @@ inline void ReactorMain1(int argc, char *argv[])
     reactor->RunEventLoop();
 }
 
+inline void ReactorMain2(int argc, char *argv[])
+{
+
+}
+
 #endif

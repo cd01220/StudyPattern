@@ -69,3 +69,11 @@ std::error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
 
     return errCode;
 }
+
+std::error_code Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
+        const void *arg,
+        TimePoint timePoint,
+        Duration  interval)
+{
+    return error_code();
+}

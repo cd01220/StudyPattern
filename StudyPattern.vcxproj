@@ -25,6 +25,7 @@
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\Reactor\ReactorImpl.cpp" />
+    <ClCompile Include="Src\Reactor\ReactorMessageBlock.cpp" />
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp" />
     <ClCompile Include="Src\StateMachine\StateMachine.cpp" />
     <ClCompile Include="Src\Task\ServiceObject.cpp" />
@@ -54,6 +55,7 @@
     <ClInclude Include="Src\Public\SystemInclude.h" />
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
+    <ClInclude Include="Src\Reactor\ReactorMessageBlock.h" />
     <ClInclude Include="Src\Reactor\WfmoReactor.h" />
     <ClInclude Include="Src\StateMachine\StateMachine.h" />
     <ClInclude Include="Src\Task\ServiceObject.h" />

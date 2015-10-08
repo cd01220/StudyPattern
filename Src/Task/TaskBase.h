@@ -26,7 +26,7 @@ public:
 
     /// Hook called to initialize a task and prepare it for execution.
     /// @a args can be used to pass arbitrary information into <open>.
-    virtual std::error_code Open(void *args = nullptr);
+    virtual std::error_code Open(void *args);
 
     // service thread routine
     // original definition: virtual int ACE_Task_Base::svc (void);
