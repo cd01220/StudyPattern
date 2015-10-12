@@ -1,6 +1,6 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
-#include "Public/Debug.h"
+#include "Debug.h"
 
 #include "Reactor/Reactor.h"
 #include "Demo/EventHandlerStub.h"

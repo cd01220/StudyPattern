@@ -47,8 +47,8 @@ TimerQueueT<T1>::~TimerQueueT()
 
 
 template <typename T1>
-Duration TimerQueueT<T1>::CalculateTimeout(TimePoint currentTime)
-{
+Duration TimerQueueT<T1>::CalculateTimeout()
+{    
     lock_guard<std::mutex> lock(c11mutex);
 
     if (timers.empty())
@@ -56,6 +56,7 @@ Duration TimerQueueT<T1>::CalculateTimeout(TimePoint currentTime)
         return Duration::max();
     }
 
+    TimePoint currentTime = std::chrono::system_clock::now();
     TimePoint earliestTime  = timers.top()->timePoint;
     if (earliestTime > currentTime)
     {
@@ -160,7 +161,7 @@ uint_t TimerQueueT<T1>::ExpireImpl(TimePoint currentTime)
             continue;
         }
 
-        node->handler->HandleTimeOut(currentTime, node->act);        
+        node->handler->HandleTimeOut(currentTime, node->act);
         if (node->interval != Duration::zero())
         {
             node->timePoint = currentTime + node->interval;

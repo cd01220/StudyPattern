@@ -7,7 +7,7 @@ class MessageBlock
 {
 public:
     MessageBlock();
-    ~MessageBlock();
+    virtual ~MessageBlock();
 };
 
 #endif

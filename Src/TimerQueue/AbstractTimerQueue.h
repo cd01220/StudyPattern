@@ -35,7 +35,7 @@ public:
         SleepEx((DWORD)duration.count(), true);
         timer_queue_->Expire();
     */
-    virtual Duration CalculateTimeout(TimePoint max) = 0;
+    virtual Duration CalculateTimeout() = 0;
     
     /**
     * Cancel all timer associated with @a type.  If

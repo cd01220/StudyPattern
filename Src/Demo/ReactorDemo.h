@@ -1,8 +1,9 @@
 #ifndef _ReactorDemo_h_
 #define _ReactorDemo_h_
 
-#include "Demo/EventHandlerStub.h"
 #include "Reactor/Reactor.h"
+#include "Demo/EventHandlerStub.h"
+#include "Demo/Client.h"
 
 inline void ReactorMain1(int argc, char *argv[])
 {
@@ -15,7 +16,12 @@ inline void ReactorMain1(int argc, char *argv[])
 
 inline void ReactorMain2(int argc, char *argv[])
 {
+    std::shared_ptr<Client> client = std::make_shared<Client>();
 
+    client->Open(nullptr);
+    client->Activate();
+
+    client->Wait();
 }
 
 #endif

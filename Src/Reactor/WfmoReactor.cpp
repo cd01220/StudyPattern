@@ -1,5 +1,6 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
+#include "Debug.h"
 
 #include "MessageQueue/MessageBlock.h"
 #include "Reactor/ReactorMessageBlock.h"
@@ -73,6 +74,18 @@ error_code WfmoReactorNotify::Notify(std::shared_ptr<EventHandler> handler, long
 }
 
 /**********************class WfmoReactor**********************/
+WfmoReactor::WfmoReactor(std::shared_ptr<TimerQueue> timerQueue)
+{
+    if (timerQueue == nullptr)
+        this->timerQueue = make_shared<TimerQueue>();
+    else
+        this->timerQueue = timerQueue;
+}
+
+WfmoReactor::~WfmoReactor()
+{
+}
+
 bool WfmoReactor::IsActived()
 {
     return true;
@@ -80,12 +93,13 @@ bool WfmoReactor::IsActived()
 
 error_code WfmoReactor::HandleEvents(Duration duration)
 {
-    return HandleEventsImpl(duration);
+    return HandleEventsImpl(CalculateTimeout(duration));
 }
 
 error_code WfmoReactor::Notify(std::shared_ptr<EventHandler> handler,
                                long mask)
 {
+    error_code errCode = this->notifyHandler->Notify(handler, mask);
     return error_code();
 }
 
@@ -96,8 +110,26 @@ error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
     return errCode;
 }
 
+error_code WfmoReactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
+        const void *arg,
+        TimePoint timePoint,
+        Duration  interval)
+{
+    return timerQueue->Schedule(handler, arg, timePoint, interval, nullptr);
+}
+
 /**********************class WfmoReactor**********************/
 /* protected member function */
+Duration WfmoReactor::CalculateTimeout(Duration maxWaitTime)
+{
+    Duration duration = timerQueue->CalculateTimeout();
+
+    if (maxWaitTime > duration)
+        return duration;
+
+    return maxWaitTime;
+}
+
 error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
                                               long mask)
 {
@@ -119,7 +151,6 @@ error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> hand
 error_code WfmoReactor::Dispatch(DWORD waitStatus)
 {
     DWORD index;
-    
     if (waitStatus <= WAIT_OBJECT_0 + repository.GetSize())
         index = waitStatus - WAIT_OBJECT_0;
     else
@@ -151,6 +182,11 @@ error_code WfmoReactor::DispatchHandles (size_t index)
     return error_code();
 }
 
+uint_t WfmoReactor::ExpireTimers()
+{
+    return this->timerQueue->Expire();
+}
+
 error_code WfmoReactor::HandleEventsImpl(Duration duration)
 {
     if (!isActived)
@@ -158,12 +194,17 @@ error_code WfmoReactor::HandleEventsImpl(Duration duration)
         return system_error_t::reactor_isnot_actived;
     }
     
+    /* ACE_WFMO_Reactor::event_handling */
     error_code errCode;
-    while (!errCode)
-    {
+    while (errCode)
+    {        
         errCode = this->WaitForMultipleEvents(duration);
+        // wait_for_multiple_events timed out without dispatching
+        // anything.  
         if (errCode)
-            cout << errCode.message() << endl;
+        {
+            dbgstrm << errCode.message() << endl;
+        }
     }
 
     return errCode;
@@ -239,35 +280,26 @@ long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
 }
 
 error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
-{
-    DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count());
+{    
+    DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count() + 1);
+         
+    DWORD result = ::WaitForMultipleObjectsEx(repository.GetSize(), repository.GetEventHandles(),
+        FALSE, timeout, TRUE);        
 
-    error_code errCode;
-    while (!errCode)
-    {        
-        DWORD result = ::WaitForMultipleObjectsEx(repository.GetSize(), repository.GetEventHandles(),
-            FALSE, timeout, TRUE);        
+    switch (result)
+    {
+    case WAIT_TIMEOUT:            
+        return system_error_t::time_out;
 
-        switch (result)
-        {
-        case WAIT_TIMEOUT:            
-            if (timeout != 0)
-                return system_error_t::time_out;
-            return errCode;
+    case WAIT_FAILED:
+        return system_error_t::unknown_error;
 
-        case WAIT_FAILED:
-            return system_error_t::unknown_error;
+    case WAIT_IO_COMPLETION:
+        return error_code();
 
-        case WAIT_IO_COMPLETION:
-            return errCode;
-
-        default:
-            errCode = Dispatch(result);
-            break;
-        }
-
-        timeout = 0;
+    default:
+        break;
     }
 
-    return errCode;
+    return Dispatch(result);
 }

@@ -15,9 +15,9 @@ public:
     virtual std::error_code HandleInput();
     virtual std::error_code HandleOutput();
     virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
-
-    
+        
     virtual std::error_code Open(void *args);
+    std::error_code ServiceRoutine();
 
 private:
     std::shared_ptr<ReactorNotificationStrategy> notificationStrategy;

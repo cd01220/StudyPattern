@@ -13,9 +13,6 @@
       <UniqueIdentifier>{2c620d70-0b3a-409d-b373-15a5ba6e464a}</UniqueIdentifier>
       <Extensions>c;cpp;h;hpp</Extensions>
     </Filter>
-    <Filter Include="StateMachine">
-      <UniqueIdentifier>{dbe66143-5a4f-4a8b-8f5c-de9e20a56328}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MessageQueue">
       <UniqueIdentifier>{cfc0d111-3f45-403c-b1f9-512f01afb20f}</UniqueIdentifier>
     </Filter>
@@ -44,9 +41,6 @@
     </ClCompile>
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp">
       <Filter>Layer3Architecture</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\StateMachine\StateMachine.cpp">
-      <Filter>StateMachine</Filter>
     </ClCompile>
     <ClCompile Include="Src\Reactor\Reactor.cpp">
       <Filter>Reactor</Filter>
@@ -115,9 +109,6 @@
     </ClInclude>
     <ClInclude Include="Src\MessageQueue\MessageQueue.h">
       <Filter>MessageQueue</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\StateMachine\StateMachine.h">
-      <Filter>StateMachine</Filter>
     </ClInclude>
     <ClInclude Include="Src\Reactor\Reactor.h">
       <Filter>Reactor</Filter>

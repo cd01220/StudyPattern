@@ -9,7 +9,7 @@ using namespace std;
 Reactor::Reactor()
 {
 #ifdef _WIN32
-    implementation = make_shared<WfmoReactor>();
+    implementation = make_shared<WfmoReactor>(nullptr);
 #endif
 }
 
@@ -70,10 +70,21 @@ std::error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
     return errCode;
 }
 
-std::error_code Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
+error_code Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,
         Duration  interval)
 {
-    return error_code();
+    // Remember the old reactor.
+    Reactor *oldReactor = handler->GetReactor();
+    handler->SetReactor(this);
+
+    error_code errCode = this->implementation->ScheduleTimer(handler, arg, timePoint, interval);
+    if (errCode)
+    {
+        // Reset the old reactor in case of failures.
+        handler->SetReactor(oldReactor);
+    }
+
+    return errCode;
 }

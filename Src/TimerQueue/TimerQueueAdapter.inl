@@ -84,7 +84,7 @@ error_code ThreadTimerQueueAdapter<T1, T2>::ServiceRoutine()
             cv.wait(lock);
         }
 
-        Duration duration = timerQueue->CalculateTimeout(chrono::system_clock::now());
+        Duration duration = timerQueue->CalculateTimeout();
         std::cv_status::cv_status status = cv.wait_for(lock, duration);
         if (status == cv_status::timeout)
         {

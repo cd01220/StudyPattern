@@ -49,8 +49,7 @@ public:
     virtual ~TimerQueueT();
 
     // virtual ACE_Time_Value *ACE_Timer_Queue_T::calculate_timeout (ACE_Time_Value *max);
-    virtual Duration CalculateTimeout(TimePoint max);
-
+    virtual Duration CalculateTimeout();
     /**
     * Cancel all timer associated with @a type.  If
     * @a dont_call_handle_close is 0 then the <functor> will be invoked,
