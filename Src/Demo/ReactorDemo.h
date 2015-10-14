@@ -16,12 +16,13 @@ inline void ReactorMain1(int argc, char *argv[])
 
 inline void ReactorMain2(int argc, char *argv[])
 {
-    std::shared_ptr<Client> client = std::make_shared<Client>();
+    Reactor *reactor = new Reactor;
+    std::shared_ptr<Client> client = std::make_shared<Client>(reactor);
 
     client->Open(nullptr);
     client->Activate();
 
-    client->Wait();
+    reactor->RunEventLoop();
 }
 
 #endif

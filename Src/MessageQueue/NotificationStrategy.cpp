@@ -1,5 +1,7 @@
 #include "SystemInclude.h"
 
+#include "Event/EventHandler.h"
+#include "Reactor/Reactor.h"
 #include "MessageQueue/NotificationStrategy.h"
 using namespace std;
 
@@ -26,6 +28,8 @@ error_code ReactorNotificationStrategy::Notify()
     return reactor->Notify(handler, mask);
 }
 
+/**********************class NotificationStrategy**********************/
+//private member function
 error_code ReactorNotificationStrategy::Notify(shared_ptr<EventHandler> handler)
 {
     return error_code();

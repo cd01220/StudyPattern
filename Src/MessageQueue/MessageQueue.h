@@ -61,7 +61,7 @@ protected:
 class MessageQueue: public MessageQueueBase
 {
 public:
-    MessageQueue(std::shared_ptr<NotificationStrategy> ns = nullptr);
+    MessageQueue(std::shared_ptr<NotificationStrategy> ns);
     virtual ~MessageQueue();    
     
     virtual void Activate();
@@ -75,6 +75,7 @@ public:
 
     virtual size_t GetSize();
     virtual void Open(std::shared_ptr<NotificationStrategy> ns = nullptr);
+    /* ACE_Message_Queue::notification_strategy(ACE_Notification_Strategy *s) */
     virtual void SetNotificationStrategy(std::shared_ptr<NotificationStrategy> ns);
 
     /**

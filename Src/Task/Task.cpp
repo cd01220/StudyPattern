@@ -1,13 +1,16 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "MessageQueue/MessageQueue.h"
+
 #include "Task/Task.h"
 using namespace std;
 
 /**********************class Task**********************/
-Task::Task()
+Task::Task(Reactor *reactor)
+    : TaskBase(reactor)
 {
-    msgQueue = make_shared<MessageQueue>();
+    msgQueue = make_shared<MessageQueue>(nullptr);
 }
 
 Task::~Task()

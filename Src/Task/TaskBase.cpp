@@ -1,13 +1,13 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
-#include "Reactor/Reactor.h"
 #include "Task/TaskBase.h"
 using namespace std;
 
 /**********************class TaskBase**********************/
 /* Origial definition: ACE_Task_Base */
-TaskBase::TaskBase()
+TaskBase::TaskBase(Reactor *reactor)
+    : ServiceObject(reactor)
 {}
 
 TaskBase::~TaskBase()

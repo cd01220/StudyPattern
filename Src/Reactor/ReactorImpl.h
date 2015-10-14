@@ -2,9 +2,9 @@
 #define _ReactorImpl_h_
 
 #include "SystemInclude.h"
+#include "TimerQueue/TimeValue.h"  //TimePoint, Duration
 
-#include "Event/EventHandler.h"
-#include "TimerQueue/AbstractTimerQueue.h"
+class EventHandler;
 
 /**********************class ReactorImpl**********************/
 /* class ACE_Reactor_Impl */

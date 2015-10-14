@@ -36,6 +36,7 @@ enum class system_error_t
 	file_not_exists,
 	bad_file_type,
     unknown_error, 
+    wait_failed,
 };
 
 class system_category_impl : public std::error_category

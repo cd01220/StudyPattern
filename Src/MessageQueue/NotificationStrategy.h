@@ -2,9 +2,9 @@
 #define _NotificationStrategy_h_
 
 #include "SystemInclude.h"
-#include "Event/EventHandler.h"
-#include "Reactor/Reactor.h"
 
+class Reactor;
+class EventHandler;
 /**********************class NotificationStrategy**********************/
 /**
  * @class ACE_Notification_Strategy
@@ -37,6 +37,8 @@ public:
     virtual ~ReactorNotificationStrategy();
 
     virtual std::error_code Notify();
+
+private:
     virtual std::error_code Notify(std::shared_ptr<EventHandler> handler);
 
 private:

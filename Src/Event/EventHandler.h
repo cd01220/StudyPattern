@@ -2,7 +2,7 @@
 #define _EventHandler_h_
 
 #include "SystemInclude.h"
-#include "TimerQueue/AbstractTimerQueue.h"
+#include "TimerQueue/TimeValue.h"  //TimePoint, Duration
 
 #ifdef _WIN32
     typedef HANDLE Handle;

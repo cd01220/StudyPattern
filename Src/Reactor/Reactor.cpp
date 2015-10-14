@@ -1,6 +1,8 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "Event/EventHandler.h" //EventHandler
+#include "Reactor/ReactorImpl.h" //ReactorImpl
 #include "Reactor/WfmoReactor.h"
 #include "Reactor/Reactor.h"
 using namespace std;
@@ -45,7 +47,7 @@ error_code Reactor::RunEventLoop()
     return RunReactorEventLoop(nullptr);
 }
 
-std::error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
+error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
 {
     if (!implementation->IsActived())
     {

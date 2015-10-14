@@ -1,8 +1,10 @@
 #ifndef _ServiceObject_h_
 #define _ServiceObject_h_
+#include "SystemError.h"
 
-#include "Event/EventHandler.h"  //for definition of EventHandler and Reactor
+#include "Event/EventHandler.h"  //EventHandler
 
+class Reactor;
 /**********************class ServiceObject**********************/
 /* Origial definition: ACE_Service_Object */
 class ServiceObject: public EventHandler
@@ -10,7 +12,7 @@ class ServiceObject: public EventHandler
 public:
     // = Initialization and termination methods.
     /// Constructor.
-    ServiceObject (Reactor *reactor = nullptr);
+    ServiceObject (Reactor *reactor);
 
     /// Destructor.
     virtual ~ServiceObject (void);

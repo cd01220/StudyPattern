@@ -64,18 +64,32 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
 }
 
 /**********************class WfmoReactorNotify**********************/
-error_code WfmoReactorNotify::Notify(std::shared_ptr<EventHandler> handler, long mask)
+WfmoReactorNotify::WfmoReactorNotify()
+    : msgQueue(nullptr)
+{
+}
+
+WfmoReactorNotify::~WfmoReactorNotify()
+{
+}
+
+error_code WfmoReactorNotify::HandleSignal(int signalNum, SignalInfo SigInfor)
+{
+    return error_code();
+}
+
+error_code WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
 {
     shared_ptr<MessageBlock> block = make_shared<NotificationMessageBlock>(NotificationMessageBlock(handler, mask));
 
-    Duration duration;
-    error_code errCode = msgQueue.Push(block, duration);
-    return errCode;
+    return msgQueue.Push(block, Duration::zero());
 }
 
 /**********************class WfmoReactor**********************/
 WfmoReactor::WfmoReactor(std::shared_ptr<TimerQueue> timerQueue)
 {
+    notifyHandler = make_shared<WfmoReactorNotify>();
+
     if (timerQueue == nullptr)
         this->timerQueue = make_shared<TimerQueue>();
     else
@@ -187,25 +201,33 @@ uint_t WfmoReactor::ExpireTimers()
     return this->timerQueue->Expire();
 }
 
+/* Reactor::RunReactorEventLoop() 
+    -> implementation->HandleEvents()
+    -> HandleEventsImpl(CalculateTimeout(duration))
+  refert to ACE_WFMO_Reactor::event_handling
+*/
 error_code WfmoReactor::HandleEventsImpl(Duration duration)
 {
     if (!isActived)
     {
         return system_error_t::reactor_isnot_actived;
-    }
+    }   
     
-    /* ACE_WFMO_Reactor::event_handling */
+    TimeCountDown countdown(duration);
     error_code errCode;
-    while (errCode)
-    {        
+    do
+    {
         errCode = this->WaitForMultipleEvents(duration);
-        // wait_for_multiple_events timed out without dispatching
-        // anything.  
-        if (errCode)
+        if (errCode && errCode != system_error_t::time_out)
         {
-            dbgstrm << errCode.message() << endl;
+            errstrm << errCode.message() << endl;
+            break;
         }
-    }
+        else
+            errCode.clear();
+        ExpireTimers();    
+        duration = countdown.GetRemainingTime();
+    }while (duration != Duration::zero());
 
     return errCode;
 }
@@ -282,9 +304,13 @@ long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
 error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
 {    
     DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count() + 1);
-         
-    DWORD result = ::WaitForMultipleObjectsEx(repository.GetSize(), repository.GetEventHandles(),
-        FALSE, timeout, TRUE);        
+    DWORD result;
+
+    if (repository.GetSize() == 0)
+        return error_code();
+    else
+        result = ::WaitForMultipleObjectsEx(repository.GetSize(), repository.GetEventHandles(),
+            FALSE, timeout, TRUE);        
 
     switch (result)
     {
@@ -292,7 +318,7 @@ error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
         return system_error_t::time_out;
 
     case WAIT_FAILED:
-        return system_error_t::unknown_error;
+        return system_error_t::wait_failed;
 
     case WAIT_IO_COMPLETION:
         return error_code();
