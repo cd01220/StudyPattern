@@ -3,7 +3,9 @@
 #include "Debug.h"
 
 #include "MessageQueue/MessageBlock.h"
-#include "Reactor/ReactorMessageBlock.h"
+#include "Reactor/NotificationMessageBlock.h"
+#include "Reactor/WfmoReactorNotify.h"
+
 #include "Reactor/WfmoReactor.h"
 using namespace std;
 
@@ -63,32 +65,10 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
     handles[repository.size() - 1] = handler->GetEventHandle();
 }
 
-/**********************class WfmoReactorNotify**********************/
-WfmoReactorNotify::WfmoReactorNotify()
-    : msgQueue(nullptr)
-{
-}
-
-WfmoReactorNotify::~WfmoReactorNotify()
-{
-}
-
-error_code WfmoReactorNotify::HandleSignal(int signalNum, SignalInfo SigInfor)
-{
-    return error_code();
-}
-
-error_code WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
-{
-    shared_ptr<MessageBlock> block = make_shared<NotificationMessageBlock>(NotificationMessageBlock(handler, mask));
-
-    return msgQueue.Push(block, Duration::zero());
-}
-
 /**********************class WfmoReactor**********************/
 WfmoReactor::WfmoReactor(std::shared_ptr<TimerQueue> timerQueue)
 {
-    notifyHandler = make_shared<WfmoReactorNotify>();
+    notifyHandler = make_shared<WfmoReactorNotify>(nullptr);
 
     if (timerQueue == nullptr)
         this->timerQueue = make_shared<TimerQueue>();

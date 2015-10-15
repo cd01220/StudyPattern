@@ -35,9 +35,10 @@ std::error_code Client::HandleOutput()
 std::error_code Client::HandleTimeOut(TimePoint, const void *arg)
 {
     cout << "HandleTimeOut" << endl;
-    shared_ptr<MessageBlock> msg = make_shared<MessageBlock>();
-    this->msgQueue->Push(msg, Duration::zero());
-    return error_code();
+    
+    std::shared_ptr<MessageBlock> msg = std::make_shared<MessageBlock>();
+
+    return Push(msg, Duration::zero());
 }
 
 std::error_code Client::Open(void *args)
@@ -60,7 +61,7 @@ std::error_code Client::Open(void *args)
     //    errstrm << errCode.message();
 
     notifer = make_shared<ReactorNotificationStrategy>(reactor, shared_from_this(), EventHandler::WriteMask);
-    this->msgQueue->SetNotificationStrategy(this->notifer);
+    this->msgQueue->SetNotificationStrategy(notifer);
     
     errCode = reactor->ScheduleTimer(shared_from_this(), nullptr, GetCurTime() + Duration(1000), Duration(500));
 

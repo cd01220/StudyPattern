@@ -93,7 +93,10 @@
     <ClCompile Include="Src\MessageQueue\NotificationStrategy.cpp">
       <Filter>MessageQueue</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Reactor\ReactorMessageBlock.cpp">
+    <ClCompile Include="Src\Reactor\WfmoReactorNotify.cpp">
+      <Filter>Reactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp">
       <Filter>Reactor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -176,7 +179,13 @@
     <ClInclude Include="Src\MessageQueue\NotificationStrategy.h">
       <Filter>MessageQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Reactor\ReactorMessageBlock.h">
+    <ClInclude Include="Src\Reactor\WfmoReactorNotify.h">
+      <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor\ReactorNotify.h">
+      <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor\NotificationMessageBlock.h">
       <Filter>Reactor</Filter>
     </ClInclude>
   </ItemGroup>

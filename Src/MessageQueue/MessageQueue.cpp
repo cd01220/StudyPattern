@@ -100,8 +100,9 @@ error_code MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duratio
     msg = msgQueue.top();
     cv.notify_all();
     lock.unlock();
-
-    notificationStrategy->Notify();
+    
+    if (notificationStrategy != nullptr)
+        notificationStrategy->Notify();
     return errCode;
 }
 
@@ -128,8 +129,9 @@ error_code MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
     msgQueue.pop();
     cv.notify_all();
     lock.unlock();
-
-    notificationStrategy->Notify();
+    
+    if (notificationStrategy != nullptr)
+        notificationStrategy->Notify();
     return errCode;
 }
 
@@ -156,7 +158,8 @@ error_code MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
     cv.notify_all();
     lock.unlock(); 
 
-    notificationStrategy->Notify();
+    if (notificationStrategy != nullptr)
+        notificationStrategy->Notify();
     return errCode;
 }
 

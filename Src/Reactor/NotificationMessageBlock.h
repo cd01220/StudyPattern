@@ -1,3 +1,6 @@
+#ifndef _NotificationMessageBlock_h_
+#define _NotificationMessageBlock_h_
+
 #include "SystemInclude.h"
 #include "MessageQueue/MessageBlock.h"
 
@@ -14,3 +17,5 @@ public:
     std::shared_ptr<EventHandler> handler;
     long mask;
 };
+
+#endif

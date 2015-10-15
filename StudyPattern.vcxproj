@@ -25,8 +25,9 @@
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\Reactor\ReactorImpl.cpp" />
-    <ClCompile Include="Src\Reactor\ReactorMessageBlock.cpp" />
+    <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp" />
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp" />
+    <ClCompile Include="Src\Reactor\WfmoReactorNotify.cpp" />
     <ClCompile Include="Src\Task\ServiceObject.cpp" />
     <ClCompile Include="Src\Task\Task.cpp" />
     <ClCompile Include="Src\Task\TaskBase.cpp" />
@@ -54,8 +55,10 @@
     <ClInclude Include="Src\Public\SystemInclude.h" />
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
-    <ClInclude Include="Src\Reactor\ReactorMessageBlock.h" />
+    <ClInclude Include="Src\Reactor\NotificationMessageBlock.h" />
+    <ClInclude Include="Src\Reactor\ReactorNotify.h" />
     <ClInclude Include="Src\Reactor\WfmoReactor.h" />
+    <ClInclude Include="Src\Reactor\WfmoReactorNotify.h" />
     <ClInclude Include="Src\Task\ServiceObject.h" />
     <ClInclude Include="Src\Task\Task.h" />
     <ClInclude Include="Src\Task\TaskBase.h" />
@@ -116,7 +119,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions);STTCL_CX11_IMPL</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)\Src;$(ProjectDir)\Src\Public</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\Src;.\Src\Public</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

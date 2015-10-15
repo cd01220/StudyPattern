@@ -1,6 +1,7 @@
 #ifndef _ReactorDemo_h_
 #define _ReactorDemo_h_
 
+#include "MessageQueue/MessageQueue.h"
 #include "Reactor/Reactor.h"
 #include "Demo/EventHandlerStub.h"
 #include "Demo/Client.h"
@@ -21,7 +22,7 @@ inline void ReactorMain2(int argc, char *argv[])
 
     client->Open(nullptr);
     client->Activate();
-
+    
     reactor->RunEventLoop();
 }
 

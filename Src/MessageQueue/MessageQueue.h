@@ -25,7 +25,7 @@ public:
     };
     MessageQueueBase();
     virtual ~MessageQueueBase();
-        
+
     virtual void Activate() = 0;
     // Close down the message queue and release all resources.
     virtual void Close(void) = 0;
