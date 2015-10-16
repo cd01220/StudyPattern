@@ -2,10 +2,10 @@
 #define _MessageQueue_h_
 
 #include "SystemInclude.h"
+#include "TimeValue.h"
 
-#include "TimerQueue/TimeValue.h"
-#include "MessageQueue/MessageBlock.h"
-#include "MessageQueue/NotificationStrategy.h"
+class MessageBlock;
+class NotificationStrategy;
 
 /**********************class MessageQueueBase**********************/
 /* ACE_Message_Queue_Base */
@@ -61,6 +61,7 @@ protected:
 class MessageQueue: public MessageQueueBase
 {
 public:
+    MessageQueue();
     MessageQueue(std::shared_ptr<NotificationStrategy> ns);
     virtual ~MessageQueue();    
     
@@ -74,7 +75,7 @@ public:
     virtual bool IsFull();
 
     virtual size_t GetSize();
-    virtual void Open(std::shared_ptr<NotificationStrategy> ns = nullptr);
+    virtual void Open(std::shared_ptr<NotificationStrategy> ns);
     /* ACE_Message_Queue::notification_strategy(ACE_Notification_Strategy *s) */
     virtual void SetNotificationStrategy(std::shared_ptr<NotificationStrategy> ns);
 
@@ -103,11 +104,11 @@ private:
     void DeactivateImpl(void);
 
 private:
-    std::priority_queue<std::shared_ptr<MessageBlock>> msgQueue;
-    std::shared_ptr<NotificationStrategy> notificationStrategy;
-
     std::mutex  c11mutex;
     std::condition_variable cv;
+
+    std::priority_queue<std::shared_ptr<MessageBlock>> msgQueue;
+    std::shared_ptr<NotificationStrategy> notificationStrategy;
 };
 
 #endif

@@ -2,7 +2,7 @@
 #define _Reactor_h_
 
 #include "SystemInclude.h"
-#include "TimerQueue/TimeValue.h"  //TimePoint, Duration
+#include "TimeValue.h"  //TimePoint, Duration
 
 class EventHandler;
 class ReactorImpl;
@@ -16,7 +16,7 @@ public:
     Reactor();
     virtual ~Reactor();
 
-    std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
+    bool Notify(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
     std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);

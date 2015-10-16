@@ -23,7 +23,7 @@ ReactorNotificationStrategy::ReactorNotificationStrategy(Reactor *reactor,
 ReactorNotificationStrategy::~ReactorNotificationStrategy()
 {}
 
-error_code ReactorNotificationStrategy::Notify()
+bool ReactorNotificationStrategy::Notify()
 {
     return reactor->Notify(handler, mask);
 }

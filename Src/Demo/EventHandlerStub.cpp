@@ -10,8 +10,7 @@ using namespace std;
 EventHandlerStub::EventHandlerStub(Reactor *reactor)
     : EventHandler(reactor)
 {
-    dbgstrm << "Start." << endl;
-    eventHandle = CreateEvent(NULL, TRUE, FALSE, TEXT("EventHandlerStubEvent"));        
+    dbgstrm << "Start." << endl;    
 }
 
 error_code EventHandlerStub::HandleClose()
@@ -38,7 +37,7 @@ error_code EventHandlerStub::HandleInput()
     if (errCode)
         client->HandleClose();
 
-    return error_code();
+    return errCode;
 }
 
 error_code EventHandlerStub::HandleOutput()

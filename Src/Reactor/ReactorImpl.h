@@ -2,7 +2,7 @@
 #define _ReactorImpl_h_
 
 #include "SystemInclude.h"
-#include "TimerQueue/TimeValue.h"  //TimePoint, Duration
+#include "TimeValue.h"     //TimePoint, Duration
 
 class EventHandler;
 
@@ -15,8 +15,9 @@ public:
 
     /* int ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long) */
     virtual std::error_code HandleEvents(Duration duration) = 0;    
-    virtual std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask) = 0;
+    virtual bool Notify(std::shared_ptr<EventHandler> handler, long mask) = 0;
     virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler) = 0;
+
     virtual std::error_code ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,

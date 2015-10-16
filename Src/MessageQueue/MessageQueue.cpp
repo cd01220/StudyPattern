@@ -1,6 +1,8 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "MessageQueue/MessageBlock.h"
+#include "MessageQueue/NotificationStrategy.h"
 #include "MessageQueue/MessageQueue.h"
 
 using namespace std;
@@ -14,6 +16,11 @@ MessageQueueBase::~MessageQueueBase()
 
 
 /**********************class MessageQueueBase**********************/
+MessageQueue::MessageQueue()
+{
+    Open(nullptr);
+}
+
 MessageQueue::MessageQueue(shared_ptr<NotificationStrategy> ns)
 {
     Open(ns);

@@ -2,6 +2,7 @@
 #include "SystemError.h"
 #include "Debug.h"
 
+#include "TimerQueue/TimerQueue.h"  //TimerQueue
 #include "MessageQueue/MessageBlock.h"
 #include "Reactor/NotificationMessageBlock.h"
 #include "Reactor/WfmoReactorNotify.h"
@@ -66,14 +67,23 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
 }
 
 /**********************class WfmoReactor**********************/
-WfmoReactor::WfmoReactor(std::shared_ptr<TimerQueue> timerQueue)
+WfmoReactor::WfmoReactor()
+    : notifyHandler(nullptr), timerQueue(nullptr)
 {
-    notifyHandler = make_shared<WfmoReactorNotify>(nullptr);
+    if (!Open(notifyHandler, timerQueue))
+    {
+        errstrm << "Open() failed." << endl;
+    }
+}
 
-    if (timerQueue == nullptr)
-        this->timerQueue = make_shared<TimerQueue>();
-    else
-        this->timerQueue = timerQueue;
+WfmoReactor::WfmoReactor(std::shared_ptr<WfmoReactorNotify> notifyHandler, 
+                         std::shared_ptr<TimerQueue> timerQueue)
+    : notifyHandler(nullptr), timerQueue(nullptr)
+{
+    if (!Open(notifyHandler, timerQueue))
+    {
+        errstrm << "Open() failed." << endl;
+    }
 }
 
 WfmoReactor::~WfmoReactor()
@@ -90,11 +100,27 @@ error_code WfmoReactor::HandleEvents(Duration duration)
     return HandleEventsImpl(CalculateTimeout(duration));
 }
 
-error_code WfmoReactor::Notify(std::shared_ptr<EventHandler> handler,
+bool WfmoReactor::Notify(std::shared_ptr<EventHandler> handler,
                                long mask)
 {
-    error_code errCode = this->notifyHandler->Notify(handler, mask);
-    return error_code();
+    return notifyHandler->Notify(handler, mask);
+}
+
+bool WfmoReactor::Open(std::shared_ptr<WfmoReactorNotify> notifyHandler, 
+                       std::shared_ptr<TimerQueue> timerQueue)
+{
+    if (timerQueue == nullptr)
+        this->timerQueue = make_shared<TimerQueue>();
+    else
+        this->timerQueue = timerQueue;
+
+    if (notifyHandler == nullptr)
+        this->notifyHandler = make_shared<WfmoReactorNotify>();
+    else
+        this->notifyHandler = notifyHandler;
+    this->notifyHandler->Open(this, this->timerQueue);
+
+    return true;
 }
 
 error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)

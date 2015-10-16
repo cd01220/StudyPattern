@@ -4,7 +4,7 @@
 using namespace std;
 const char* system_category_impl::name() const
 {
-    return "Router error.";
+    return "system error.";
 }
 
 string system_category_impl::message(int ev) const
@@ -15,6 +15,7 @@ string system_category_impl::message(int ev) const
     case system_error_t::file_not_exists:
         ret = "file not exists";
         break;
+
     case system_error_t::bad_file_type:
         ret = "bad file type (supposed to be pcap format, 802.11 packet)";
         break;
@@ -22,6 +23,7 @@ string system_category_impl::message(int ev) const
     case system_error_t::wait_failed:
         ret = "wait failed";
         break;
+
     default:
         ret = "unknown error";
     }

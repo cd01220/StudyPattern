@@ -14,7 +14,6 @@
     <ClCompile Include="Src\Demo\Client.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
-    <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
     <ClCompile Include="Src\Main.cpp" />
@@ -24,7 +23,6 @@
     <ClCompile Include="Src\Public\Debug.cpp" />
     <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
-    <ClCompile Include="Src\Reactor\ReactorImpl.cpp" />
     <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp" />
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp" />
     <ClCompile Include="Src\Reactor\WfmoReactorNotify.cpp" />
@@ -32,9 +30,6 @@
     <ClCompile Include="Src\Task\Task.cpp" />
     <ClCompile Include="Src\Task\TaskBase.cpp" />
     <ClCompile Include="Src\TimerQueue\TimerQueueAdapter.cpp" />
-    <None Include="Src\TimerQueue\TimerQueueAdapter.inl">
-      <FileType>Document</FileType>
-    </None>
     <ClCompile Include="Src\TimerQueue\TimerQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -43,7 +38,6 @@
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Demo\ReactorDemo.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
-    <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\MessageQueue\MessageBlock.h" />
@@ -53,6 +47,7 @@
     <ClInclude Include="Src\Public\Debug.h" />
     <ClInclude Include="Src\Public\SystemError.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
+    <ClInclude Include="Src\Public\TimeValue.h" />
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />
     <ClInclude Include="Src\Reactor\Reactor.h" />
     <ClInclude Include="Src\Reactor\NotificationMessageBlock.h" />
@@ -66,13 +61,9 @@
     <ClInclude Include="Src\TimerQueue\TimerQueue.h" />
     <ClInclude Include="Src\TimerQueue\TimerNode.h" />
     <ClInclude Include="Src\TimerQueue\TimerQueueAdapter.h" />
-    <ClInclude Include="Src\TimerQueue\TimeValue.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Src\TimerQueue\TimerQueue.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{DC8D1673-A964-4C90-A8A0-FC3EE137DF5D}</ProjectGuid>

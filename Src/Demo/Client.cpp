@@ -2,8 +2,10 @@
 #include "Debug.h"
 
 #include "Reactor/Reactor.h"
-#include "MessageQueue/MessageQueue.h"
+#include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/NotificationStrategy.h"
+#include "MessageQueue/MessageQueue.h"
+
 #include "Demo/Client.h"
 
 using namespace std;
@@ -13,7 +15,6 @@ Client::Client(Reactor *reactor)
     : Task(reactor)
 {
     dbgstrm << "Start." << endl;
-    eventHandle = CreateEvent(NULL, TRUE, FALSE, TEXT("ClientEvent")); 
 }
 
 Client::~Client()

@@ -1,10 +1,11 @@
 #ifndef _TimerQueue_h_
 #define _TimerQueue_h_
 
-#include "CopyDisabled.h"
-#include "Event/EventHandler.h"
-#include "TimerQueue/TimerNode.h"
-#include "TimerQueue/AbstractTimerQueue.h"
+#include "CopyDisabled.h"                   //base class
+#include "TimerQueue/AbstractTimerQueue.h"  //base class
+
+class EventHandler;
+template<typename T> class TimerNodeT; 
 
 /**********************class TimerQueueUpcallBase**********************/
 /* ACE define the class "ACE_Event_Handler_Handle_Timeout_Upcall", required by TimerQueue 
@@ -31,22 +32,21 @@ the reference counter, so we comment out class AbstractTimerQueue.
 //    std::shared_ptr<T2> upcallFunctor;
 //};
 
-/**********************class TimerQueueT**********************/
+/**********************class TimerQueue**********************/
 /* class ACE_Timer_Queue_T */
 // T1: ACE_Event_Handler
 // T2: ACE_Event_Handler_Handle_Timeout_Upcall
-template <class T1>
-class TimerQueueT: public AbstractTimerQueue<T1>,
-                   private CopyDisabled
+class TimerQueue: public AbstractTimerQueue<EventHandler>,
+                  private CopyDisabled
 {
 public:
-    typedef typename TimerNodeT<T1> TimerNode;
+    typedef TimerNodeT<EventHandler> TimerNode;
     enum: uint_t { MaxNodeNumber = 65535 };
-    TimerQueueT();
+    TimerQueue();
 
     // Destructor - make virtual for proper destruction of inherited
     // classes.
-    virtual ~TimerQueueT();
+    virtual ~TimerQueue();
 
     // virtual ACE_Time_Value *ACE_Timer_Queue_T::calculate_timeout (ACE_Time_Value *max);
     virtual Duration CalculateTimeout();
@@ -71,7 +71,7 @@ public:
     * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule() with the right
     * locking strategy.
     */
-    virtual std::error_code Schedule(std::shared_ptr<T1> handler, 
+    virtual std::error_code Schedule(std::shared_ptr<EventHandler> handler, 
         const void *act, 
         TimePoint future, 
         Duration  interval,
@@ -93,7 +93,5 @@ private:
     std::list<uint_t> freeId; 
     std::bitset<MaxNodeNumber> canceledId;
 };
-
-typedef TimerQueueT<EventHandler> TimerQueue;
 
 #endif

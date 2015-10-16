@@ -1,9 +1,9 @@
 #ifndef _WfmoReactor_h_
 #define _WfmoReactor_h_
 
-#include "TimerQueue/TimerQueue.h"
-#include "MessageQueue/MessageQueue.h"
-#include "Reactor/ReactorImpl.h"
+#include "Reactor/ReactorImpl.h"  //class WfmoReactor: public ReactorImpl
+
+class TimerQueue;
 
 /**********************class WfmoReactorHandlerRepository**********************/
 /* ACE_WFMO_Reactor_Handler_Repository */
@@ -29,13 +29,16 @@ private:
     std::map<Handle, std::shared_ptr<EventHandler>> repository;
 };
 
-class ReactorNotify;
+class WfmoReactorNotify;
+
 /**********************class WfmoReactor**********************/
 /* class ACE_WFMO_Reactor (WFMO: Wait For Multiple Objects) */
 class WfmoReactor: public ReactorImpl
 {
 public:
-    WfmoReactor(std::shared_ptr<TimerQueue> timerQueue);
+    WfmoReactor();
+    WfmoReactor(std::shared_ptr<WfmoReactorNotify> notifyHandler, 
+                std::shared_ptr<TimerQueue> timerQueue);
     ~WfmoReactor();
 
     bool IsActived();
@@ -43,9 +46,10 @@ public:
     /* int ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long)*/
     virtual std::error_code HandleEvents(Duration duration);
         
-    virtual std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
+    virtual bool Notify(std::shared_ptr<EventHandler> handler, long mask);
 
-    //virtual std::error_code Open();
+    virtual bool Open(std::shared_ptr<WfmoReactorNotify> notifyHandler,
+                      std::shared_ptr<TimerQueue> timerQueue);
 
     /* int ACE_WFMO_Reactor::register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
     virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
@@ -91,7 +95,7 @@ protected:
 private:
     bool isActived;
     //ACE_WFMO_Reactor::notify_handler_, object type is WfmoReactorNotify
-    std::shared_ptr<ReactorNotify> notifyHandler;
+    std::shared_ptr<WfmoReactorNotify> notifyHandler; 
     WfmoReactorHandlerRepository repository;
     std::shared_ptr<TimerQueue> timerQueue;
 };

@@ -4,7 +4,7 @@
 #include "Task/TaskBase.h"
 #include "TimerQueue/TimerQueue.h"
 
-/**********************class ThreadTimerQueueAdapter**********************/
+/**********************class ActiveTimer**********************/
 /* Oringinal definition:
 typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> ActiveTimer; 
 
@@ -12,13 +12,12 @@ template <class TQ, class TYPE = ACE_Event_Handler*>
 class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
 */
 // T1: TimerQueue
-// T2: EventHandler
-template<typename T1, typename T2>
-class ThreadTimerQueueAdapter: public TaskBase
+// T2: EventHandler 
+class ActiveTimer: public TaskBase
 {
 public:
-    ThreadTimerQueueAdapter();
-    virtual ~ThreadTimerQueueAdapter();
+    ActiveTimer();
+    virtual ~ActiveTimer();
     
     std::error_code Activate();
 
@@ -29,7 +28,7 @@ public:
     // Inform the dispatching thread that it should terminate.
     void Deactivate (void);
 
-    std::error_code Schedule(std::shared_ptr<T2> handler, 
+    std::error_code Schedule(std::shared_ptr<EventHandler> handler, 
         const void *act, 
         TimePoint future, 
         Duration  interval,
@@ -40,13 +39,12 @@ public:
     virtual std::error_code ServiceRoutine();
 
 private:
-    std::shared_ptr<T1> timerQueue;
+    std::shared_ptr<TimerQueue> timerQueue;
     bool isActive;
 
     std::mutex  c11mutex;
     std::condition_variable cv;
 };
 
-typedef ThreadTimerQueueAdapter<TimerQueueT<EventHandler>, EventHandler> ActiveTimer; 
 
 #endif

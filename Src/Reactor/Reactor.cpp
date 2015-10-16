@@ -11,7 +11,7 @@ using namespace std;
 Reactor::Reactor()
 {
 #ifdef _WIN32
-    implementation = make_shared<WfmoReactor>(nullptr);
+    implementation = make_shared<WfmoReactor>();
 #endif
 }
 
@@ -19,7 +19,7 @@ Reactor::~Reactor()
 {
 }
 
-error_code Reactor::Notify(std::shared_ptr<EventHandler> handler, long mask)
+bool Reactor::Notify(std::shared_ptr<EventHandler> handler, long mask)
 {
     if (handler != nullptr && handler->GetReactor() == nullptr)
         handler->SetReactor(this);

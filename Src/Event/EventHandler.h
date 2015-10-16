@@ -2,11 +2,19 @@
 #define _EventHandler_h_
 
 #include "SystemInclude.h"
-#include "TimerQueue/TimeValue.h"  //TimePoint, Duration
+#include "TimeValue.h"  //TimePoint, Duration
 
 #ifdef _WIN32
     typedef HANDLE Handle;
     #define InvalidHandleValue INVALID_HANDLE_VALUE
+        
+    struct SignalInfo
+    {
+        SignalInfo (Handle handle);
+
+        /// Win32 HANDLE that has become signaled.
+        Handle handle;
+    };
 #else
 #endif
 

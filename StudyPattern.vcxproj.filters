@@ -48,9 +48,6 @@
     <ClCompile Include="Src\Public\SystemError.cpp">
       <Filter>Public</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Event\EventHandlerHandleTimeoutUpcall.cpp">
-      <Filter>Event</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Event\EventHandler.cpp">
       <Filter>Event</Filter>
     </ClCompile>
@@ -74,9 +71,6 @@
     </ClCompile>
     <ClCompile Include="Src\Task\Task.cpp">
       <Filter>Task</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Reactor\ReactorImpl.cpp">
-      <Filter>Reactor</Filter>
     </ClCompile>
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp">
       <Filter>Reactor</Filter>
@@ -122,9 +116,6 @@
     <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h">
       <Filter>TimerQueue</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Event\EventHandlerHandleTimeoutUpcall.h">
-      <Filter>Event</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Event\EventHandler.h">
       <Filter>Event</Filter>
     </ClInclude>
@@ -133,9 +124,6 @@
     </ClInclude>
     <ClInclude Include="Src\Public\CopyDisabled.h">
       <Filter>Public</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\TimerQueue\TimeValue.h">
-      <Filter>TimerQueue</Filter>
     </ClInclude>
     <ClInclude Include="Src\TimerQueue\TimerNode.h">
       <Filter>TimerQueue</Filter>
@@ -188,16 +176,11 @@
     <ClInclude Include="Src\Reactor\NotificationMessageBlock.h">
       <Filter>Reactor</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Public\TimeValue.h">
+      <Filter>Public</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Src\TimerQueue\TimerQueue.inl">
-      <Filter>TimerQueue</Filter>
-    </None>
-    <None Include="Src\TimerQueue\TimerQueueAdapter.inl">
-      <Filter>TimerQueue</Filter>
-    </None>
   </ItemGroup>
 </Project>

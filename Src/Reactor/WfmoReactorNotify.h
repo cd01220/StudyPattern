@@ -1,25 +1,18 @@
 #ifndef _WfmoReactorNotify_h_
 #define _WfmoReactorNotify_h_
 
-#include "Event/EventHandler.h" //Handle
-#include "Reactor/ReactorNotify.h"
-#include "MessageQueue/MessageQueue.h" //MessageQueue
+#include "Reactor/ReactorNotify.h"     //ReactorNotify: base class
 
-struct SignalInfo
-{
-    SignalInfo (Handle handle);
+class MessageQueue;
+class ReactorImpl;
+class TimerQueue;
 
-    /// Win32 HANDLE that has become signaled.
-    Handle handle;
-};
-
-class NotificationStrategy;  //for parameter of MessageQueue's construct function
 /**********************class WfmoReactorNotify**********************/
 /* class ACE_WFMO_Reactor_Notify */
 class WfmoReactorNotify: public ReactorNotify
 {
 public:
-    WfmoReactorNotify(std::shared_ptr<NotificationStrategy> msgQueueNs);
+    WfmoReactorNotify();
     virtual ~WfmoReactorNotify();
     /**
     * Called when the notification event waited on by
@@ -32,10 +25,17 @@ public:
                                  ACE_Reactor_Mask mask,
                                  ACE_Time_Value *timeout)
     */
-    std::error_code Notify(std::shared_ptr<EventHandler> handler, long mask);
+    bool Notify(std::shared_ptr<EventHandler> handler, long mask);
+
+    //int ACE_WFMO_Reactor_Notify::open (ACE_Reactor_Impl *wfmo_reactor,
+    //                           ACE_Timer_Queue *timer_queue,
+    //                           int ignore_notify)
+    bool Open(ReactorImpl *reactor, std::shared_ptr<TimerQueue>);
 
 private:
-    MessageQueue msgQueue;
+    std::shared_ptr<MessageQueue> msgQueue;
+    /* shared timer queue with WfmoReactor */
+    std::shared_ptr<TimerQueue> timerQueue;  
 };
 
 #endif

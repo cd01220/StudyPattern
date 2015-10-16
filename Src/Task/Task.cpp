@@ -1,6 +1,7 @@
 #include "SystemInclude.h"
 #include "SystemError.h"
 
+#include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/MessageQueue.h"
 
 #include "Task/Task.h"
@@ -10,11 +11,11 @@ using namespace std;
 Task::Task(Reactor *reactor)
     : TaskBase(reactor)
 {
-    msgQueue = make_shared<MessageQueue>(nullptr);
+    msgQueue = make_shared<MessageQueue>();
 }
 
 Task::~Task()
-{}
+{} 
 
 error_code Task::Push(std::shared_ptr<MessageBlock> msg, Duration duration)
 {
