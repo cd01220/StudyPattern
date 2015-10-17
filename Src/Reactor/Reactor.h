@@ -1,7 +1,6 @@
 #ifndef _Reactor_h_
 #define _Reactor_h_
 
-#include "SystemInclude.h"
 #include "TimeValue.h"  //TimePoint, Duration
 
 class EventHandler;
@@ -11,7 +10,7 @@ class ReactorImpl;
 class Reactor
 {
 public:
-    typedef std::function<std::error_code(Reactor&)> ReactorEventHook;
+    typedef std::function<bool(Reactor&)> ReactorEventHook;
 
     Reactor();
     virtual ~Reactor();
@@ -19,15 +18,15 @@ public:
     bool Notify(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
-    std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
+    bool RegisterHandler(std::shared_ptr<EventHandler> handler);
     
     /* static int ACE_Reactor::run_event_loop (void) */
-    virtual std::error_code RunEventLoop();
+    virtual bool RunEventLoop();
 
     /* int ACE_Reactor::run_reactor_event_loop (REACTOR_EVENT_HOOK eh) */
-    virtual std::error_code RunReactorEventLoop(ReactorEventHook hook);
+    virtual bool RunReactorEventLoop(ReactorEventHook hook);
 
-    std::error_code ScheduleTimer(std::shared_ptr<EventHandler> handler,
+    bool ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,
         Duration  interval);

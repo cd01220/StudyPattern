@@ -13,11 +13,11 @@ public:
     Client(Reactor *reactor);
     ~Client();
     
-    virtual std::error_code HandleInput();
-    virtual std::error_code HandleOutput();
-    virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    virtual bool HandleInput();
+    virtual bool HandleOutput();
+    virtual bool HandleTimeOut(TimePoint, const void *arg = 0);
         
-    virtual std::error_code Open(void *args);
+    virtual bool Open(void *args);
 
 private:
     std::shared_ptr<ReactorNotificationStrategy> notifer;

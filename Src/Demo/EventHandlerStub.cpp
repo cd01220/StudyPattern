@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 #include "Debug.h"
 
 #include "Reactor/Reactor.h"
@@ -13,13 +12,13 @@ EventHandlerStub::EventHandlerStub(Reactor *reactor)
     dbgstrm << "Start." << endl;    
 }
 
-error_code EventHandlerStub::HandleClose()
+bool EventHandlerStub::HandleClose()
 {
     dbgstrm << "Start." << endl;
     return error_code();
 }
 
-error_code EventHandlerStub::HandleInput()
+bool EventHandlerStub::HandleInput()
 {
     dbgstrm << "Start." << endl;    
     SOCKET acceptSocket;
@@ -27,32 +26,34 @@ error_code EventHandlerStub::HandleInput()
     if (acceptSocket == INVALID_SOCKET)
     {
         errstrm << "accept failed:" << WSAGetLastError() << endl;
-        return system_error_t::unknown_error;
+        return false;
     }
 
     std::shared_ptr<ClientService> client = std::make_shared<ClientService>(this->reactor);
     client->SetIoHandle((Handle)acceptSocket);    
     client->SetMask(ReadMask);
-    error_code errCode = client->Open();
-    if (errCode)
+    if (!client->Open())
+    {
         client->HandleClose();
+        return false;
+    }
 
-    return errCode;
+    return true;
 }
 
-error_code EventHandlerStub::HandleOutput()
+bool EventHandlerStub::HandleOutput()
 {
     dbgstrm << "Start." << endl;
-    return error_code();
+    return true;
 }
 
-error_code EventHandlerStub::HandleTimeOut(TimePoint, const void *arg)
+bool EventHandlerStub::HandleTimeOut(TimePoint, const void *arg)
 {
     dbgstrm << "Start." << endl;
-    return error_code();
+    return true;
 }
 
-error_code EventHandlerStub::Open()
+bool EventHandlerStub::Open()
 {
     SOCKET listenSocket;
     listenSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -60,7 +61,7 @@ error_code EventHandlerStub::Open()
     {
         errstrm << "Error at socket(): " <<  WSAGetLastError() << endl;
         WSACleanup();
-        return system_error_t::unknown_error;
+        return false;
     }
 
     sockaddr_in service;
@@ -73,7 +74,7 @@ error_code EventHandlerStub::Open()
         errstrm << "bind() failed." << endl;
         closesocket(listenSocket);
         WSACleanup();
-        return system_error_t::unknown_error;
+        return false;
     }
 
     if (::listen(listenSocket, 1) == SOCKET_ERROR) 
@@ -81,16 +82,19 @@ error_code EventHandlerStub::Open()
         errstrm << "Error listening on socket." << endl;
         closesocket(listenSocket);
         WSACleanup();
-        return system_error_t::unknown_error;
+        return false;
     }
 
     this->SetIoHandle((Handle)listenSocket);
     this->SetMask(AcceptMask);
-    error_code errCode = reactor->RegisterHandler(shared_from_this());
-    if (errCode)
-        errstrm << errCode.message();
 
-    return errCode;
+    if (reactor->RegisterHandler(shared_from_this()))
+    {
+        errstrm << "reactor->RegisterHandler() failed" << endl;
+        return false;
+    }
+
+    return true;
 }
 
 /**********************class ClientService**********************/
@@ -104,14 +108,14 @@ ClientService::~ClientService()
 {
 }
 
-error_code ClientService::HandleInput()
+bool ClientService::HandleInput()
 { 
     const size_t bufSize = 256;
     char buffer[bufSize];
     int result = recv((SOCKET)ioHandle, buffer, bufSize - 1, 0);
     if (result <= 0)
     {
-        return system_error_t::unknown_error;
+        return false;
     }
     buffer[result] = '\0';
     prtstrm << buffer;
@@ -120,16 +124,12 @@ error_code ClientService::HandleInput()
     return error_code();
 }
 
-error_code ClientService::HandleTimeOut(TimePoint, const void *arg)
+bool ClientService::HandleTimeOut(TimePoint, const void *arg)
 {
     return error_code();
 }
 
-error_code ClientService::Open()
+bool ClientService::Open()
 {
-    error_code errCode = reactor->RegisterHandler(shared_from_this());
-    if (errCode)
-        errstrm << errCode.message();
-
-    return errCode;
+    return reactor->RegisterHandler(shared_from_this());
 }

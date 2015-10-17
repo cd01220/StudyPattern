@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 
 #include "Event/EventHandler.h" //EventHandler
 #include "Reactor/ReactorImpl.h" //ReactorImpl
@@ -27,38 +26,36 @@ bool Reactor::Notify(std::shared_ptr<EventHandler> handler, long mask)
     return implementation->Notify(handler, mask);
 }
 
-error_code Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
+bool Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
 {
     error_code errCode;
     Reactor *reactor = handler->GetReactor();
     handler->SetReactor(this);
 
-    errCode = implementation->RegisterHandler(handler);
-    if (errCode)
+    if (implementation->RegisterHandler(handler))
     {
         handler->SetReactor(reactor);
+        return false;
     }
 
-    return errCode;
+    return true;
 }
 
-error_code Reactor::RunEventLoop()
+bool Reactor::RunEventLoop()
 {
     return RunReactorEventLoop(nullptr);
 }
 
-error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
+bool Reactor::RunReactorEventLoop(ReactorEventHook hook)
 {
     if (!implementation->IsActived())
     {
-        return error_code(system_error_t::unknown_error);
+        return false;
     }
 
-    error_code errCode;
     while (true)
     {
-        errCode = implementation->HandleEvents(Duration::max());
-        if (errCode)
+        if (!implementation->HandleEvents(Duration::max()))
         { 
             break; 
         }
@@ -69,10 +66,10 @@ error_code Reactor::RunReactorEventLoop(ReactorEventHook hook)
         }
     }
 
-    return errCode;
+    return true;
 }
 
-error_code Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
+bool Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,
         Duration  interval)
@@ -81,12 +78,12 @@ error_code Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
     Reactor *oldReactor = handler->GetReactor();
     handler->SetReactor(this);
 
-    error_code errCode = this->implementation->ScheduleTimer(handler, arg, timePoint, interval);
-    if (errCode)
+    if (!this->implementation->ScheduleTimer(handler, arg, timePoint, interval))
     {
         // Reset the old reactor in case of failures.
         handler->SetReactor(oldReactor);
+        return false;
     }
 
-    return errCode;
+    return true;
 }

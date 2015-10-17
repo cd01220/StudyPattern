@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 
 #include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/MessageQueue.h"
@@ -17,12 +16,13 @@ Task::Task(Reactor *reactor)
 Task::~Task()
 {} 
 
-error_code Task::Push(std::shared_ptr<MessageBlock> msg, Duration duration)
+bool Task::Push(std::shared_ptr<MessageBlock> msg, Duration duration)
 {
-    error_code errCode;
-    errCode = msgQueue->Push(msg, duration);
-    if (errCode)
+    if (msgQueue->Push(msg, duration))
+    {
         cerr << "Task::Push() failed" << endl;
+        return false;
+    }
 
-    return errCode;
+    return true;
 }

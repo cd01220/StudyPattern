@@ -43,9 +43,9 @@ public:
     * which typically invokes the <handle_close> hook.  Returns number
     * of timers cancelled.
     */
-    virtual std::error_code Cancel(uint_t timerId) = 0;
+    virtual bool Cancel(uint_t timerId) = 0;
 
-    virtual std::error_code Schedule(std::shared_ptr<T> handler, 
+    virtual bool Schedule(std::shared_ptr<T> handler, 
         const void *arc, 
         TimePoint future, 
         Duration  interval,

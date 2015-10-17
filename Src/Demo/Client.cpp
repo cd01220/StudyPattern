@@ -22,18 +22,18 @@ Client::~Client()
     delete reactor;
 }
 
-std::error_code Client::HandleInput()
+bool Client::HandleInput()
 {
-    return error_code();
+    return true;
 }
 
 // Called when output is possible.
-std::error_code Client::HandleOutput()
+bool Client::HandleOutput()
 {
-    return error_code();
+    return true;
 }
 
-std::error_code Client::HandleTimeOut(TimePoint, const void *arg)
+bool Client::HandleTimeOut(TimePoint, const void *arg)
 {
     cout << "HandleTimeOut" << endl;
     
@@ -42,12 +42,10 @@ std::error_code Client::HandleTimeOut(TimePoint, const void *arg)
     return Push(msg, Duration::zero());
 }
 
-std::error_code Client::Open(void *args)
+bool Client::Open(void *args)
 {
-    error_code errCode;
-    errCode = MyBase::Open(args);
-    if (errCode)
-        return errCode;
+    if (MyBase::Open(args))
+        return false;
     
     //SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     //sockaddr_in clientService; 
@@ -64,8 +62,6 @@ std::error_code Client::Open(void *args)
     notifer = make_shared<ReactorNotificationStrategy>(reactor, shared_from_this(), EventHandler::WriteMask);
     this->msgQueue->SetNotificationStrategy(notifer);
     
-    errCode = reactor->ScheduleTimer(shared_from_this(), nullptr, GetCurTime() + Duration(1000), Duration(500));
-
-    return errCode;
+    return reactor->ScheduleTimer(shared_from_this(), nullptr, GetCurTime() + Duration(1000), Duration(500));
 }
 

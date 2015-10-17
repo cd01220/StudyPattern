@@ -18,24 +18,21 @@ ActiveTimer::ActiveTimer()
 ActiveTimer::~ActiveTimer()
 {}
 
-error_code ActiveTimer::Activate()
+bool ActiveTimer::Activate()
 {
     std::lock_guard<mutex> lock(c11mutex);
     this->isActive = true;
     return TaskBase::Activate();
 }
 
-error_code ActiveTimer::Cancel(uint_t timerId)
+bool ActiveTimer::Cancel(uint_t timerId)
 {
-    error_code errCode;
-
-    errCode = timerQueue->Cancel(timerId);
-    if (errCode)
+    if (!timerQueue->Cancel(timerId))
     {
-        std::cerr << errCode.message() << std::endl;
+        return false;
     }
 
-    return errCode;
+    return true;
 }
 
 void ActiveTimer::Deactivate(void)
@@ -45,7 +42,7 @@ void ActiveTimer::Deactivate(void)
     cv.notify_one();
 }
 
-error_code ActiveTimer::Schedule(std::shared_ptr<EventHandler> handler, 
+bool ActiveTimer::Schedule(std::shared_ptr<EventHandler> handler, 
     const void *act, 
     TimePoint future, 
     Duration  interval,
@@ -54,18 +51,16 @@ error_code ActiveTimer::Schedule(std::shared_ptr<EventHandler> handler,
     error_code errCode;
 
     std::lock_guard<mutex> lock(c11mutex);
-    errCode = timerQueue->Schedule(handler, act, future, interval, timerId);
-    if (errCode)
+    if (!timerQueue->Schedule(handler, act, future, interval, timerId))
     {
-        cerr << errCode.message() << std::endl;
-        return errCode;
+        return false;
     }
 
     cv.notify_one();
-    return errCode;
+    return true;
 }
 
-error_code ActiveTimer::ServiceRoutine()
+bool ActiveTimer::ServiceRoutine()
 {
     error_code errCode;
 

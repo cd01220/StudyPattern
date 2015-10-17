@@ -20,7 +20,7 @@ public:
     * ACE_Event_Handlers and dispatches them.
     */
     /* int ACE_WFMO_Reactor_Notify::handle_signal() */
-    std::error_code HandleSignal(int signalNum, SignalInfo SigInfor);
+    bool HandleSignal(int signalNum, SignalInfo SigInfor);
     /* int ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
                                  ACE_Reactor_Mask mask,
                                  ACE_Time_Value *timeout)

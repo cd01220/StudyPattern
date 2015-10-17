@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 
 #include "Task/TaskBase.h"
 using namespace std;
@@ -13,26 +12,25 @@ TaskBase::TaskBase(Reactor *reactor)
 TaskBase::~TaskBase()
 {}
 
-error_code TaskBase::Activate()
+bool TaskBase::Activate()
 {
-    error_code errCode;
     svcThread = std::thread(&TaskBase::ThreadRoutine, this);
-    return errCode;
+    return true;
 }
 
-error_code TaskBase::Close(uint_t flags)
+bool TaskBase::Close(uint_t flags)
 {
-    return error_code();
+    return true;
 }
 
-error_code TaskBase::Open(void *args)
+bool TaskBase::Open(void *args)
 {
-    return error_code();
+    return true;
 }
 
-error_code TaskBase::ServiceRoutine()
+bool TaskBase::ServiceRoutine()
 {
-    return error_code();
+    return true;
 }
 
 void TaskBase::Wait()

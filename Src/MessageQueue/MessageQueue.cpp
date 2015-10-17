@@ -1,5 +1,5 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
+#include "Debug.h"
 
 #include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/NotificationStrategy.h"
@@ -85,9 +85,8 @@ void MessageQueue::SetNotificationStrategy(shared_ptr<NotificationStrategy> ns)
     this->state = Actived;
 }
 
-error_code MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
+bool MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
-    error_code errCode;
     TimePoint until = GetCurTime() + duration;
 
     unique_lock<mutex> lock(c11mutex);
@@ -98,9 +97,8 @@ error_code MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duratio
         {
             lock.unlock();
             /* time out */
-            cerr << "error, queue is empty." << endl;
-            errCode = system_error_t::queue_is_empty;
-            return errCode;
+            errstrm << "error, queue is empty." << endl;
+            return false;
         }
     }
 
@@ -110,12 +108,11 @@ error_code MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duratio
     
     if (notificationStrategy != nullptr)
         notificationStrategy->Notify();
-    return errCode;
+    return true;
 }
 
-error_code MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
+bool MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
-    error_code errCode;
     TimePoint until = GetCurTime() + duration;
 
     unique_lock<mutex> lock(c11mutex);
@@ -126,9 +123,8 @@ error_code MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
         {
             lock.unlock();
             /* time out */
-            cerr << "error, queue is empty." << endl;
-            errCode = system_error_t::queue_is_empty;
-            return errCode;
+            errstrm << "error, queue is empty." << endl;
+            return false;
         }
     }
 
@@ -139,12 +135,11 @@ error_code MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
     
     if (notificationStrategy != nullptr)
         notificationStrategy->Notify();
-    return errCode;
+    return true;
 }
 
-error_code MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
+bool MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
 {
-    error_code errCode;
     TimePoint until = GetCurTime() + duration;
 
     unique_lock<mutex> lock(c11mutex);   
@@ -155,9 +150,8 @@ error_code MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
         {
             lock.unlock();
             /* time out */
-            cerr << "error, queue is full." << endl;
-            errCode = system_error_t::queue_is_full;
-            return errCode;
+            errstrm << "error, queue is full." << endl;
+            return false;
         }
     }
 
@@ -167,7 +161,7 @@ error_code MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
 
     if (notificationStrategy != nullptr)
         notificationStrategy->Notify();
-    return errCode;
+    return true;
 }
 
 /**********************class MessageQueueBase**********************/

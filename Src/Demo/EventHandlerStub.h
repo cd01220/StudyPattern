@@ -10,12 +10,12 @@ class EventHandlerStub: public EventHandler
 public:
     EventHandlerStub(Reactor *reactor = nullptr);
     
-    std::error_code HandleClose();
-    std::error_code HandleInput();
-    std::error_code HandleOutput();
-    std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    bool HandleClose();
+    bool HandleInput();
+    bool HandleOutput();
+    bool HandleTimeOut(TimePoint, const void *arg = 0);
 
-    std::error_code Open();
+    bool Open();
 };
 
 /**********************class ClientService**********************/
@@ -25,10 +25,10 @@ public:
     ClientService(Reactor *reactor = nullptr);
     ~ClientService();
     
-    std::error_code HandleInput();
-    std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    bool HandleInput();
+    bool HandleTimeOut(TimePoint, const void *arg = 0);
 
-    std::error_code Open();
+    bool Open();
 };
 
 #endif

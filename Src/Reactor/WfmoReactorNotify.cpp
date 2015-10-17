@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 #include "Debug.h"
 
 #include "TimerQueue/TimerQueue.h"  //TimerQueue
@@ -21,9 +20,9 @@ WfmoReactorNotify::~WfmoReactorNotify()
 {
 }
 
-error_code WfmoReactorNotify::HandleSignal(int signalNum, SignalInfo SigInfor)
+bool WfmoReactorNotify::HandleSignal(int signalNum, SignalInfo SigInfor)
 {
-    return error_code();
+    return true;
 }
 
 bool WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)

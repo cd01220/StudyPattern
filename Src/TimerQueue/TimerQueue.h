@@ -56,7 +56,7 @@ public:
     * which typically invokes the <handle_close> hook.  Returns number
     * of timers cancelled.
     */
-    virtual std::error_code Cancel(uint_t timerId);
+    virtual bool Cancel(uint_t timerId);
 
     /**
     * Implement ACE_Abstract_Timer_Queue<TYPE>::expire() with the right
@@ -71,7 +71,7 @@ public:
     * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule() with the right
     * locking strategy.
     */
-    virtual std::error_code Schedule(std::shared_ptr<EventHandler> handler, 
+    virtual bool Schedule(std::shared_ptr<EventHandler> handler, 
         const void *act, 
         TimePoint future, 
         Duration  interval,

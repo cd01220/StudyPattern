@@ -19,16 +19,16 @@ public:
     ActiveTimer();
     virtual ~ActiveTimer();
     
-    std::error_code Activate();
+    bool Activate();
 
     /// Cancel the @a timer_id and pass back the @a act if an address is
     /// passed in.
-    std::error_code Cancel(uint_t timerId);
+    bool Cancel(uint_t timerId);
 
     // Inform the dispatching thread that it should terminate.
     void Deactivate (void);
 
-    std::error_code Schedule(std::shared_ptr<EventHandler> handler, 
+    bool Schedule(std::shared_ptr<EventHandler> handler, 
         const void *act, 
         TimePoint future, 
         Duration  interval,
@@ -36,7 +36,7 @@ public:
 
     // ACE_Thread_Timer_Queue_Adapter::svc()
     // overwrite virtual function of TaskBase::ServiceRoutine
-    virtual std::error_code ServiceRoutine();
+    virtual bool ServiceRoutine();
 
 private:
     std::shared_ptr<TimerQueue> timerQueue;

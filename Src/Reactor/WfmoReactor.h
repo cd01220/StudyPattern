@@ -44,7 +44,7 @@ public:
     bool IsActived();
 
     /* int ACE_WFMO_Reactor::handle_events (ACE_Time_Value *how_long)*/
-    virtual std::error_code HandleEvents(Duration duration);
+    virtual bool HandleEvents(Duration duration);
         
     virtual bool Notify(std::shared_ptr<EventHandler> handler, long mask);
 
@@ -52,9 +52,9 @@ public:
                       std::shared_ptr<TimerQueue> timerQueue);
 
     /* int ACE_WFMO_Reactor::register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
-    virtual std::error_code RegisterHandler(std::shared_ptr<EventHandler> handler);
+    virtual bool RegisterHandler(std::shared_ptr<EventHandler> handler);
 
-    virtual std::error_code ScheduleTimer(std::shared_ptr<EventHandler> handler,
+    virtual bool ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,
         Duration  interval);
@@ -65,24 +65,24 @@ protected:
                                                          ACE_Reactor_Mask mask,
                                                          bool &changes_required)
     */
-    std::error_code DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask);
+    bool DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status) */
-    std::error_code Dispatch(DWORD waitStatus);
+    bool Dispatch(DWORD waitStatus);
     /* int ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status) */
-    std::error_code DispatchHandles (size_t index);
+    bool DispatchHandles (size_t index);
     uint_t ExpireTimers();
 
     /* int ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time, int alertable)
     */
-    std::error_code HandleEventsImpl(Duration duration);
+    bool HandleEventsImpl(Duration duration);
 
     /* virtual int ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
     ACE_HANDLE io_handle,
     ACE_Event_Handler *event_handler,
     ACE_Reactor_Mask mask);
     */
-    std::error_code RegisterHandlerImpl(std::shared_ptr<EventHandler> handler);
+    bool RegisterHandlerImpl(std::shared_ptr<EventHandler> handler);
 
     /*
     ACE_Reactor_Mask ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
@@ -90,7 +90,7 @@ protected:
         WSANETWORKEVENTS &events)
     */
     long UpCall(long events, std::shared_ptr<EventHandler> handler);
-    std::error_code WaitForMultipleEvents(Duration duration);
+    bool WaitForMultipleEvents(Duration duration);
     
 private:
     bool isActived;

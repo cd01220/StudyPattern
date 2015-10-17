@@ -21,7 +21,6 @@
     <ClCompile Include="Src\MessageQueue\MessageQueue.cpp" />
     <ClCompile Include="Src\MessageQueue\NotificationStrategy.cpp" />
     <ClCompile Include="Src\Public\Debug.cpp" />
-    <ClCompile Include="Src\Public\SystemError.cpp" />
     <ClCompile Include="Src\Reactor\Reactor.cpp" />
     <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp" />
     <ClCompile Include="Src\Reactor\WfmoReactor.cpp" />
@@ -45,7 +44,6 @@
     <ClInclude Include="Src\MessageQueue\NotificationStrategy.h" />
     <ClInclude Include="Src\Public\CopyDisabled.h" />
     <ClInclude Include="Src\Public\Debug.h" />
-    <ClInclude Include="Src\Public\SystemError.h" />
     <ClInclude Include="Src\Public\SystemInclude.h" />
     <ClInclude Include="Src\Public\TimeValue.h" />
     <ClInclude Include="Src\Reactor\ReactorImpl.h" />

@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 
 #include "TimeValue.h"  //TimePoint, Duration
 
@@ -71,7 +70,7 @@ Duration TimerQueue::CalculateTimeout()
     return Duration::zero();
 }
 
-std::error_code TimerQueue::Cancel(uint_t timerId)
+bool TimerQueue::Cancel(uint_t timerId)
 {
     lock_guard<std::mutex> lock(c11mutex);
     CancelTimerId(timerId);
@@ -101,16 +100,14 @@ bool TimerQueue::IsEmpty()
     return timers.empty();
 }
 
-std::error_code TimerQueue::Schedule(std::shared_ptr<EventHandler> handler, 
+bool TimerQueue::Schedule(std::shared_ptr<EventHandler> handler, 
     const void *act, TimePoint future, Duration interval, uint_t *timerId)
 {
     lock_guard<std::mutex> lock(c11mutex);
 
-    error_code errCode;
     if (freeId.empty())
     {
-        errCode = system_error_t::no_free_timer_id;
-        return errCode;
+        return false;
     }
     uint_t id = AllocTimerId();
     if (timerId != nullptr)
@@ -120,7 +117,7 @@ std::error_code TimerQueue::Schedule(std::shared_ptr<EventHandler> handler,
 
     timers.push(make_shared<TimerNode>(handler, act, future, interval, id));
 
-    return errCode;
+    return true;
 }
 
 /**********************class TimerQueue**********************/

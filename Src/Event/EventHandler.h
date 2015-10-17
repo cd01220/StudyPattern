@@ -45,13 +45,13 @@ public:
 
     virtual ~EventHandler();
     
-    virtual std::error_code HandleClose();
-    virtual std::error_code HandleException();
-    virtual std::error_code HandleGroupQos();
-    virtual std::error_code HandleInput();
-    virtual std::error_code HandleOutput();
-    virtual std::error_code HandleQos();
-    virtual std::error_code HandleTimeOut(TimePoint, const void *arg = 0);
+    virtual bool HandleClose();
+    virtual bool HandleException();
+    virtual bool HandleGroupQos();
+    virtual bool HandleInput();
+    virtual bool HandleOutput();
+    virtual bool HandleQos();
+    virtual bool HandleTimeOut(TimePoint, const void *arg = 0);
 
     virtual Handle GetEventHandle() const;
     virtual Handle GetIoHandle() const;

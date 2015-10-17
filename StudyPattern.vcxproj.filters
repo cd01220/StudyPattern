@@ -45,9 +45,6 @@
     <ClCompile Include="Src\Reactor\Reactor.cpp">
       <Filter>Reactor</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Public\SystemError.cpp">
-      <Filter>Public</Filter>
-    </ClCompile>
     <ClCompile Include="Src\Event\EventHandler.cpp">
       <Filter>Event</Filter>
     </ClCompile>
@@ -109,9 +106,6 @@
     </ClInclude>
     <ClInclude Include="Src\Reactor\Reactor.h">
       <Filter>Reactor</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Public\SystemError.h">
-      <Filter>Public</Filter>
     </ClInclude>
     <ClInclude Include="Src\TimerQueue\AbstractTimerQueue.h">
       <Filter>TimerQueue</Filter>

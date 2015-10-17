@@ -13,7 +13,7 @@ public:
     Task(Reactor *reactor);
     virtual ~Task();
 
-    std::error_code Push(std::shared_ptr<MessageBlock> msg, Duration duration);
+    bool Push(std::shared_ptr<MessageBlock> msg, Duration duration);
 
 protected:
     std::shared_ptr<MessageQueue> msgQueue;

@@ -17,13 +17,13 @@ ServiceObject::~ServiceObject (void)
 }
 
 /// Temporarily disable a service without removing it completely.
-error_code ServiceObject::Suspend (void)
+bool ServiceObject::Suspend (void)
 {
-    return error_code();
+    return true;
 }
 
 /// Re-enable a previously suspended service.
-error_code ServiceObject::Resume (void)
+bool ServiceObject::Resume (void)
 {
-    return error_code();
+    return true;
 }

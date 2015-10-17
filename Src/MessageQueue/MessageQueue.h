@@ -1,7 +1,6 @@
 #ifndef _MessageQueue_h_
 #define _MessageQueue_h_
 
-#include "SystemInclude.h"
 #include "TimeValue.h"
 
 class MessageBlock;
@@ -47,10 +46,10 @@ public:
     * on the queue.
     * original definition: peek_dequeue_head()
     */
-    virtual std::error_code PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
+    virtual bool PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
 
-    virtual std::error_code Pop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
-    virtual std::error_code Push(std::shared_ptr<MessageBlock> msg, Duration duration) = 0;
+    virtual bool Pop(std::shared_ptr<MessageBlock> &msg, Duration duration) = 0;
+    virtual bool Push(std::shared_ptr<MessageBlock> msg, Duration duration) = 0;
 
 protected:
     uint_t state;
@@ -89,16 +88,16 @@ public:
     * on the queue.
     * original definition: peek_dequeue_head()
     */
-    virtual std::error_code PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration);
+    virtual bool PeekTop(std::shared_ptr<MessageBlock> &msg, Duration duration);
 
-    virtual std::error_code Pop(std::shared_ptr<MessageBlock> &msg, Duration duration);
+    virtual bool Pop(std::shared_ptr<MessageBlock> &msg, Duration duration);
     /* Enqueue an ACE_Message_Block into the queue in accordance with
      * the ACE_Message_Block's priority (0 is lowest priority).  FIFO
      * order is maintained when messages of the same priority are
      * inserted consecutively.
     ACE_Message_Queue::enqueue_prio (ACE_Message_Block *new_item, ACE_Time_Value *timeout)
     */
-    virtual std::error_code Push(std::shared_ptr<MessageBlock> msg, Duration duration);
+    virtual bool Push(std::shared_ptr<MessageBlock> msg, Duration duration);
 
 private:
     void DeactivateImpl(void);

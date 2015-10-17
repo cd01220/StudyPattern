@@ -1,6 +1,5 @@
 #ifndef _ServiceObject_h_
 #define _ServiceObject_h_
-#include "SystemError.h"
 
 #include "Event/EventHandler.h"  //EventHandler
 
@@ -18,10 +17,10 @@ public:
     virtual ~ServiceObject (void);
 
     /// Temporarily disable a service without removing it completely.
-    virtual std::error_code Suspend (void);
+    virtual bool Suspend (void);
 
     /// Re-enable a previously suspended service.
-    virtual std::error_code Resume (void);
+    virtual bool Resume (void);
 };
 
 #endif

@@ -11,7 +11,7 @@ public:
     TaskBase(Reactor *reactor = nullptr);
     ~TaskBase();
     
-    std::error_code Activate();
+    bool Activate();
 
     /**
     * Hook called from ACE_Thread_Exit when during thread exit and from
@@ -23,17 +23,17 @@ public:
     * interpret this as a flag to shut down the Task.
     */
     //int ACE_Task_Base::close (u_long)
-    virtual std::error_code Close(uint_t flags = 0);
+    virtual bool Close(uint_t flags = 0);
 
     /// Hook called to initialize a task and prepare it for execution.
     /// @a args can be used to pass arbitrary information into <open>.
     //int ACE_Task_Base::open (void *)
-    virtual std::error_code Open(void *args);
+    virtual bool Open(void *args);
 
     // service thread routine
     // original definition: virtual int ACE_Task_Base::svc (void);
     //int ACE_Task_Base::svc (void)
-    virtual std::error_code ServiceRoutine();
+    virtual bool ServiceRoutine();
 
     virtual void Wait();
 

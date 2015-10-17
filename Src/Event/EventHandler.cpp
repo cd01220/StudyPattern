@@ -10,39 +10,39 @@ EventHandler::~EventHandler()
 {
 }
 
-error_code EventHandler::HandleClose()
+bool EventHandler::HandleClose()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleException()
+bool EventHandler::HandleException()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleGroupQos()
+bool EventHandler::HandleGroupQos()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleInput()
+bool EventHandler::HandleInput()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleOutput()
+bool EventHandler::HandleOutput()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleQos()
+bool EventHandler::HandleQos()
 {
-    return error_code();
+    return true;
 }
 
-error_code EventHandler::HandleTimeOut(TimePoint, const void *arg)
+bool EventHandler::HandleTimeOut(TimePoint, const void *arg)
 {
-    return error_code();
+    return true;
 }
 
 Handle EventHandler::GetEventHandle() const

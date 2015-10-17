@@ -1,5 +1,4 @@
 #include "SystemInclude.h"
-#include "SystemError.h"
 #include "Debug.h"
 
 #include "TimerQueue/TimerQueue.h"  //TimerQueue
@@ -95,7 +94,7 @@ bool WfmoReactor::IsActived()
     return true;
 }
 
-error_code WfmoReactor::HandleEvents(Duration duration)
+bool WfmoReactor::HandleEvents(Duration duration)
 {
     return HandleEventsImpl(CalculateTimeout(duration));
 }
@@ -123,14 +122,12 @@ bool WfmoReactor::Open(std::shared_ptr<WfmoReactorNotify> notifyHandler,
     return true;
 }
 
-error_code WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
+bool WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
 {
-    error_code errCode;
-    errCode = RegisterHandlerImpl(handler);
-    return errCode;
+    return RegisterHandlerImpl(handler);
 }
 
-error_code WfmoReactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
+bool WfmoReactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
         const void *arg,
         TimePoint timePoint,
         Duration  interval)
@@ -150,7 +147,7 @@ Duration WfmoReactor::CalculateTimeout(Duration maxWaitTime)
     return maxWaitTime;
 }
 
-error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
+bool WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
                                               long mask)
 {
     long newMask = handler->GetMask() & (~mask);
@@ -162,13 +159,13 @@ error_code WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> hand
     {
         int err = WSAGetLastError();
         /* */
-        return system_error_t::unknown_error;
+        return false;
     }
 
-    return error_code();
+    return true;
 }
 
-error_code WfmoReactor::Dispatch(DWORD waitStatus)
+bool WfmoReactor::Dispatch(DWORD waitStatus)
 {
     DWORD index;
     if (waitStatus <= WAIT_OBJECT_0 + repository.GetSize())
@@ -179,7 +176,7 @@ error_code WfmoReactor::Dispatch(DWORD waitStatus)
     return DispatchHandles(index);
 }
 
-error_code WfmoReactor::DispatchHandles (size_t index)
+bool WfmoReactor::DispatchHandles (size_t index)
 {
     WSANETWORKEVENTS events;
     auto handler = repository.Find(index);
@@ -187,7 +184,7 @@ error_code WfmoReactor::DispatchHandles (size_t index)
     if (::WSAEnumNetworkEvents((SOCKET)handler->GetIoHandle(), handler->GetEventHandle(),
                               &events) == SOCKET_ERROR)
     {
-        return system_error_t::unknown_error;
+        return false;
     }
 
     long problems = UpCall(events.lNetworkEvents, handler);
@@ -199,7 +196,7 @@ error_code WfmoReactor::DispatchHandles (size_t index)
     /* we don't return handler error code to my caller, the handler should take care it's own error 
     *  status.
     */
-    return error_code();
+    return true;
 }
 
 uint_t WfmoReactor::ExpireTimers()
@@ -212,33 +209,29 @@ uint_t WfmoReactor::ExpireTimers()
     -> HandleEventsImpl(CalculateTimeout(duration))
   refert to ACE_WFMO_Reactor::event_handling
 */
-error_code WfmoReactor::HandleEventsImpl(Duration duration)
+bool WfmoReactor::HandleEventsImpl(Duration duration)
 {
     if (!isActived)
     {
-        return system_error_t::reactor_isnot_actived;
+        return false;
     }   
     
     TimeCountDown countdown(duration);
-    error_code errCode;
     do
     {
-        errCode = this->WaitForMultipleEvents(duration);
-        if (errCode && errCode != system_error_t::time_out)
+        if (!this->WaitForMultipleEvents(duration))
         {
-            errstrm << errCode.message() << endl;
             break;
         }
-        else
-            errCode.clear();
+
         ExpireTimers();    
         duration = countdown.GetRemainingTime();
     }while (duration != Duration::zero());
 
-    return errCode;
+    return true;
 }
 
-error_code WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
+bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
 {
     error_code errCode;
 
@@ -247,7 +240,7 @@ error_code WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
         handler->GetEventHandle(), handler->GetMask());
 
     if (result == SOCKET_ERROR)
-        return system_error_t::unknown_error;
+        return false;
 
     return errCode;
 }
@@ -307,7 +300,7 @@ long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
     return problems;
 }
 
-error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
+bool WfmoReactor::WaitForMultipleEvents(Duration duration)
 {    
     DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count() + 1);
     DWORD result;
@@ -320,14 +313,10 @@ error_code WfmoReactor::WaitForMultipleEvents(Duration duration)
 
     switch (result)
     {
-    case WAIT_TIMEOUT:            
-        return system_error_t::time_out;
-
+    case WAIT_TIMEOUT:  
     case WAIT_FAILED:
-        return system_error_t::wait_failed;
-
     case WAIT_IO_COMPLETION:
-        return error_code();
+        return true;
 
     default:
         break;
