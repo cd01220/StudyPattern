@@ -2,7 +2,6 @@
 #define _ActiveTimerDemo_h_
 
 #include "SystemInclude.h"
-#include "SystemError.h"
 
 #include "Demo/EventHandlerStub.h"
 #include "TimerQueue/TimerQueueAdapter.h"

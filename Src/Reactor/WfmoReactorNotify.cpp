@@ -35,6 +35,5 @@ bool WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
 bool WfmoReactorNotify::Open(ReactorImpl *reactor, std::shared_ptr<TimerQueue> timerQueue)
 {
     this->timerQueue = timerQueue;
-    reactor->RegisterHandler(shared_from_this());
-    return true;
+    return reactor->RegisterHandler(shared_from_this());
 }
