@@ -18,9 +18,7 @@ Client::Client(Reactor *reactor)
 }
 
 Client::~Client()
-{
-    delete reactor;
-}
+{}
 
 bool Client::HandleInput()
 {
@@ -44,7 +42,7 @@ bool Client::HandleTimeOut(TimePoint, const void *arg)
 
 bool Client::Open(void *args)
 {
-    if (MyBase::Open(args))
+    if (!MyBase::Open(args))
         return false;
     
     //SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -59,9 +57,11 @@ bool Client::Open(void *args)
     //if (errCode)
     //    errstrm << errCode.message();
 
-    notifer = make_shared<ReactorNotificationStrategy>(reactor, shared_from_this(), EventHandler::WriteMask);
+    auto notifer = make_shared<ReactorNotificationStrategy>(reactor, 
+        shared_from_this(), EventHandler::WriteMask);
     this->msgQueue->SetNotificationStrategy(notifer);
     
-    return reactor->ScheduleTimer(shared_from_this(), nullptr, GetCurTime() + Duration(1000), Duration(500));
+    return reactor->ScheduleTimer(shared_from_this(), 
+        nullptr, GetCurTime() + Duration(1000), Duration(1000));
 }
 

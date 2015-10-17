@@ -69,7 +69,7 @@ void WfmoReactorHandlerRepository::Insert(std::shared_ptr<EventHandler> handler)
 WfmoReactor::WfmoReactor()
     : notifyHandler(nullptr), timerQueue(nullptr)
 {
-    if (!Open(notifyHandler, timerQueue))
+    if (!Open())
     {
         errstrm << "Open() failed." << endl;
     }
@@ -77,9 +77,9 @@ WfmoReactor::WfmoReactor()
 
 WfmoReactor::WfmoReactor(std::shared_ptr<WfmoReactorNotify> notifyHandler, 
                          std::shared_ptr<TimerQueue> timerQueue)
-    : notifyHandler(nullptr), timerQueue(nullptr)
+    : notifyHandler(notifyHandler), timerQueue(timerQueue)
 {
-    if (!Open(notifyHandler, timerQueue))
+    if (!Open())
     {
         errstrm << "Open() failed." << endl;
     }
@@ -105,21 +105,15 @@ bool WfmoReactor::Notify(std::shared_ptr<EventHandler> handler,
     return notifyHandler->Notify(handler, mask);
 }
 
-bool WfmoReactor::Open(std::shared_ptr<WfmoReactorNotify> notifyHandler, 
-                       std::shared_ptr<TimerQueue> timerQueue)
+bool WfmoReactor::Open()
 {
     if (timerQueue == nullptr)
-        this->timerQueue = make_shared<TimerQueue>();
-    else
-        this->timerQueue = timerQueue;
+        timerQueue = make_shared<TimerQueue>();
 
     if (notifyHandler == nullptr)
-        this->notifyHandler = make_shared<WfmoReactorNotify>();
-    else
-        this->notifyHandler = notifyHandler;
-    this->notifyHandler->Open(this, this->timerQueue);
-
-    return true;
+        notifyHandler = make_shared<WfmoReactorNotify>();
+    
+    return notifyHandler->Open(this, timerQueue);
 }
 
 bool WfmoReactor::RegisterHandler(shared_ptr<EventHandler> handler)
@@ -147,8 +141,8 @@ Duration WfmoReactor::CalculateTimeout(Duration maxWaitTime)
     return maxWaitTime;
 }
 
-bool WfmoReactor::DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, 
-                                              long mask)
+bool WfmoReactor::DeregisterHandlerImpl(shared_ptr<EventHandler> handler, 
+                                        long mask)
 {
     long newMask = handler->GetMask() & (~mask);
     handler->SetMask(newMask);
@@ -233,16 +227,17 @@ bool WfmoReactor::HandleEventsImpl(Duration duration)
 
 bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
 {
-    error_code errCode;
-
     repository.Insert(handler);
     int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
         handler->GetEventHandle(), handler->GetMask());
 
     if (result == SOCKET_ERROR)
+    {
+        errstrm << "WSAEventSelect() failed, error code is " << WSAGetLastError() << endl;
         return false;
+    }
 
-    return errCode;
+    return true;
 }
 
 long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)

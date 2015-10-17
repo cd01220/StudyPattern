@@ -1,4 +1,5 @@
 #include "SystemInclude.h"
+#include "Debug.h"
 
 #include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/MessageQueue.h"
@@ -18,9 +19,9 @@ Task::~Task()
 
 bool Task::Push(std::shared_ptr<MessageBlock> msg, Duration duration)
 {
-    if (msgQueue->Push(msg, duration))
+    if (!msgQueue->Push(msg, duration))
     {
-        cerr << "Task::Push() failed" << endl;
+        errstrm << "msgQueue->Push() failed" << endl;
         return false;
     }
 

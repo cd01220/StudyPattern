@@ -30,7 +30,6 @@ private:
 };
 
 class WfmoReactorNotify;
-
 /**********************class WfmoReactor**********************/
 /* class ACE_WFMO_Reactor (WFMO: Wait For Multiple Objects) */
 class WfmoReactor: public ReactorImpl
@@ -48,8 +47,7 @@ public:
         
     virtual bool Notify(std::shared_ptr<EventHandler> handler, long mask);
 
-    virtual bool Open(std::shared_ptr<WfmoReactorNotify> notifyHandler,
-                      std::shared_ptr<TimerQueue> timerQueue);
+    virtual bool Open();
 
     /* int ACE_WFMO_Reactor::register_handler (ACE_Event_Handler *event_handler, ACE_Reactor_Mask mask); */
     virtual bool RegisterHandler(std::shared_ptr<EventHandler> handler);

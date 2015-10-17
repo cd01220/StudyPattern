@@ -18,9 +18,6 @@ public:
     virtual bool HandleTimeOut(TimePoint, const void *arg = 0);
         
     virtual bool Open(void *args);
-
-private:
-    std::shared_ptr<ReactorNotificationStrategy> notifer;
 };
 
 

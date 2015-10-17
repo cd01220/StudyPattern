@@ -24,6 +24,7 @@ inline void ReactorMain2(int argc, char *argv[])
     client->Activate();
     
     reactor->RunEventLoop();
+    delete reactor;
 }
 
 #endif

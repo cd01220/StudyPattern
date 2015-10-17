@@ -167,11 +167,11 @@
     <ClInclude Include="Src\Reactor\ReactorNotify.h">
       <Filter>Reactor</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Reactor\NotificationMessageBlock.h">
-      <Filter>Reactor</Filter>
-    </ClInclude>
     <ClInclude Include="Src\Public\TimeValue.h">
       <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Reactor\NotificationMessageBlock.h">
+      <Filter>Reactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
