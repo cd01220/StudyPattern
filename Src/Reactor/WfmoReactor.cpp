@@ -171,20 +171,26 @@ bool WfmoReactor::Dispatch(DWORD waitStatus)
 }
 
 bool WfmoReactor::DispatchHandles (size_t index)
-{
-    WSANETWORKEVENTS events;
+{    
     auto handler = repository.Find(index);
 
-    if (::WSAEnumNetworkEvents((SOCKET)handler->GetIoHandle(), handler->GetEventHandle(),
-                              &events) == SOCKET_ERROR)
+    if (handler->GetIoHandle() != InvalidHandleValue)
     {
-        return false;
-    }
+        WSANETWORKEVENTS events;
+        if (::WSAEnumNetworkEvents((SOCKET)handler->GetIoHandle(), handler->GetEventHandle(),
+                                  &events) == SOCKET_ERROR)
+        {
+            return false;
+        }
 
-    long problems = UpCall(events.lNetworkEvents, handler);
-    if (problems != EventHandler::NullMask)
+        long problems = UpCall(events.lNetworkEvents, handler);
+        if (problems != EventHandler::NullMask)
+        {
+            this->DeregisterHandlerImpl(handler, problems);
+        }
+    }
+    else
     {
-        this->DeregisterHandlerImpl(handler, problems);
     }
 
     /* we don't return handler error code to my caller, the handler should take care it's own error 
@@ -228,15 +234,24 @@ bool WfmoReactor::HandleEventsImpl(Duration duration)
 bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
 {
     repository.Insert(handler);
-    int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
-        handler->GetEventHandle(), handler->GetMask());
-
-    if (result == SOCKET_ERROR)
+    if (handler->GetIoHandle() != InvalidHandleValue)
     {
-        errstrm << "WSAEventSelect() failed, error code is " << WSAGetLastError() << endl;
-        return false;
+        int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
+            handler->GetEventHandle(), handler->GetMask());
+
+        if (result == SOCKET_ERROR)
+        {
+            errstrm << "WSAEventSelect() failed, error code is " << WSAGetLastError() << endl;
+            return false;
+        }
     }
 
+    return true;
+}
+
+bool WfmoReactor::UpCall(shared_ptr<EventHandler> handler)
+{
+    handler->HandleSignal();
     return true;
 }
 
@@ -308,8 +323,12 @@ bool WfmoReactor::WaitForMultipleEvents(Duration duration)
 
     switch (result)
     {
-    case WAIT_TIMEOUT:  
     case WAIT_FAILED:
+        result = GetLastError();
+        errstrm << "WaitForMultipleObjectsEx() failed, error code is " << result << endl;
+        return false;
+
+    case WAIT_TIMEOUT:      
     case WAIT_IO_COMPLETION:
         return true;
 

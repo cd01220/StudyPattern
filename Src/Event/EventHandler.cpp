@@ -40,6 +40,11 @@ bool EventHandler::HandleQos()
     return true;
 }
 
+bool EventHandler::HandleSignal()
+{
+    return true;
+}
+
 bool EventHandler::HandleTimeOut(TimePoint, const void *arg)
 {
     return true;
@@ -90,4 +95,5 @@ EventHandler::EventHandler(Reactor *reactor, uint_t priority)
     wostringstream os;
     os << TEXT("EventHandler") << index++;
     eventHandle = CreateEvent(NULL, TRUE, FALSE, os.str().c_str());
+    ioHandle = InvalidHandleValue;
 }

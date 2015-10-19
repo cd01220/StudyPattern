@@ -39,11 +39,10 @@ public:
     virtual bool ServiceRoutine();
 
 private:
+    bool                    isActive;
+    std::mutex              theMutex;
+    std::condition_variable theCv;
     std::shared_ptr<TimerQueue> timerQueue;
-    bool isActive;
-
-    std::mutex  c11mutex;
-    std::condition_variable cv;
 };
 
 

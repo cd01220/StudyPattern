@@ -82,6 +82,8 @@ protected:
     */
     bool RegisterHandlerImpl(std::shared_ptr<EventHandler> handler);
 
+    /* Up call when handler->GetIoHandle() == InvalidHandleValue */
+    bool UpCall(std::shared_ptr<EventHandler> handler);
     /*
     ACE_Reactor_Mask ACE_WFMO_Reactor::upcall (ACE_Event_Handler *event_handler,
         ACE_HANDLE io_handle,

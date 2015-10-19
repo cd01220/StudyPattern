@@ -51,6 +51,7 @@ public:
     virtual bool HandleInput();
     virtual bool HandleOutput();
     virtual bool HandleQos();
+    virtual bool HandleSignal();
     virtual bool HandleTimeOut(TimePoint, const void *arg = 0);
 
     virtual Handle GetEventHandle() const;
@@ -69,9 +70,9 @@ protected:
 protected:
     Handle  eventHandle;
     Handle  ioHandle;
-    Reactor *reactor;
-    uint_t  priority;
     long    mask;
+    uint_t  priority;
+    Reactor *reactor;
 };
 
 

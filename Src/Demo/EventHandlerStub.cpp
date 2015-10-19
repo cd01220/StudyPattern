@@ -85,8 +85,8 @@ bool EventHandlerStub::Open()
         return false;
     }
 
-    this->SetIoHandle((Handle)listenSocket);
-    this->SetMask(AcceptMask);
+    this->ioHandle = (Handle)listenSocket;
+    this->mask = AcceptMask;
 
     if (reactor->RegisterHandler(shared_from_this()))
     {

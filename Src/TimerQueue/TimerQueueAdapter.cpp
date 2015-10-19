@@ -20,8 +20,8 @@ ActiveTimer::~ActiveTimer()
 
 bool ActiveTimer::Activate()
 {
-    std::lock_guard<mutex> lock(c11mutex);
-    this->isActive = true;
+    lock_guard<mutex> lock(theMutex);
+    isActive = true;
     return TaskBase::Activate();
 }
 
@@ -37,12 +37,12 @@ bool ActiveTimer::Cancel(uint_t timerId)
 
 void ActiveTimer::Deactivate(void)
 {
-    std::lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     isActive = false;
-    cv.notify_one();
+    theCv.notify_one();
 }
 
-bool ActiveTimer::Schedule(std::shared_ptr<EventHandler> handler, 
+bool ActiveTimer::Schedule(shared_ptr<EventHandler> handler, 
     const void *act, 
     TimePoint future, 
     Duration  interval,
@@ -50,13 +50,13 @@ bool ActiveTimer::Schedule(std::shared_ptr<EventHandler> handler,
 {
     error_code errCode;
 
-    std::lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     if (!timerQueue->Schedule(handler, act, future, interval, timerId))
     {
         return false;
     }
 
-    cv.notify_one();
+    theCv.notify_one();
     return true;
 }
 
@@ -66,14 +66,14 @@ bool ActiveTimer::ServiceRoutine()
 
     while (isActive)
     {
-        unique_lock<std::mutex> lock(c11mutex);
+        unique_lock<mutex> lock(theMutex);
         while(timerQueue->IsEmpty())
         {
-            cv.wait(lock);
+            theCv.wait(lock);
         }
 
         Duration duration = timerQueue->CalculateTimeout();
-        std::cv_status::cv_status status = cv.wait_for(lock, duration);
+        cv_status::cv_status status = theCv.wait_for(lock, duration);
         if (status == cv_status::timeout)
         {
             timerQueue->Expire();

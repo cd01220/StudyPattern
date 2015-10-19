@@ -1,7 +1,6 @@
 #ifndef _AbstractTimerQueue_h_
 #define _AbstractTimerQueue_h_
 
-#include "SystemInclude.h"
 #include "TimerNode.h"
 
 /**********************class AbstractTimerQueue**********************/

@@ -6,10 +6,6 @@
 #include "TimerQueue/TimerNode.h"
 #include "TimerQueue/TimerQueue.h"
 
-#if defined(max)
-#undef max
-#endif
-
 using namespace std;
 
 /**********************class TimerQueueUpcallBase**********************/
@@ -74,7 +70,7 @@ bool TimerQueue::Cancel(uint_t timerId)
 {
     lock_guard<std::mutex> lock(c11mutex);
     CancelTimerId(timerId);
-    return error_code();
+    return true;
 }
 
 
