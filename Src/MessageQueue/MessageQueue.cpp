@@ -87,13 +87,11 @@ void MessageQueue::SetNotificationStrategy(shared_ptr<NotificationStrategy> ns)
 
 bool MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
-    TimePoint until = GetCurTime() + duration;
-
     unique_lock<mutex> lock(c11mutex);
     assert(state != Deactivated);
     while (msgQueue.size() == 0)
     {
-        if (cv.wait_until(lock, until) == cv_status::timeout)
+        if (cv.wait_for(lock, duration) == cv_status::timeout)
         {
             lock.unlock();
             /* time out */

@@ -2,6 +2,7 @@
 #define _WfmoReactorNotify_h_
 
 #include "Reactor/ReactorNotify.h"     //ReactorNotify: base class
+#include "Event/AutoEvent.h"           //AutoEvent
 
 class MessageQueue;
 class ReactorImpl;
@@ -36,6 +37,9 @@ private:
     std::shared_ptr<MessageQueue> msgQueue;
     /* shared timer queue with WfmoReactor */
     std::shared_ptr<TimerQueue> timerQueue;  
+
+    //ACE_Auto_Event wakeup_one_thread_;
+    AutoEvent wakeupOneThread;
 };
 
 #endif

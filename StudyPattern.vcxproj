@@ -13,6 +13,8 @@
   <ItemGroup>
     <ClCompile Include="Src\Demo\Client.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
+    <ClCompile Include="Src\Event\AutoEvent.cpp" />
+    <ClCompile Include="Src\Event\Event.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
@@ -36,7 +38,10 @@
     <ClInclude Include="Src\Demo\Client.h" />
     <ClInclude Include="Src\Demo\EventHandlerStub.h" />
     <ClInclude Include="Src\Demo\ReactorDemo.h" />
+    <ClInclude Include="Src\Event\AutoEvent.h" />
+    <ClInclude Include="Src\Event\Event.h" />
     <ClInclude Include="Src\Event\EventHandler.h" />
+    <ClInclude Include="Src\Event\Handle.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h" />
     <ClInclude Include="Src\Layer3Architecture\PersonMapper.h" />
     <ClInclude Include="Src\MessageQueue\MessageBlock.h" />

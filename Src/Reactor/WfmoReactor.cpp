@@ -151,8 +151,7 @@ bool WfmoReactor::DeregisterHandlerImpl(shared_ptr<EventHandler> handler,
         handler->GetEventHandle(), handler->GetMask());
     if (result != 0)
     {
-        int err = WSAGetLastError();
-        /* */
+        errstrm << "WSAEventSelect() failed, error code = " << WSAGetLastError() << endl;
         return false;
     }
 
@@ -187,10 +186,15 @@ bool WfmoReactor::DispatchHandles (size_t index)
         if (problems != EventHandler::NullMask)
         {
             this->DeregisterHandlerImpl(handler, problems);
+            errstrm << "UpCall() failed. " << endl;
         }
     }
     else
     {
+        if (!UpCall(handler))
+        {
+            errstrm << "UpCall() failed. " << endl;
+        }
     }
 
     /* we don't return handler error code to my caller, the handler should take care it's own error 

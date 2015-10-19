@@ -90,6 +90,12 @@
     <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp">
       <Filter>Reactor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Event\Event.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Event\AutoEvent.cpp">
+      <Filter>Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">
@@ -172,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="Src\Reactor\NotificationMessageBlock.h">
       <Filter>Reactor</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Event\AutoEvent.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Event\Event.h">
+      <Filter>Event</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Event\Handle.h">
+      <Filter>Event</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
