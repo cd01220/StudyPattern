@@ -51,12 +51,18 @@ bool Client::HandleTimeOut(TimePoint, const void *arg)
 {
     dbgstrm << "Start" << endl;
 
-    shared_ptr<MessageBlock> msg = make_shared<MessageBlock>();
-    bool result = msgQueue->Push(msg, Duration::zero());
-    if (!result)
+    char buf[] = "hello";
+    if (send((SOCKET)this->ioHandle, buf, sizeof(buf), 0) == SOCKET_ERROR)
     {
-        errstrm << "Push() failed. " << endl;
+        errstrm << "send() failed" << endl;
     }
+
+    //shared_ptr<MessageBlock> msg = make_shared<MessageBlock>();
+    //bool result = msgQueue->Push(msg, Duration::zero());
+    //if (!result)
+    //{
+    //    errstrm << "Push() failed. " << endl;
+    //}
 
     return true;
 }
