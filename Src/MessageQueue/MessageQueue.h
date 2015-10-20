@@ -103,8 +103,8 @@ private:
     void DeactivateImpl(void);
 
 private:
-    std::mutex  c11mutex;
-    std::condition_variable cv;
+    std::mutex  theMutex;
+    std::condition_variable theCv;
 
     std::priority_queue<std::shared_ptr<MessageBlock>> msgQueue;
     std::shared_ptr<NotificationStrategy> notificationStrategy;

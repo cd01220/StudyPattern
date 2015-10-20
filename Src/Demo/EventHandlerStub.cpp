@@ -20,7 +20,7 @@ bool EventHandlerStub::HandleClose()
 
 bool EventHandlerStub::HandleInput()
 {
-    dbgstrm << "Start." << endl;    
+    dbgstrm << "Start." << endl;
     SOCKET acceptSocket;
     acceptSocket = accept((SOCKET)ioHandle, NULL, NULL);
     if (acceptSocket == INVALID_SOCKET)
@@ -88,7 +88,7 @@ bool EventHandlerStub::Open()
     this->ioHandle = (Handle)listenSocket;
     this->mask = AcceptMask;
 
-    if (reactor->RegisterHandler(shared_from_this()))
+    if (!reactor->RegisterHandler(shared_from_this()))
     {
         errstrm << "reactor->RegisterHandler() failed" << endl;
         return false;
@@ -100,9 +100,7 @@ bool EventHandlerStub::Open()
 /**********************class ClientService**********************/
 ClientService::ClientService(Reactor *reactor)
     : EventHandler(reactor)
-{
-    eventHandle = CreateEvent(NULL, TRUE, FALSE, TEXT("ClientServiceEvent"));
-}
+{}
 
 ClientService::~ClientService()
 {

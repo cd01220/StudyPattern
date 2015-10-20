@@ -2,8 +2,6 @@
 #include "Debug.h"
 
 #include "TimerQueue/TimerQueue.h"  //TimerQueue
-#include "MessageQueue/MessageBlock.h"
-#include "Reactor/NotificationMessageBlock.h"
 #include "Reactor/WfmoReactorNotify.h"
 
 #include "Reactor/WfmoReactor.h"
@@ -28,17 +26,6 @@ WfmoReactorHandlerRepository::iterator WfmoReactorHandlerRepository::end()
 
 shared_ptr<EventHandler> WfmoReactorHandlerRepository::Find(Handle handle)
 {
-    auto iter = repository.find(handle);
-    if (iter == repository.end())
-        return nullptr;
-
-    return iter->second;
-}
-
-std::shared_ptr<EventHandler> WfmoReactorHandlerRepository::Find(size_t index)
-{
-    assert(index < MAXIMUM_WAIT_OBJECTS);
-    Handle handle = handles[index];
     auto iter = repository.find(handle);
     if (iter == repository.end())
         return nullptr;
@@ -158,21 +145,8 @@ bool WfmoReactor::DeregisterHandlerImpl(shared_ptr<EventHandler> handler,
     return true;
 }
 
-bool WfmoReactor::Dispatch(DWORD waitStatus)
-{
-    DWORD index;
-    if (waitStatus <= WAIT_OBJECT_0 + repository.GetSize())
-        index = waitStatus - WAIT_OBJECT_0;
-    else
-        index = waitStatus - WAIT_ABANDONED_0;
-    
-    return DispatchHandles(index);
-}
-
-bool WfmoReactor::DispatchHandles (size_t index)
+bool WfmoReactor::Dispatch (shared_ptr<EventHandler> handler)
 {    
-    auto handler = repository.Find(index);
-
     if (handler->GetIoHandle() != InvalidHandleValue)
     {
         WSANETWORKEVENTS events;
@@ -255,8 +229,7 @@ bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
 
 bool WfmoReactor::UpCall(shared_ptr<EventHandler> handler)
 {
-    handler->HandleSignal();
-    return true;
+    return handler->HandleSignal();
 }
 
 long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
@@ -265,49 +238,49 @@ long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
 
     if ((events & FD_WRITE) != 0)
     {
-        if (handler->HandleOutput())
+        if (!handler->HandleOutput())
             problems = problems | FD_WRITE;
     }
 
     if ((events & FD_CONNECT) != 0)
     {
-        if (handler->HandleInput())
+        if (!handler->HandleInput())
             problems = problems | FD_CONNECT;
     }
 
     if ((events & FD_OOB) != 0)
     {
-        if (handler->HandleException())
+        if (!handler->HandleException())
             problems = problems | FD_OOB;
     }
 
     if ((events & FD_READ) != 0)
     {
-        if (handler->HandleInput())
+        if (!handler->HandleInput())
             problems = problems | FD_READ;
     }
 
     if ((events & FD_CLOSE) != 0)
     {
-        if (handler->HandleInput())
+        if (!handler->HandleInput())
             problems = problems | FD_CLOSE;
     }
     
     if ((events & FD_ACCEPT) != 0)
     {
-        if (handler->HandleInput())
+        if (!handler->HandleInput())
             problems = problems | FD_ACCEPT;
     }
 
     if ((events & FD_QOS) != 0)
     {
-        if (handler->HandleQos())
+        if (!handler->HandleQos())
             problems = problems | FD_QOS;
     }
     
     if ((events & FD_GROUP_QOS) != 0)
     {
-        if (handler->HandleGroupQos())
+        if (!handler->HandleGroupQos())
             problems = problems | FD_GROUP_QOS;
     }
 
@@ -319,12 +292,15 @@ bool WfmoReactor::WaitForMultipleEvents(Duration duration)
     DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count() + 1);
     DWORD result;
 
-    if (repository.GetSize() == 0)
-        return error_code();
-    else
-        result = ::WaitForMultipleObjectsEx(repository.GetSize(), repository.GetEventHandles(),
-            FALSE, timeout, TRUE);        
+    Handle *handles = repository.GetEventHandles();
+    size_t handleNumber = repository.GetSize();
 
+    if (handleNumber == 0)
+    {
+        return true;
+    }
+
+    result = ::WaitForMultipleObjectsEx(handleNumber, handles, FALSE, timeout, TRUE); 
     switch (result)
     {
     case WAIT_FAILED:
@@ -340,5 +316,12 @@ bool WfmoReactor::WaitForMultipleEvents(Duration duration)
         break;
     }
 
-    return Dispatch(result);
+    DWORD index;
+    if (result <= WAIT_OBJECT_0 + repository.GetSize())
+        index = result - WAIT_OBJECT_0;
+    else
+        index = result - WAIT_ABANDONED_0;
+    
+    shared_ptr<EventHandler> handler = repository.Find(handles[index]);
+    return Dispatch(handler);
 }

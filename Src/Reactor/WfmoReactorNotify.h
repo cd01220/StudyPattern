@@ -2,7 +2,6 @@
 #define _WfmoReactorNotify_h_
 
 #include "Reactor/ReactorNotify.h"     //ReactorNotify: base class
-#include "Event/AutoEvent.h"           //AutoEvent
 
 class MessageQueue;
 class ReactorImpl;
@@ -21,7 +20,7 @@ public:
     * ACE_Event_Handlers and dispatches them.
     */
     /* int ACE_WFMO_Reactor_Notify::handle_signal() */
-    bool HandleSignal(int signalNum, SignalInfo SigInfor);
+    bool HandleSignal();
     /* int ACE_WFMO_Reactor_Notify::notify (ACE_Event_Handler *event_handler,
                                  ACE_Reactor_Mask mask,
                                  ACE_Time_Value *timeout)
@@ -37,9 +36,6 @@ private:
     std::shared_ptr<MessageQueue> msgQueue;
     /* shared timer queue with WfmoReactor */
     std::shared_ptr<TimerQueue> timerQueue;  
-
-    //ACE_Auto_Event wakeup_one_thread_;
-    AutoEvent wakeupOneThread;
 };
 
 #endif

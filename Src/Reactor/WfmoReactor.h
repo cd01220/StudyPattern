@@ -18,7 +18,6 @@ public:
     iterator end();
 
     std::shared_ptr<EventHandler> Find(Handle handle);
-    std::shared_ptr<EventHandler> Find(size_t index);
     Handle* GetEventHandles();
     size_t GetSize();
 
@@ -66,9 +65,9 @@ protected:
     bool DeregisterHandlerImpl(std::shared_ptr<EventHandler> handler, long mask);
 
     /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status) */
-    bool Dispatch(DWORD waitStatus);
+    //bool Dispatch(DWORD waitStatus);
     /* int ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status) */
-    bool DispatchHandles (size_t index);
+    bool Dispatch (std::shared_ptr<EventHandler> handler);
     uint_t ExpireTimers();
 
     /* int ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time, int alertable)

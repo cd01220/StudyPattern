@@ -16,14 +16,3 @@ Task::Task(Reactor *reactor)
 
 Task::~Task()
 {} 
-
-bool Task::Push(std::shared_ptr<MessageBlock> msg, Duration duration)
-{
-    if (!msgQueue->Push(msg, duration))
-    {
-        errstrm << "msgQueue->Push() failed" << endl;
-        return false;
-    }
-
-    return true;
-}

@@ -33,13 +33,13 @@ MessageQueue::~MessageQueue()
 
 void MessageQueue::Activate()
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     this->state = Actived;
 }
 
 void MessageQueue::Close(void)
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     DeactivateImpl();
     while(!msgQueue.empty())
     {
@@ -49,49 +49,49 @@ void MessageQueue::Close(void)
 
 void MessageQueue::Deactivate(void)
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     this->state = Deactivated;
 }
 
 bool MessageQueue::IsEmpty()
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     return msgQueue.empty();
 }
 
 bool MessageQueue::IsFull()
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     return (msgQueue.size() == MaxQueueSize);
 }
 
 size_t MessageQueue::GetSize()
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     return msgQueue.size();
 }
 
 void MessageQueue::Open(shared_ptr<NotificationStrategy> ns)
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     notificationStrategy = ns;
     this->state = Actived;
 }
 
 void MessageQueue::SetNotificationStrategy(shared_ptr<NotificationStrategy> ns)
 {
-    lock_guard<mutex> lock(c11mutex);
+    lock_guard<mutex> lock(theMutex);
     notificationStrategy = ns;
     this->state = Actived;
 }
 
 bool MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
-    unique_lock<mutex> lock(c11mutex);
+    unique_lock<mutex> lock(theMutex);
     assert(state != Deactivated);
     while (msgQueue.size() == 0)
     {
-        if (cv.wait_for(lock, duration) == cv_status::timeout)
+        if (theCv.wait_for(lock, duration) == cv_status::timeout)
         {
             lock.unlock();
             /* time out */
@@ -101,7 +101,7 @@ bool MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
     }
 
     msg = msgQueue.top();
-    cv.notify_all();
+    theCv.notify_all();
     lock.unlock();
     
     if (notificationStrategy != nullptr)
@@ -111,24 +111,20 @@ bool MessageQueue::PeekTop(shared_ptr<MessageBlock> &msg, Duration duration)
 
 bool MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
-    TimePoint until = GetCurTime() + duration;
-
-    unique_lock<mutex> lock(c11mutex);
+    unique_lock<mutex> lock(theMutex);
     assert(state != Deactivated);
     while (msgQueue.size() == 0)
     {
-        if (cv.wait_until(lock, until) == cv_status::timeout)
+        if (theCv.wait_for(lock, duration) == cv_status::timeout)
         {
             lock.unlock();
-            /* time out */
-            errstrm << "error, queue is empty." << endl;
             return false;
         }
     }
 
     msg = msgQueue.top();
     msgQueue.pop();
-    cv.notify_all();
+    theCv.notify_all();
     lock.unlock();
     
     if (notificationStrategy != nullptr)
@@ -140,11 +136,11 @@ bool MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
 {
     TimePoint until = GetCurTime() + duration;
 
-    unique_lock<mutex> lock(c11mutex);   
+    unique_lock<mutex> lock(theMutex);   
     assert(state != Deactivated); 
     while (msgQueue.size() == MaxQueueSize)
     {
-        if (cv.wait_until(lock, until) == cv_status::timeout)
+        if (theCv.wait_until(lock, until) == cv_status::timeout)
         {
             lock.unlock();
             /* time out */
@@ -154,7 +150,7 @@ bool MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
     }
 
     msgQueue.push(msg);
-    cv.notify_all();
+    theCv.notify_all();
     lock.unlock(); 
 
     if (notificationStrategy != nullptr)

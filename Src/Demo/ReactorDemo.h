@@ -21,7 +21,6 @@ inline void ReactorMain2(int argc, char *argv[])
     std::shared_ptr<Client> client = std::make_shared<Client>(reactor);
 
     client->Open(nullptr);
-    client->Activate();
     
     reactor->RunEventLoop();
     delete reactor;

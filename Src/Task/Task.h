@@ -13,8 +13,6 @@ public:
     Task(Reactor *reactor);
     virtual ~Task();
 
-    bool Push(std::shared_ptr<MessageBlock> msg, Duration duration);
-
 protected:
     std::shared_ptr<MessageQueue> msgQueue;
 };

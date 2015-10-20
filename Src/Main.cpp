@@ -8,8 +8,9 @@ void InitSocket();
 
 int main(int argc, char *argv[])
 {
-    DebugFlag flag;
-    flag.SetState("EventHandlerStub::EventHandlerStub", true);
+    DebugFlag flag; 
+    flag.SetState("Client::HandleTimeOut", true);    
+    flag.SetState("Client::HandleOutput", true);
 
     InitSocket();
     ReactorMain2(argc, argv);

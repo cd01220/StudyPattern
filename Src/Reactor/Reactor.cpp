@@ -32,7 +32,7 @@ bool Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
     Reactor *reactor = handler->GetReactor();
     handler->SetReactor(this);
 
-    if (implementation->RegisterHandler(handler))
+    if (!implementation->RegisterHandler(handler))
     {
         handler->SetReactor(reactor);
         return false;

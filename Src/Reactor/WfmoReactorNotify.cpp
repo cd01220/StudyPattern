@@ -20,16 +20,47 @@ WfmoReactorNotify::~WfmoReactorNotify()
 {
 }
 
-bool WfmoReactorNotify::HandleSignal(int signalNum, SignalInfo SigInfor)
+bool WfmoReactorNotify::HandleSignal()
 {
-    return true;
+    dbgstrm << "Start" << endl;
+
+    bool result = true;
+    shared_ptr<MessageBlock> block;
+    while (msgQueue->Pop(block, Duration::zero()))
+    {
+        shared_ptr<NotificationMessageBlock> msg = dynamic_pointer_cast<NotificationMessageBlock>(block);
+        switch(msg->mask)
+        {
+            case ReadMask:
+            case AcceptMask:
+                result = msg->handler->HandleInput();
+                break;
+            case WriteMask:
+                result = msg->handler->HandleOutput();
+                break;
+            case ExceptMask:
+                result = msg->handler->HandleException();
+                break;
+            case QosMask:
+                result = msg->handler->HandleQos();
+                break;
+            case GroupQosMask:
+                result = msg->handler->HandleGroupQos();
+                break;
+        }
+    }
+
+    return result;
 }
 
 bool WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
 {
     shared_ptr<MessageBlock> block = make_shared<NotificationMessageBlock>(NotificationMessageBlock(handler, mask));
 
-    return msgQueue->Push(block, Duration::zero());
+    if (!msgQueue->Push(block, Duration::zero()))
+        return false;
+
+    return (SetEvent(eventHandle) == TRUE);
 }
 
 bool WfmoReactorNotify::Open(ReactorImpl *reactor, std::shared_ptr<TimerQueue> timerQueue)
