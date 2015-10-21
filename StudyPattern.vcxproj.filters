@@ -90,6 +90,9 @@
     <ClCompile Include="Src\Reactor\NotificationMessageBlock.cpp">
       <Filter>Reactor</Filter>
     </ClCompile>
+    <ClCompile Include="Src\Demo\ReactorDemo.cpp">
+      <Filter>Demo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Src\Layer3Architecture\PersonDomain.h">

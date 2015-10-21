@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="Src\Demo\Client.cpp" />
     <ClCompile Include="Src\Demo\EventHandlerStub.cpp" />
+    <ClCompile Include="Src\Demo\ReactorDemo.cpp" />
     <ClCompile Include="Src\Event\EventHandler.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonDomain.cpp" />
     <ClCompile Include="Src\Layer3Architecture\PersonMapper.cpp" />
