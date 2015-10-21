@@ -60,7 +60,13 @@ bool WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
     if (!msgQueue->Push(block, Duration::zero()))
         return false;
 
-    return (SetEvent(eventHandle) == TRUE);
+    if (!SetEvent(this->eventHandle))
+    {
+        errstrm << "SetEvent() failed. " << endl;
+        return false;
+    }
+
+    return true;
 }
 
 bool WfmoReactorNotify::Open(ReactorImpl *reactor, std::shared_ptr<TimerQueue> timerQueue)

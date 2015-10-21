@@ -51,18 +51,13 @@ bool Client::HandleTimeOut(TimePoint, const void *arg)
 {
     dbgstrm << "Start" << endl;
 
-    char buf[] = "hello";
-    if (send((SOCKET)this->ioHandle, buf, sizeof(buf), 0) == SOCKET_ERROR)
+    shared_ptr<MessageBlock> msg = make_shared<MessageBlock>();
+    bool result = msgQueue->Push(msg, Duration::zero());
+    if (!result)
     {
-        errstrm << "send() failed" << endl;
+        errstrm << "Push() failed. " << endl;
+        return false;
     }
-
-    //shared_ptr<MessageBlock> msg = make_shared<MessageBlock>();
-    //bool result = msgQueue->Push(msg, Duration::zero());
-    //if (!result)
-    //{
-    //    errstrm << "Push() failed. " << endl;
-    //}
 
     return true;
 }
@@ -91,6 +86,7 @@ bool Client::Open(void *args)
     if (!reactor->RegisterHandler(shared_from_this()))
     {
         errstrm << "RegisterHandler() failed" << endl;
+        return false;
     }
 
     auto notifer = make_shared<ReactorNotificationStrategy>(reactor, 

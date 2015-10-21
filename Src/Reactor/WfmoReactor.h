@@ -67,7 +67,7 @@ protected:
     /* int ACE_WFMO_Reactor::dispatch (DWORD wait_status) */
     //bool Dispatch(DWORD waitStatus);
     /* int ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status) */
-    bool Dispatch (std::shared_ptr<EventHandler> handler);
+    void Dispatch (std::shared_ptr<EventHandler> handler);
     uint_t ExpireTimers();
 
     /* int ACE_WFMO_Reactor::event_handling (ACE_Time_Value *max_wait_time, int alertable)
@@ -89,7 +89,7 @@ protected:
         WSANETWORKEVENTS &events)
     */
     long UpCall(long events, std::shared_ptr<EventHandler> handler);
-    bool WaitForMultipleEvents(Duration duration);
+    bool WaitForMultipleEvents(Duration duration, DWORD startIndex);
     
 private:
     bool isActived;

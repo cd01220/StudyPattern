@@ -145,36 +145,35 @@ bool WfmoReactor::DeregisterHandlerImpl(shared_ptr<EventHandler> handler,
     return true;
 }
 
-bool WfmoReactor::Dispatch (shared_ptr<EventHandler> handler)
+/* we don't return handler error code to my caller, the handler should take care it's own error 
+*  status.
+*/
+void WfmoReactor::Dispatch (shared_ptr<EventHandler> handler)
 {    
-    if (handler->GetIoHandle() != InvalidHandleValue)
-    {
-        WSANETWORKEVENTS events;
-        if (::WSAEnumNetworkEvents((SOCKET)handler->GetIoHandle(), handler->GetEventHandle(),
-                                  &events) == SOCKET_ERROR)
-        {
-            return false;
-        }
-
-        long problems = UpCall(events.lNetworkEvents, handler);
-        if (problems != EventHandler::NullMask)
-        {
-            this->DeregisterHandlerImpl(handler, problems);
-            errstrm << "UpCall() failed. " << endl;
-        }
-    }
-    else
+    if (handler->GetIoHandle() == InvalidHandleValue)
     {
         if (!UpCall(handler))
         {
             errstrm << "UpCall() failed. " << endl;
         }
+        return;
     }
 
-    /* we don't return handler error code to my caller, the handler should take care it's own error 
-    *  status.
-    */
-    return true;
+    WSANETWORKEVENTS events;
+    if (::WSAEnumNetworkEvents((SOCKET)handler->GetIoHandle(), handler->GetEventHandle(),
+                                &events) == SOCKET_ERROR)
+    {
+        errstrm << "::WSAEnumNetworkEvents() failed." << endl;
+        return;
+    }
+
+    long problems = UpCall(events.lNetworkEvents, handler);
+    if (problems != EventHandler::NullMask)
+    {
+        this->DeregisterHandlerImpl(handler, problems);
+        errstrm << "UpCall() failed. " << endl;
+        return;
+    }
 }
 
 uint_t WfmoReactor::ExpireTimers()
@@ -197,7 +196,7 @@ bool WfmoReactor::HandleEventsImpl(Duration duration)
     TimeCountDown countdown(duration);
     do
     {
-        if (!this->WaitForMultipleEvents(duration))
+        if (!this->WaitForMultipleEvents(duration, 0))
         {
             break;
         }
@@ -211,7 +210,6 @@ bool WfmoReactor::HandleEventsImpl(Duration duration)
 
 bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
 {
-    repository.Insert(handler);
     if (handler->GetIoHandle() != InvalidHandleValue)
     {
         int result = ::WSAEventSelect((SOCKET)handler->GetIoHandle(),
@@ -223,6 +221,7 @@ bool WfmoReactor::RegisterHandlerImpl(shared_ptr<EventHandler> handler)
             return false;
         }
     }
+    repository.Insert(handler);
 
     return true;
 }
@@ -287,7 +286,7 @@ long WfmoReactor::UpCall(long events, shared_ptr<EventHandler> handler)
     return problems;
 }
 
-bool WfmoReactor::WaitForMultipleEvents(Duration duration)
+bool WfmoReactor::WaitForMultipleEvents(Duration duration, DWORD startIndex)
 {    
     DWORD timeout = static_cast<DWORD>((duration == Duration::max()) ? INFINITE : duration.count() + 1);
     DWORD result;
@@ -295,12 +294,13 @@ bool WfmoReactor::WaitForMultipleEvents(Duration duration)
     Handle *handles = repository.GetEventHandles();
     size_t handleNumber = repository.GetSize();
 
-    if (handleNumber == 0)
+    if (handleNumber == 0 || handleNumber <=  startIndex)
     {
         return true;
     }
 
-    result = ::WaitForMultipleObjectsEx(handleNumber, handles, FALSE, timeout, TRUE); 
+    result = ::WaitForMultipleObjectsEx(handleNumber - startIndex, 
+        handles + startIndex, FALSE, timeout, TRUE); 
     switch (result)
     {
     case WAIT_FAILED:
@@ -318,10 +318,12 @@ bool WfmoReactor::WaitForMultipleEvents(Duration duration)
 
     DWORD index;
     if (result <= WAIT_OBJECT_0 + repository.GetSize())
-        index = result - WAIT_OBJECT_0;
+        index = result - WAIT_OBJECT_0 + startIndex;
     else
-        index = result - WAIT_ABANDONED_0;
+        index = result - WAIT_ABANDONED_0 + startIndex;
     
     shared_ptr<EventHandler> handler = repository.Find(handles[index]);
-    return Dispatch(handler);
+    Dispatch(handler);
+
+    return WaitForMultipleEvents(Duration::zero(), index + 1);
 }

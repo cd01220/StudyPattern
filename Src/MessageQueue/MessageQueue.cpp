@@ -113,7 +113,7 @@ bool MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
 {
     unique_lock<mutex> lock(theMutex);
     assert(state != Deactivated);
-    while (msgQueue.size() == 0)
+    while (msgQueue.empty())
     {
         if (theCv.wait_for(lock, duration) == cv_status::timeout)
         {
@@ -134,13 +134,11 @@ bool MessageQueue::Pop(shared_ptr<MessageBlock> &msg, Duration duration)
 
 bool MessageQueue::Push(shared_ptr<MessageBlock> msg, Duration duration)
 {
-    TimePoint until = GetCurTime() + duration;
-
     unique_lock<mutex> lock(theMutex);   
     assert(state != Deactivated); 
     while (msgQueue.size() == MaxQueueSize)
     {
-        if (theCv.wait_until(lock, until) == cv_status::timeout)
+        if (theCv.wait_for(lock, duration) == cv_status::timeout)
         {
             lock.unlock();
             /* time out */

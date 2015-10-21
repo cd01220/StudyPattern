@@ -91,9 +91,6 @@ void EventHandler::SetReactor(Reactor *reactor)
 EventHandler::EventHandler(Reactor *reactor, uint_t priority)
     : reactor(reactor), priority(priority)
 {
-    static uint_t index = 0;
-    wostringstream os;
-    os << TEXT("EventHandler") << index++;
-    eventHandle = CreateEvent(NULL, TRUE, FALSE, os.str().c_str());
+    eventHandle = CreateEvent(NULL, TRUE, FALSE, nullptr);
     ioHandle = InvalidHandleValue;
 }
