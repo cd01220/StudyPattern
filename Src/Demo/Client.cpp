@@ -89,6 +89,10 @@ bool Client::Open(void *args)
         return false;
     }
 
+    /* Note:
+       Set messge queue notification stratege, mask "EventHandler::WriteMask" means 
+       a msgQueue->Push() call will cause this->HandleOutput() to be called.
+    */
     auto notifer = make_shared<ReactorNotificationStrategy>(reactor, 
         shared_from_this(), EventHandler::WriteMask);
     msgQueue->SetNotificationStrategy(notifer);

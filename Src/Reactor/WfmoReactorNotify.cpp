@@ -72,5 +72,8 @@ bool WfmoReactorNotify::Notify(shared_ptr<EventHandler> handler, long mask)
 bool WfmoReactorNotify::Open(ReactorImpl *reactor, std::shared_ptr<TimerQueue> timerQueue)
 {
     this->timerQueue = timerQueue;
+    /* Register call back with ioHandle = InvalidHandleValue, mask = Event::NullMask. When
+       event is set to signaled state, this->HandleSignal() will be called.
+     */
     return reactor->RegisterHandler(shared_from_this());
 }
