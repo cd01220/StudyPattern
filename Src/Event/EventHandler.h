@@ -5,7 +5,7 @@
 #include "TimeValue.h"  //TimePoint, Duration
 
 #include "Event/Handle.h"
-class Reactor;
+
 /**********************class EventHandler**********************/
 /* class ACE_Event_Handler */
 class EventHandler: public std::enable_shared_from_this<EventHandler>
@@ -44,22 +44,19 @@ public:
     virtual Handle GetEventHandle() const;
     virtual Handle GetIoHandle() const;
     virtual long GetMask() const;
-    virtual Reactor* GetReactor();
     
     virtual void SetIoHandle(Handle handle);
     virtual void SetMask(long mask);
-    virtual void SetReactor(Reactor *reactor);
 
 protected:
     /// Force ACE_Event_Handler to be an abstract base class.
-    EventHandler(Reactor *reactor = nullptr, uint_t priority = LowPriority);
+    EventHandler();
 
 protected:
     Handle  eventHandle;
     Handle  ioHandle;
     long    mask;
     uint_t  priority;
-    Reactor *reactor;
 };
 
 

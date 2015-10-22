@@ -10,7 +10,7 @@ class Client: public Task
 {
 public:
     typedef Task MyBase;
-    Client(Reactor *reactor);
+    Client();
     ~Client();
     
     virtual bool HandleInput();

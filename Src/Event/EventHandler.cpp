@@ -1,8 +1,6 @@
 #include "SystemInclude.h"
 
-#include "Reactor/Reactor.h"
 #include "Event/EventHandler.h"
-
 using namespace std;
 
 /**********************class EventHandler**********************/
@@ -65,11 +63,6 @@ long EventHandler::GetMask() const
     return mask;
 }
 
-Reactor* EventHandler::GetReactor()
-{
-    return reactor;
-}
-
 void EventHandler::SetIoHandle(Handle handle)
 {
     ioHandle = handle;
@@ -80,17 +73,12 @@ void EventHandler::SetMask(long mask)
     this->mask = mask;
 }
 
-void EventHandler::SetReactor(Reactor *reactor)
-{
-    if (this->reactor != reactor)
-        this->reactor = reactor;
-}
-
 /**********************class EventHandler**********************/
 /* protected member function */
-EventHandler::EventHandler(Reactor *reactor, uint_t priority)
-    : reactor(reactor), priority(priority)
+EventHandler::EventHandler()
 {
-    eventHandle = CreateEvent(NULL, TRUE, FALSE, nullptr);
-    ioHandle = InvalidHandleValue;
+    this->eventHandle = CreateEvent(NULL, TRUE, FALSE, nullptr);
+    this->ioHandle = InvalidHandleValue;
+    this->mask = NullMask;
+    this->priority = LowPriority;
 }

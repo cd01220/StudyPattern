@@ -1,7 +1,6 @@
 #include "SystemInclude.h"
 #include "Debug.h"
 
-#include "Reactor/Reactor.h"
 #include "MessageQueue/MessageBlock.h"
 #include "MessageQueue/NotificationStrategy.h"
 #include "MessageQueue/MessageQueue.h"
@@ -11,8 +10,7 @@
 using namespace std;
 
 /**********************class Client**********************/
-Client::Client(Reactor *reactor)
-    : Task(reactor)
+Client::Client()
 {
     dbgstrm << "Start." << endl;
 }
@@ -65,7 +63,9 @@ bool Client::HandleTimeOut(TimePoint, const void *arg)
 bool Client::Open(void *args)
 {
     if (!MyBase::Open(args))
+    {
         return false;
+    }
     
     SOCKET sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     sockaddr_in clientService; 
@@ -83,21 +83,22 @@ bool Client::Open(void *args)
     this->ioHandle = (Handle)sock;
     this->mask = EventHandler::ReadMask;
     
-    if (!reactor->RegisterHandler(shared_from_this()))
-    {
-        errstrm << "RegisterHandler() failed" << endl;
-        return false;
-    }
+    //if (!reactor->RegisterHandler(shared_from_this()))
+    //{
+    //    errstrm << "RegisterHandler() failed" << endl;
+    //    return false;
+    //}
 
     /* Note:
        Set messge queue notification stratege, mask "EventHandler::WriteMask" means 
        a msgQueue->Push() call will cause this->HandleOutput() to be called.
     */
-    auto notifer = make_shared<ReactorNotificationStrategy>(reactor, 
-        shared_from_this(), EventHandler::WriteMask);
-    msgQueue->SetNotificationStrategy(notifer);
+    //auto notifer = make_shared<ReactorNotificationStrategy>(reactor, 
+    //    shared_from_this(), EventHandler::WriteMask);
+    //msgQueue->SetNotificationStrategy(notifer);
     
-    return reactor->ScheduleTimer(shared_from_this(), 
-        nullptr, GetCurTime() + Duration(1000), Duration(2000));
+    //return reactor->ScheduleTimer(shared_from_this(), 
+    //    nullptr, GetCurTime() + Duration(1000), Duration(2000));
+    return true;
 }
 

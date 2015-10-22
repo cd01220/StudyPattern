@@ -1,15 +1,12 @@
 #include "SystemInclude.h"
 
-#include "Reactor/Reactor.h" //Reactor
 #include "ServiceObject.h"
 using namespace std;
 
 /**********************class ServiceObject**********************/
 /* Origial definition: ACE_Service_Object */
-ServiceObject::ServiceObject(Reactor *reactor)
-    : EventHandler(reactor)
-{
-}
+ServiceObject::ServiceObject()
+{}
 
 /// Destructor.
 ServiceObject::~ServiceObject (void)
