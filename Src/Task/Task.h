@@ -3,16 +3,15 @@
 
 #include "Task/TaskBase.h"
 
+class MessageBlock;
 class MessageQueue;
 /**********************class Task**********************/
 /* class ACE_Task */
 class Task: public TaskBase
 {
 public:
-    Task();
+    Task(Reactor *reactor);
     virtual ~Task();
-
-    MessageQueue& GetMessageQueue();
 
 protected:
     std::shared_ptr<MessageQueue> msgQueue;

@@ -7,10 +7,8 @@
 /**********************class EventHandlerStub**********************/
 class EventHandlerStub: public EventHandler
 {
-    typedef std::function<void(SOCKET sock)> AcceptHandler;
-
 public:
-    EventHandlerStub(AcceptHandler acceptHandler);
+    EventHandlerStub(Reactor *reactor = nullptr);
     
     bool HandleClose();
     bool HandleInput();
@@ -18,16 +16,13 @@ public:
     bool HandleTimeOut(TimePoint, const void *arg = 0);
 
     bool Open();
-
-private:
-    AcceptHandler acceptHandler;
 };
 
 /**********************class ClientService**********************/
 class ClientService: public EventHandler
 {
 public:
-    ClientService();
+    ClientService(Reactor *reactor = nullptr);
     ~ClientService();
     
     bool HandleInput();

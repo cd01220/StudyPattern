@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     flag.SetState("Client::HandleOutput", true);
 
     InitSocket();
-    ReactorMain1(argc, argv);
+    ReactorMain2(argc, argv);
     return 0;
 }
 

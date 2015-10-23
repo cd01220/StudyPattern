@@ -6,8 +6,8 @@
 using namespace std;
 
 /**********************class EventHandlerStub**********************/
-EventHandlerStub::EventHandlerStub(AcceptHandler acceptHandler)
-    : acceptHandler(acceptHandler)
+EventHandlerStub::EventHandlerStub(Reactor *reactor)
+    : EventHandler(reactor)
 {
     dbgstrm << "Start." << endl;    
 }
@@ -29,7 +29,15 @@ bool EventHandlerStub::HandleInput()
         return false;
     }
 
-    acceptHandler(acceptSocket);
+    std::shared_ptr<ClientService> client = std::make_shared<ClientService>(this->reactor);
+    client->SetIoHandle((Handle)acceptSocket);    
+    client->SetMask(ReadMask);
+    if (!client->Open())
+    {
+        client->HandleClose();
+        return false;
+    }
+
     return true;
 }
 
@@ -80,17 +88,18 @@ bool EventHandlerStub::Open()
     this->ioHandle = (Handle)listenSocket;
     this->mask = AcceptMask;
 
-    //if (!reactor->RegisterHandler(shared_from_this()))
-    //{
-    //    errstrm << "reactor->RegisterHandler() failed" << endl;
-    //    return false;
-    //}
+    if (!reactor->RegisterHandler(shared_from_this()))
+    {
+        errstrm << "reactor->RegisterHandler() failed" << endl;
+        return false;
+    }
 
     return true;
 }
 
 /**********************class ClientService**********************/
-ClientService::ClientService()
+ClientService::ClientService(Reactor *reactor)
+    : EventHandler(reactor)
 {}
 
 ClientService::~ClientService()
@@ -120,6 +129,5 @@ bool ClientService::HandleTimeOut(TimePoint, const void *arg)
 
 bool ClientService::Open()
 {
-    //return reactor->RegisterHandler(shared_from_this());
-    return true;
+    return reactor->RegisterHandler(shared_from_this());
 }

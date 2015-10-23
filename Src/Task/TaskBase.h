@@ -8,7 +8,7 @@
 class TaskBase: public ServiceObject
 {
 public:
-    TaskBase();
+    TaskBase(Reactor *reactor = nullptr);
     ~TaskBase();
     
     bool Activate();

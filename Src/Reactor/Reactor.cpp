@@ -20,12 +20,25 @@ Reactor::~Reactor()
 
 bool Reactor::Notify(std::shared_ptr<EventHandler> handler, long mask)
 {
+    if (handler != nullptr && handler->GetReactor() == nullptr)
+        handler->SetReactor(this);
+
     return implementation->Notify(handler, mask);
 }
 
 bool Reactor::RegisterHandler(shared_ptr<EventHandler> handler)
 {
-    return implementation->RegisterHandler(handler);
+    error_code errCode;
+    Reactor *reactor = handler->GetReactor();
+    handler->SetReactor(this);
+
+    if (!implementation->RegisterHandler(handler))
+    {
+        handler->SetReactor(reactor);
+        return false;
+    }
+
+    return true;
 }
 
 bool Reactor::RunEventLoop()
@@ -61,5 +74,16 @@ bool Reactor::ScheduleTimer(std::shared_ptr<EventHandler> handler,
         TimePoint timePoint,
         Duration  interval)
 {
-    return implementation->ScheduleTimer(handler, arg, timePoint, interval);
+    // Remember the old reactor.
+    Reactor *oldReactor = handler->GetReactor();
+    handler->SetReactor(this);
+
+    if (!this->implementation->ScheduleTimer(handler, arg, timePoint, interval))
+    {
+        // Reset the old reactor in case of failures.
+        handler->SetReactor(oldReactor);
+        return false;
+    }
+
+    return true;
 }

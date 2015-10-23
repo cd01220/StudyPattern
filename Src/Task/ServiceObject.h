@@ -11,7 +11,7 @@ class ServiceObject: public EventHandler
 public:
     // = Initialization and termination methods.
     /// Constructor.
-    ServiceObject ();
+    ServiceObject (Reactor *reactor);
 
     /// Destructor.
     virtual ~ServiceObject (void);

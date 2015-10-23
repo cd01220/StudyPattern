@@ -5,7 +5,8 @@ using namespace std;
 
 /**********************class TaskBase**********************/
 /* Origial definition: ACE_Task_Base */
-TaskBase::TaskBase()
+TaskBase::TaskBase(Reactor *reactor)
+    : ServiceObject(reactor)
 {}
 
 TaskBase::~TaskBase()
