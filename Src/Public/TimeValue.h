@@ -19,7 +19,7 @@ public:
     TimeCountDown(Duration duration)
         : duration(duration)
     {
-        tp = GetCurTime();
+        timePoint = GetCurTime();
     }
 
     ~TimeCountDown()
@@ -27,17 +27,17 @@ public:
 
     Duration GetRemainingTime()
     {
-        TimePoint tpNow = GetCurTime();
-        duration = duration - std::chrono::duration_cast<Duration>(tpNow - tp);    
+        TimePoint nowTimePoint = GetCurTime();
+        duration = duration - std::chrono::duration_cast<Duration>(nowTimePoint - timePoint);    
         if (duration < Duration::zero())
             duration = Duration::zero();
-        tp = tpNow;
+        timePoint = nowTimePoint;
         return duration;
     }
 
 private:
     Duration duration;
-    TimePoint tp;
+    TimePoint timePoint;
 };
 
 #endif

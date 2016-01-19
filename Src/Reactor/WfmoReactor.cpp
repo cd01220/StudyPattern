@@ -14,16 +14,6 @@ WfmoReactorHandlerRepository::WfmoReactorHandlerRepository()
 WfmoReactorHandlerRepository::~WfmoReactorHandlerRepository()
 {}
 
-WfmoReactorHandlerRepository::iterator WfmoReactorHandlerRepository::begin()
-{
-    return repository.begin();
-}
-
-WfmoReactorHandlerRepository::iterator WfmoReactorHandlerRepository::end()
-{
-    return repository.end();
-}
-
 shared_ptr<EventHandler> WfmoReactorHandlerRepository::Find(Handle handle)
 {
     auto iter = repository.find(handle);

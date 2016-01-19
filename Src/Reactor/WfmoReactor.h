@@ -10,12 +10,8 @@ class TimerQueue;
 class WfmoReactorHandlerRepository
 {
 public:
-    typedef std::map<Handle, std::shared_ptr<EventHandler>>::iterator iterator;
     WfmoReactorHandlerRepository();
     ~WfmoReactorHandlerRepository();
-
-    iterator begin();
-    iterator end();
 
     std::shared_ptr<EventHandler> Find(Handle handle);
     Handle* GetEventHandles();

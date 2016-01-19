@@ -26,7 +26,7 @@ void InitSocket()
         /* Tell the user that we could not find a usable */
         /* WinSock DLL.  */
         int errCode = WSAGetLastError();
-        cerr << "Last error code " << errCode << endl;
+        cerr << "Last error code = " << errCode << endl;
         return;
     }
 }
